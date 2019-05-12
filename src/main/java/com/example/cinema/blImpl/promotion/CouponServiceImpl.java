@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
  * Created by liying on 2019/4/17.
  */
 @Service
-public class CouponServiceImpl implements CouponService {
+public class CouponServiceImpl implements CouponService,CouponServiceForBl {
 
     @Autowired
     CouponMapper couponMapper;
@@ -55,5 +55,15 @@ public class CouponServiceImpl implements CouponService {
             return ResponseVO.buildFailure("失败");
         }
 
+    }
+
+    @Override
+    public ResponseVO getCoupon(int couponId) {
+        try {
+            return ResponseVO.buildSuccess(couponMapper.selectById(couponId));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseVO.buildFailure("失败");
+        }
     }
 }
