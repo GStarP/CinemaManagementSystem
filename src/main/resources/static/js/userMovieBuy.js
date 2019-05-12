@@ -104,21 +104,25 @@ function orderConfirmClick() {
     $('#order-state').css("display", "");
 
     // TODO:这里是假数据，需要连接后端获取真数据，数据格式可以自行修改，但如果改了格式，别忘了修改renderOrder方法
+    const seats = []
+    selectedSeats.forEach(x => {
+        seats.push({'columnIndex': x[1]-1, 'rowIndex': x[0]-1})
+    })
     postRequest(
-     '/ticket/lockSeat',
-     {
+        '/ticket/lockSeat',
+        {
             'userId': sessionStorage.getItem('id'),
             'scheduleId': scheduleId,
-            'seats':selectedSeats
+            'seats': seats
         },
-     function (res) {
+        function (res) {
             orderInfo = res.content;
+            renderOrder(orderInfo);
         },
-     function (error) {
+        function (error) {
             alert(error);
         }
-     );
-    renderOrder(orderInfo);
+    );
 
     getRequest(
         '/vip/' + sessionStorage.getItem('id') + '/get',
@@ -196,13 +200,11 @@ function changeCoupon(couponIndex) {
 function payConfirmClick() {
     if (useVIP) {
         postRequest(
-            '/ticket/vip/buy',
-            {
-                ticketId: order.ticketId,
-                couponId: order.couponId
-            },
+            '/ticket/vip/buy/'+order.couponId,
+            order.ticketId,
             function (res) {
                 if (res.success) postPayRequest()
+                else alert(JSON.stringify(res))
             },
             function (err) {
                 alert(JSON.stringify(err))
@@ -213,12 +215,10 @@ function payConfirmClick() {
             if ($('#userBuy-cardNum').val() === "123123123" && $('#userBuy-cardPwd').val() === "123123") {
                 postRequest(
                     '/ticket/buy',
-                    {
-                        ticketId: JSON.stringify(order.ticketId),
-                        couponId: order.couponId
-                    },
+                    order.ticketId,
                     function (res) {
                         if (res.success) postPayRequest()
+                        else alert(JSON.stringify(res))
                     },
                     function (err) {
                         alert(JSON.stringify(err))

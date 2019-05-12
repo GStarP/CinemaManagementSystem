@@ -17,8 +17,10 @@ public class TicketController {
     @Autowired
     TicketService ticketService;
 
-    @PostMapping("/vip/buy")
-    public ResponseVO buyTicketByVIPCard(@RequestParam List<Integer> ticketId, @RequestParam int couponId){
+    @PostMapping("/vip/buy/{couponId}")
+    public ResponseVO buyTicketByVIPCard(@RequestBody List<Integer> ticketId,@PathVariable int couponId){
+        System.out.println("=====================");
+        System.out.println(ticketId+" "+couponId);
         return ticketService.completeByVIPCard(ticketId,couponId);
     }
 
