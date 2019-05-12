@@ -2,6 +2,7 @@ var selectedSeats = []
 var scheduleId;
 var order = {ticketId: [], couponId: 0};
 var coupons = [];
+var orderInfo = [];
 var isVIP = false;
 var useVIP = true;
 
@@ -102,27 +103,22 @@ function orderConfirmClick() {
     $('#seat-state').css("display", "none");
     $('#order-state').css("display", "");
 
-    var seats = [];
-    selectedSeats.forEach(function (seat) {
-        seats.push({rowIndex:seat[0],columnIndex:+seat[1]});
-    });
-    var ticketForm = {
-        userId: sessionStorage.getItem("id"),
-        scheduleId: scheduleId,
-        seats: seats
-    };
-
+    // TODO:这里是假数据，需要连接后端获取真数据，数据格式可以自行修改，但如果改了格式，别忘了修改renderOrder方法
     postRequest(
-        '/ticket/lockSeat',
-        ticketForm,
-        function (res) {
-            renderOrder(res.content);
+     '/ticket/lockSeat',
+     {
+            'userId': sessionStorage.getItem('id'),
+            'scheduleId': scheduleId,
+            'seats':selectedSeats
         },
-        function (error) {
-            alert(JSON.stringify(error));
+     function (res) {
+            orderInfo = res.content;
+        },
+     function (error) {
+            alert(error);
         }
-    );
-
+     );
+    renderOrder(orderInfo);
 
     getRequest(
         '/vip/' + sessionStorage.getItem('id') + '/get',
@@ -199,11 +195,35 @@ function changeCoupon(couponIndex) {
 
 function payConfirmClick() {
     if (useVIP) {
-        postPayRequest();
+        postRequest(
+            '/ticket/vip/buy',
+            {
+                ticketId: order.ticketId,
+                couponId: order.couponId
+            },
+            function (res) {
+                if (res.success) postPayRequest()
+            },
+            function (err) {
+                alert(JSON.stringify(err))
+            }
+        );
     } else {
         if (validateForm()) {
             if ($('#userBuy-cardNum').val() === "123123123" && $('#userBuy-cardPwd').val() === "123123") {
-                postPayRequest();
+                postRequest(
+                    '/ticket/buy',
+                    {
+                        ticketId: JSON.stringify(order.ticketId),
+                        couponId: order.couponId
+                    },
+                    function (res) {
+                        if (res.success) postPayRequest()
+                    },
+                    function (err) {
+                        alert(JSON.stringify(err))
+                    }
+                );
             } else {
                 alert("银行卡号或密码错误");
             }
@@ -211,7 +231,7 @@ function payConfirmClick() {
     }
 }
 
-// TODO:填空
+// 支付成功后的界面渲染
 function postPayRequest() {
     $('#order-state').css("display", "none");
     $('#success-state').css("display", "");
