@@ -2,6 +2,7 @@ var selectedSeats = []
 var scheduleId;
 var order = {ticketId: [], couponId: 0};
 var coupons = [];
+var orderInfo = [];
 var isVIP = false;
 var useVIP = true;
 
@@ -103,67 +104,20 @@ function orderConfirmClick() {
     $('#order-state').css("display", "");
 
     // TODO:这里是假数据，需要连接后端获取真数据，数据格式可以自行修改，但如果改了格式，别忘了修改renderOrder方法
-    var orderInfo = {
-        "ticketVOList": [{
-            "id": 63,
-            "userId": 15,
-            "scheduleId": 67,
-            "columnIndex": 5,
-            "rowIndex": 1,
-            "state": "未完成"
-        }, {"id": 64, "userId": 15, "scheduleId": 67, "columnIndex": 6, "rowIndex": 1, "state": "未完成"}],
-        "total": 41.0,
-        "coupons": [{
-            "id": 5,
-            "description": "测试优惠券",
-            "name": "品质联盟",
-            "targetAmount": 30.0,
-            "discountAmount": 4.0,
-            "startTime": "2019-04-21T05:14:46.000+0800",
-            "endTime": "2019-04-25T05:14:51.000+0800"
-        }, {
-            "id": 5,
-            "description": "测试优惠券",
-            "name": "品质联盟",
-            "targetAmount": 30.0,
-            "discountAmount": 4.0,
-            "startTime": "2019-04-21T05:14:46.000+0800",
-            "endTime": "2019-04-25T05:14:51.000+0800"
-        }],
-        "activities": [{
-            "id": 4,
-            "name": "测试活动",
-            "description": "测试活动",
-            "startTime": "2019-04-21T00:00:00.000+0800",
-            "endTime": "2019-04-27T00:00:00.000+0800",
-            "movieList": [{
-                "id": 10,
-                "name": "夏目友人帐",
-                "posterUrl": "http://n.sinaimg.cn/translate/640/w600h840/20190312/ampL-hufnxfm4278816.jpg",
-                "director": "大森贵弘 /伊藤秀樹",
-                "screenWriter": "",
-                "starring": "神谷浩史 /井上和彦 /高良健吾 /小林沙苗 /泽城美雪",
-                "type": "动画",
-                "country": null,
-                "language": null,
-                "startDate": "2019-04-14T22:54:31.000+0800",
-                "length": 120,
-                "description": "在人与妖怪之间过着忙碌日子的夏目，偶然与以前的同学结城重逢，由此回忆起了被妖怪缠身的苦涩记忆。此时，夏目认识了在归还名字的妖怪记忆中出现的女性·津村容莉枝。和玲子相识的她，现在和独子椋雄一同过着平稳的生活。夏目通过与他们的交流，心境也变得平和。但这对母子居住的城镇，却似乎潜伏着神秘的妖怪。在调查此事归来后，寄生于猫咪老师身体的“妖之种”，在藤原家的庭院中，一夜之间就长成树结出果实。而吃掉了与自己形状相似果实的猫咪老师，竟然分裂成了3个",
-                "status": 0,
-                "islike": null,
-                "likeCount": null
-            }],
-            "coupon": {
-                "id": 8,
-                "description": "测试优惠券",
-                "name": "123",
-                "targetAmount": 100.0,
-                "discountAmount": 99.0,
-                "startTime": "2019-04-21T00:00:00.000+0800",
-                "endTime": "2019-04-27T00:00:00.000+0800"
-            }
-        }]
-    };
+    postRequest(
+     '/ticket/lockSeat',
+     {
+            'userId': sessionStorage.getItem('id'),
+            'scheduleId': scheduleId,
+            'seats':selectedSeats
+        },
+     function (res) {
+            orderInfo = res.content;
+        },
+     function (error) {
+            alert(error);
+        }
+     );
     renderOrder(orderInfo);
 
     getRequest(
@@ -241,11 +195,35 @@ function changeCoupon(couponIndex) {
 
 function payConfirmClick() {
     if (useVIP) {
-        postPayRequest();
+        postRequest(
+            '/ticket/vip/buy',
+            {
+                ticketId: order.ticketId,
+                couponId: order.couponId
+            },
+            function (res) {
+                if (res.success) postPayRequest()
+            },
+            function (err) {
+                alert(JSON.stringify(err))
+            }
+        );
     } else {
         if (validateForm()) {
             if ($('#userBuy-cardNum').val() === "123123123" && $('#userBuy-cardPwd').val() === "123123") {
-                postPayRequest();
+                postRequest(
+                    '/ticket/buy',
+                    {
+                        ticketId: JSON.stringify(order.ticketId),
+                        couponId: order.couponId
+                    },
+                    function (res) {
+                        if (res.success) postPayRequest()
+                    },
+                    function (err) {
+                        alert(JSON.stringify(err))
+                    }
+                );
             } else {
                 alert("银行卡号或密码错误");
             }
@@ -253,7 +231,7 @@ function payConfirmClick() {
     }
 }
 
-// TODO:填空
+// 支付成功后的界面渲染
 function postPayRequest() {
     $('#order-state').css("display", "none");
     $('#success-state').css("display", "");
