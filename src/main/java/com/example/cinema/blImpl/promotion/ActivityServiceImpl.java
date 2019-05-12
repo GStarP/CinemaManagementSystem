@@ -11,11 +11,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 /**
  * Created by liying on 2019/4/20.
  */
 @Service
-public class ActivityServiceImpl implements ActivityService {
+public class ActivityServiceImpl implements ActivityService,ActivityServiceForBl {
 
     @Autowired
     ActivityMapper activityMapper;
@@ -55,4 +57,23 @@ public class ActivityServiceImpl implements ActivityService {
         }
     }
 
+    @Override
+    public ResponseVO getActivitiesByMovie(int movieId) {
+        try {
+            return ResponseVO.buildSuccess(activityMapper.selectActivitiesByMovie(movieId));
+        }catch (Exception e){
+            e.printStackTrace();
+            return ResponseVO.buildFailure("失败");
+        }
+    }
+
+    @Override
+    public List<Activity> getActivityList() {
+        try {
+            return activityMapper.selectActivities();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 }
