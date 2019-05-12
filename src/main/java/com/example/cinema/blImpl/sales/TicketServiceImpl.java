@@ -146,7 +146,10 @@ public class TicketServiceImpl implements TicketService {
                 ticketMapper.updateTicketState(i,1);
             }
         }
-        totalPay=totalPay-((Coupon)couponService.getCoupon(couponId).getContent()).getDiscountAmount();
+
+        if(couponId!=0){
+            totalPay=totalPay-((Coupon)couponService.getCoupon(couponId).getContent()).getDiscountAmount();
+        }
 
         //更新会员卡余额
         if (! vipService.getCardByUserId(ticket.getUserId()).getSuccess()){
@@ -197,6 +200,11 @@ public class TicketServiceImpl implements TicketService {
 
     //检验优惠券是否存在，是否能用(门槛，时间)
     private boolean isCouponEnable(int couponId, double totalPay, int userId){
+        //检验是否使用优惠券
+        if(couponId==0){
+            return true;
+        }
+
         Coupon coupon=null;
         //检验是否存在
         List<Coupon> couponList= (List<Coupon>) couponService.getCouponsByUser(userId).getContent();
