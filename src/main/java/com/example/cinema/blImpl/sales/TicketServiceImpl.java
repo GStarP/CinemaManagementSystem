@@ -1,5 +1,7 @@
 package com.example.cinema.blImpl.sales;
 
+import com.example.cinema.bl.promotion.ActivityService;
+import com.example.cinema.bl.promotion.CouponService;
 import com.example.cinema.bl.sales.TicketService;
 import com.example.cinema.blImpl.management.hall.HallServiceForBl;
 import com.example.cinema.blImpl.management.schedule.ScheduleServiceForBl;
@@ -14,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -35,10 +38,28 @@ public class TicketServiceImpl implements TicketService {
     @Autowired
     VIPServiceForBl vipService;
 
+
     @Override
     @Transactional
     public ResponseVO addTicket(TicketForm ticketForm) {
-        return null;
+        List<Ticket> tickets = new ArrayList<>();
+        List<SeatForm> seats = ticketForm.getSeats();
+        for (SeatForm seat: seats){
+            Ticket ticket = new Ticket();
+            ticket.setUserId(ticketForm.getUserId());
+            ticket.setScheduleId(ticketForm.getScheduleId());
+            ticket.setRowIndex(seat.getRowIndex());
+            ticket.setColumnIndex(seat.getColumnIndex());
+            ticket.setState(0);
+            tickets.add(ticket);
+        }
+        try {
+            ticketMapper.insertTickets(tickets);
+            return getOtherInfo(ticketForm);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseVO.buildFailure("失败");
+        }
     }
 
     @Override
@@ -158,6 +179,23 @@ public class TicketServiceImpl implements TicketService {
     }
 
 
+    private ResponseVO getOtherInfo(TicketForm ticketForm) {
+        try {
+            TicketWithCouponVO ticketWithCouponVO = new TicketWithCouponVO();
+            List<TicketVO> ticketVOList = new ArrayList<>();
+            for (SeatForm seat: ticketForm.getSeats()){
+                ticketVOList.add(ticketMapper.selectTicketByScheduleIdAndSeat(ticketForm.getScheduleId(), seat.getColumnIndex(), seat.getRowIndex()).getVO());
+            }
+            ticketWithCouponVO.setTicketVOList(ticketVOList);
+            ticketWithCouponVO.setTotal(ticketVOList.size() * scheduleService.getScheduleItemById(ticketForm.getScheduleId()).getFare());
+            ticketWithCouponVO.setCoupons((List<Coupon>) couponService.getCouponsByUser(ticketForm.getUserId()).getContent());
+            ticketWithCouponVO.setActivities((List<Activity>) activityService.getActivities().getContent());
+            return ResponseVO.buildSuccess(ticketWithCouponVO);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseVO.buildFailure("失败");
+        }
+    }
 
     //检验优惠券是否存在，是否能用(门槛，时间)
     private boolean isCouponEnable(int couponId, double totalPay, int userId){
