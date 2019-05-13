@@ -137,30 +137,43 @@ public class TicketServiceImpl implements TicketService {
         ScheduleItem scheduleItem=scheduleService.getScheduleItemById(ticket.getScheduleId());
         double totalPay=scheduleItem.getFare()*id.size();
         if(! isCouponEnable(couponId,totalPay,ticket.getUserId())){
-            for (int i:id){
-                ticketMapper.updateTicketState(i,0);
-            }
+//            for (int i:id){
+//                ticketMapper.updateTicketState(i,0);
+//            }
             return ResponseVO.buildFailure("优惠券不能使用");
         }else{
+            if(couponId!=0){
+                totalPay=totalPay-((Coupon)couponService.getCoupon(couponId).getContent()).getDiscountAmount();
+            }
+            //更新会员卡余额
+            if (! vipService.getCardByUserId(ticket.getUserId()).getSuccess()){
+                return ResponseVO.buildFailure("会员卡获取失败");
+            }else{
+                VIPCard vipCard= (VIPCard) vipService.getCardByUserId(ticket.getUserId()).getContent();
+                if (vipCard.getBalance()<totalPay){
+                    return ResponseVO.buildFailure("会员卡余额不足");
+                }
+                vipService.payByCard(vipCard.getId(),vipCard.getBalance()-totalPay);
+            }
             for (int i:id){
                 ticketMapper.updateTicketState(i,1);
             }
         }
 
-        if(couponId!=0){
-            totalPay=totalPay-((Coupon)couponService.getCoupon(couponId).getContent()).getDiscountAmount();
-        }
+//        if(couponId!=0){
+//            totalPay=totalPay-((Coupon)couponService.getCoupon(couponId).getContent()).getDiscountAmount();
+//        }
 
-        //更新会员卡余额
-        if (! vipService.getCardByUserId(ticket.getUserId()).getSuccess()){
-            return ResponseVO.buildFailure("会员卡获取失败");
-        }else{
-            VIPCard vipCard= (VIPCard) vipService.getCardByUserId(ticket.getUserId()).getContent();
-            if (vipCard.getBalance()<totalPay){
-                return ResponseVO.buildFailure("会员卡余额不足");
-            }
-            vipService.payByCard(vipCard.getId(),vipCard.getBalance()-totalPay);
-        }
+//        //更新会员卡余额
+//        if (! vipService.getCardByUserId(ticket.getUserId()).getSuccess()){
+//            return ResponseVO.buildFailure("会员卡获取失败");
+//        }else{
+//            VIPCard vipCard= (VIPCard) vipService.getCardByUserId(ticket.getUserId()).getContent();
+//            if (vipCard.getBalance()<totalPay){
+//                return ResponseVO.buildFailure("会员卡余额不足");
+//            }
+//            vipService.payByCard(vipCard.getId(),vipCard.getBalance()-totalPay);
+//        }
 
         //赠送优惠券
         List<Activity> list= (List<Activity>) activityService.getActivitiesByMovie(scheduleItem.getMovieId()).getContent();

@@ -41,19 +41,20 @@ $(document).ready(function() {
                         y : 'bottom',
                         data:nameList
                     },
-                    toolbox: {
-                        show : true,
-                        feature : {
-                            mark : {show: true},
-                            dataView : {show: true, readOnly: false},
-                            magicType : {
-                                show: true,
-                                type: ['pie', 'funnel']
-                            },
-                            restore : {show: true},
-                            saveAsImage : {show: true}
-                        }
-                    },
+                    //TODO:去除工具栏
+                    // toolbox: {
+                    //     show : true,
+                    //     feature : {
+                    //         mark : {show: true},
+                    //         dataView : {show: true, readOnly: false},
+                    //         magicType : {
+                    //             show: true,
+                    //             type: ['pie', 'funnel']
+                    //         },
+                    //         restore : {show: true},
+                    //         saveAsImage : {show: true}
+                    //     }
+                    // },
                     calculable : true,
                     series : [
                         {
