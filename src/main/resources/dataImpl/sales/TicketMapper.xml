@@ -42,6 +42,10 @@
         delete from ticket where id=#{ticketId}
     </delete>
 
+    <delete id="deleteLockedTicket">
+        delete from ticket where user_id=#{userId} and schedule_id=#{scheduleId} and state=0
+    </delete>
+
     <resultMap id="Ticket" type="com.example.cinema.po.Ticket">
         <result column="schedule_id" property="scheduleId"></result>
         <result column="id" property="id"></result>

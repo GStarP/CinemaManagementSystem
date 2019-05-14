@@ -40,6 +40,9 @@ public class TicketServiceImpl implements TicketService {
     @Override
     @Transactional
     public ResponseVO addTicket(TicketForm ticketForm) {
+        // 首先将该用户已选座位但未支付的电影票移除
+        ticketMapper.deleteLockedTicket(ticketForm.getUserId(),ticketForm.getScheduleId());
+
         List<Ticket> tickets = new ArrayList<>();
         List<SeatForm> seats = ticketForm.getSeats();
         for (SeatForm seat: seats){
@@ -99,12 +102,17 @@ public class TicketServiceImpl implements TicketService {
     @Override
     public ResponseVO getBySchedule(int scheduleId) {
         try {
+            // 此时已经将失效（state==2）的电影票过滤掉了
             List<Ticket> tickets = ticketMapper.selectTicketsBySchedule(scheduleId);
-            ScheduleItem schedule=scheduleService.getScheduleItemById(scheduleId);
-            Hall hall=hallService.getHallById(schedule.getHallId());
-            int[][] seats=new int[hall.getRow()][hall.getColumn()];
-            tickets.stream().forEach(ticket -> {
-                seats[ticket.getRowIndex()][ticket.getColumnIndex()]=1;
+            ScheduleItem schedule = scheduleService.getScheduleItemById(scheduleId);
+            Hall hall = hallService.getHallById(schedule.getHallId());
+            int[][] seats = new int[hall.getRow()][hall.getColumn()];
+            // 当前用户已选但未支付的座位为2，否则为1
+            tickets.forEach(ticket -> {
+                if (ticket.getState() == 0)
+                    seats[ticket.getRowIndex()][ticket.getColumnIndex()] = 2;
+                else
+                    seats[ticket.getRowIndex()][ticket.getColumnIndex()] = 1;
             });
             ScheduleWithSeatVO scheduleWithSeatVO=new ScheduleWithSeatVO();
             scheduleWithSeatVO.setScheduleItem(schedule);
