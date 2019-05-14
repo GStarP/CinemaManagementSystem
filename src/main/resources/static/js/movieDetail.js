@@ -95,12 +95,106 @@ $(document).ready(function(){
             });
     });
 
-    // admin界面才有
-    $("#modify-btn").click(function () {
-       alert('交给你们啦，修改时需要在对应html文件添加表单然后获取用户输入，提交给后端，别忘记对用户输入进行验证。（可参照添加电影&添加排片&修改排片）');
+    /**
+     * @Date:   2019-5-7
+     * @Author: hxw
+     * @Info:   获取电影信息表单
+     */
+    function getMovieForm() {
+        return {
+            id: window.location.href.split("=")[1],
+            name: $('#movie-name-input').val(),
+            startDate: $('#movie-date-input').val(),
+            posterUrl: $('#movie-img-input').val(),
+            description: $('#movie-description-input').val(),
+            type: $('#movie-type-input').val(),
+            length: $('#movie-length-input').val(),
+            country: $('#movie-country-input').val(),
+            starring: $('#movie-star-input').val(),
+            director: $('#movie-director-input').val(),
+            screenWriter: $('#movie-writer-input').val(),
+            language: $('#movie-language-input').val()
+        };
+    }
+
+    /**
+     * @Date:   2019-5-7
+     * @Author: hxw
+     * @Info:   修改电影信息
+     */
+    $("#movie-form-btn").click(function () {
+        var formData = getMovieForm();
+        if(!validateMovieForm(formData)) {
+            return;
+        }
+        postRequest(
+            '/movie/update',
+            formData,
+            function (res) {
+                if (res.success) {
+                    alert("修改成功!");
+                    $("#movieModal").modal('hide');
+                } else {
+                    alert(res.message);
+                }
+            },
+            function (error) {
+                alert(error);
+            });
     });
-    $("#delete-btn").click(function () {
-        alert('交给你们啦，下架别忘记需要一个确认提示框，也别忘记下架之后要对用户有所提示哦');
+
+    /**
+     * @Date:   2019-5-7
+     * @Author: hxw
+     * @Info:   下架电影
+     */
+    $("#commitMovieDel").click(function () {
+        var list = [];
+        list.push(window.location.href.split("=")[1]);
+        postRequest(
+            '/movie/off/batch',
+            { movieIdList: list },
+            function (res) {
+                if (res.success) {
+                    alert("下架成功!");
+                    $("#movieDelModal").modal('hide');
+                } else {
+                    alert(res.message);
+                }
+            },
+            function (error) {
+                alert(error);
+            }
+        )
     });
+
+    /**
+     * @Date:   2019-5-7
+     * @Author: hxw
+     * @Info:   检验表单信息完整性
+     */
+    function validateMovieForm(data) {
+        if (!data.name) {
+            $('#movie-name-input').parent('.form-group').addClass('has-error');
+            alert("请填写电影名称!");
+            return false;
+        }
+        if (!data.posterUrl) {
+            $('#movie-img-input').parent('.form-group').addClass('has-error');
+            alert("请填写电影海报!");
+            return false;
+        }
+        if (!data.startDate) {
+            $('#movie-date-input').parent('.form-group').addClass('has-error');
+            alert("请填写上映时间!");
+            return false;
+        }
+        if (!data.length) {
+            $('#movie-length-input').parent('.form-group').addClass('has-error');
+            alert("请填写片长!");
+            return false;
+        }
+        return true;
+    }
 
 });
