@@ -30,7 +30,7 @@
     </select>
 
     <select id="selectTicketByUser" resultMap="Ticket">
-        select * from ticket where user_id=#{userId}
+        select * from ticket where user_id=#{userId} order by time desc
     </select>
 
 

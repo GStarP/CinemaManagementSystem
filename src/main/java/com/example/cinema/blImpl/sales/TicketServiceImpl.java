@@ -142,18 +142,8 @@ public class TicketServiceImpl implements TicketService {
                 vo.setHallName(scheduleItem.getHallName());
                 vo.setStartTime(scheduleItem.getStartTime());
                 vo.setEndTime(scheduleItem.getEndTime());
-                switch (ticket.getState()) {
-                    case 1:
-                        vo.setState("已完成");
-                        res.add(vo);
-                        break;
-                    case 2:
-                        vo.setState("已失效");
-                        res.add(vo);
-                        break;
-                    default:
-                        break;
-                }
+                vo.setState(ticket.getState());
+                res.add(vo);
             }
             return ResponseVO.buildSuccess(res);
         } catch (Exception e) {
