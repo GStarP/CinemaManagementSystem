@@ -3,6 +3,7 @@ package com.example.cinema.data.statistics;
 import com.example.cinema.po.AudiencePrice;
 import com.example.cinema.po.MovieScheduleTime;
 import com.example.cinema.po.MovieTotalBoxOffice;
+import com.example.cinema.vo.PlacingRateVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -35,4 +36,22 @@ public interface StatisticsMapper {
      * @return
      */
     List<AudiencePrice> selectAudiencePrice(@Param("date") Date date, @Param("nextDate") Date nextDate);
+
+    /**
+     * 查询各电影指定日期上座率
+     * @param date
+     * @param nextDate
+     * @return
+     */
+    List<PlacingRateVO> selectPlacingRate(@Param("date") Date date, @Param("nextDate") Date nextDate);
+
+    /**
+     * 查询指定日期段内各电影总票房的前几位
+     * @param startDate
+     * @param today
+     * @param num
+     * @return
+     */
+    List<MovieTotalBoxOffice> selectRecentTotalBoxOffice(@Param("startDate") Date startDate,
+                                                         @Param("today") Date today, @Param("num") int num);
 }

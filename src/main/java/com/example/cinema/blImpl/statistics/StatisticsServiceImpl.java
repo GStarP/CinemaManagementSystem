@@ -5,10 +5,7 @@ import com.example.cinema.data.statistics.StatisticsMapper;
 import com.example.cinema.po.AudiencePrice;
 import com.example.cinema.po.MovieScheduleTime;
 import com.example.cinema.po.MovieTotalBoxOffice;
-import com.example.cinema.vo.AudiencePriceVO;
-import com.example.cinema.vo.MovieScheduleTimeVO;
-import com.example.cinema.vo.MovieTotalBoxOfficeVO;
-import com.example.cinema.vo.ResponseVO;
+import com.example.cinema.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -80,16 +77,38 @@ public class StatisticsServiceImpl implements StatisticsService {
 
     @Override
     public ResponseVO getMoviePlacingRateByDate(Date date) {
-        //要求见接口说明
-        return null;
+        try {
+            Date nextDate = getNumDayAfterDate(date, 1);
+            List<PlacingRateVO> res = statisticsMapper.selectPlacingRate(date,nextDate);
+            return ResponseVO.buildSuccess(res);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseVO.buildFailure("获取上座率失败!");
+        }
     }
 
     @Override
     public ResponseVO getPopularMovies(int days, int movieNum) {
-        //要求见接口说明
-        return null;
+        try {
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            Date today = simpleDateFormat.parse(simpleDateFormat.format(new Date()));
+            Date startDate = getNumDayAfterDate(today, -days+1);
+            List<MovieTotalBoxOffice> list = statisticsMapper.selectRecentTotalBoxOffice(startDate,today,movieNum);
+            List<RecentPopularMovieVO> res = new ArrayList<>();
+            for (int i = 0; i < list.size(); i++) {
+                if (list.get(i).getBoxOffice() != 0) {
+                    RecentPopularMovieVO vo = new RecentPopularMovieVO();
+                    vo.setName(list.get(i).getName());
+                    vo.setBoxOffice(list.get(i).getBoxOffice());
+                    res.add(vo);
+                }
+            }
+            return ResponseVO.buildSuccess(res);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseVO.buildFailure("受欢迎电影获取失败！");
+        }
     }
-
 
     /**
      * 获得num天后的日期
@@ -103,8 +122,6 @@ public class StatisticsServiceImpl implements StatisticsService {
         calendarTime.add(Calendar.DAY_OF_YEAR, num);
         return calendarTime.getTime();
     }
-
-
 
     private List<MovieScheduleTimeVO> movieScheduleTimeList2MovieScheduleTimeVOList(List<MovieScheduleTime> movieScheduleTimeList){
         List<MovieScheduleTimeVO> movieScheduleTimeVOList = new ArrayList<>();

@@ -118,7 +118,40 @@ public class TicketServiceImpl implements TicketService {
 
     @Override
     public ResponseVO getTicketByUser(int userId) {
-        return null;
+        try {
+            List<Ticket> ticketList = ticketMapper.selectTicketByUser(userId);
+            List<UserTicketVO> res = new ArrayList<>();
+            for (Ticket ticket : ticketList) {
+                ScheduleItem scheduleItem = scheduleService.getScheduleItemById(ticket.getScheduleId());
+                UserTicketVO vo = new UserTicketVO();
+                vo.setId(ticket.getId());
+                vo.setColumnIndex(ticket.getColumnIndex());
+                vo.setRowIndex(ticket.getRowIndex());
+                vo.setScheduleId(ticket.getScheduleId());
+                vo.setUserId(ticket.getUserId());
+                vo.setTime(ticket.getTime());
+                vo.setMovieName(scheduleItem.getMovieName());
+                vo.setHallName(scheduleItem.getHallName());
+                vo.setStartTime(scheduleItem.getStartTime());
+                vo.setEndTime(scheduleItem.getEndTime());
+                switch (ticket.getState()) {
+                    case 1:
+                        vo.setState("已完成");
+                        res.add(vo);
+                        break;
+                    case 2:
+                        vo.setState("已失效");
+                        res.add(vo);
+                        break;
+                    default:
+                        break;
+                }
+            }
+            return ResponseVO.buildSuccess(res);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseVO.buildFailure("获取购票历史失败!");
+        }
     }
 
     @Override
@@ -189,7 +222,16 @@ public class TicketServiceImpl implements TicketService {
 
     @Override
     public ResponseVO cancelTicket(List<Integer> id) {
-        return null;
+        try {
+            for (int i = 0; i < id.size(); i++) {
+                if (ticketMapper.selectTicketById(id.get(i)).getState() == 0) {
+                    ticketMapper.deleteTicket(id.get(i));
+                }
+            }
+            return ResponseVO.buildSuccess();
+        } catch (Exception e) {
+            return ResponseVO.buildFailure("取消锁座失败!");
+        }
     }
 
 

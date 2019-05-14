@@ -122,7 +122,12 @@ $(document).ready(function() {
         $('#scheduleEditModal')[0].dataset.scheduleId = schedule.id;
         console.log(schedule);
     });
-    
+
+    /**
+     * @Author: hxw
+     * @Date:   2019-5-13
+     * @Info:   添加校验表单信息
+     */
     $('#schedule-form-btn').click(function () {
         var form = {
             hallId: $("#schedule-hall-input").children('option:selected').val(),
@@ -131,7 +136,10 @@ $(document).ready(function() {
             endTime: $("#schedule-end-date-input").val(),
             fare: $("#schedule-price-input").val()
         };
-        //todo 需要做一下表单验证？
+
+        if (!validateForm(form)) {
+            return;
+        }
 
         postRequest(
             '/schedule/add',
@@ -150,6 +158,11 @@ $(document).ready(function() {
         );
     });
 
+    /**
+     * @Date:   2019-5-13
+     * @Author: hxw
+     * @Info:   添加校验表单信息
+     */
     $('#schedule-edit-form-btn').click(function () {
         var form = {
             id: Number($('#scheduleEditModal')[0].dataset.scheduleId),
@@ -159,7 +172,10 @@ $(document).ready(function() {
             endTime: $("#schedule-edit-end-date-input").val(),
             fare: $("#schedule-edit-price-input").val()
         };
-        //todo 需要做一下表单验证？
+
+        if (!validateForm(form)) {
+            return;
+        }
 
         postRequest(
             '/schedule/update',
@@ -198,6 +214,27 @@ $(document).ready(function() {
             );
         }
     })
+
+    /**
+     * @Date:   2019-4-30
+     * @Author: hxw
+     * @Info:   表单信息有效性检验
+     */
+    function validateForm(form) {
+        if (!form.startTime) {
+            alert("请输入开始时间！");
+            return false;
+        }
+        if (!form .endTime) {
+            alert("请输入结束时间!");
+            return false;
+        }
+        if (!form.fare) {
+            alert("请输入票价！");
+            return false;
+        }
+        return true;
+    }
 
 });
 

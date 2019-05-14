@@ -35,23 +35,6 @@ $(document).ready(function(){
         };
     }
 
-    function validateMovieForm(data) {
-        var isValidate = true;
-        if(!data.name) {
-            isValidate = false;
-            $('#movie-name-input').parent('.form-group').addClass('has-error');
-        }
-        if(!data.posterUrl) {
-            isValidate = false;
-            $('#movie-img-input').parent('.form-group').addClass('has-error');
-        }
-        if(!data.startDate) {
-            isValidate = false;
-            $('#movie-date-input').parent('.form-group').addClass('has-error');
-        }
-        return isValidate;
-    }
-
     function getMovieList() {
         getRequest(
             '/movie/all',
@@ -86,5 +69,34 @@ $(document).ready(function(){
                 "</li>";
         });
         $('.movie-on-list').append(movieDomStr);
+    }
+
+    /**
+     * @Date:   2019-5-7
+     * @Author: hxw
+     * @Intro:  检验表单信息完整性
+     */
+    function validateMovieForm(data) {
+        if (!data.name) {
+            $('#movie-name-input').parent('.form-group').addClass('has-error');
+            alert("请填写电影名称!");
+            return false;
+        }
+        if (!data.posterUrl) {
+            $('#movie-img-input').parent('.form-group').addClass('has-error');
+            alert("请填写电影海报!");
+            return false;
+        }
+        if (!data.startDate) {
+            $('#movie-date-input').parent('.form-group').addClass('has-error');
+            alert("请填写上映时间!");
+            return false;
+        }
+        if (!data.length) {
+            $('#movie-length-input').parent('.form-group').addClass('has-error');
+            alert("请填写片长!");
+            return false;
+        }
+        return true;
     }
 });
