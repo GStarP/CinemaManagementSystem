@@ -244,7 +244,13 @@ public class TicketServiceImpl implements TicketService {
             }
             ticketWithCouponVO.setTicketVOList(ticketVOList);
             ticketWithCouponVO.setTotal(ticketVOList.size() * scheduleService.getScheduleItemById(ticketForm.getScheduleId()).getFare());
-            ticketWithCouponVO.setCoupons((List<Coupon>) couponService.getCouponsByUser(ticketForm.getUserId()).getContent());
+            List<Coupon> coupons = new ArrayList<>();
+            for (Coupon temp:(List<Coupon>) couponService.getCouponsByUser(ticketForm.getUserId()).getContent()){
+                if (temp.getTargetAmount() < ticketWithCouponVO.getTotal()){
+                    coupons.add(temp);
+                }
+            }
+            ticketWithCouponVO.setCoupons(coupons);
             ticketWithCouponVO.setActivities(activityService.getActivityList());
             return ResponseVO.buildSuccess(ticketWithCouponVO);
         } catch (Exception e) {
