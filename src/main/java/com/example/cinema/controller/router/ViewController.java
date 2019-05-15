@@ -77,4 +77,10 @@ public class ViewController {
     public String getUserMember() {
         return "userMember";
     }
+
+    @RequestMapping(value = "/user/edit")
+    public String getUserEdit() {
+        return "userEdit";
+    }
+
 }

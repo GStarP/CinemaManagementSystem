@@ -6,14 +6,11 @@ import com.example.cinema.po.User;
 import com.example.cinema.vo.UserForm;
 import com.example.cinema.vo.ResponseVO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 
 /**
- *
  * @author hxw
  * @date 2019/5/14
  */
@@ -41,5 +38,15 @@ public class AccountController {
     public String logOut(HttpSession session){
         session.removeAttribute(InterceptorConfiguration.SESSION_KEY);
         return "index";
+    }
+
+    @GetMapping("/user/checkPassword")
+    public ResponseVO checkPassword(@RequestParam("rawPwd") String rawPassword, HttpSession session) {
+        return accountService.checkPassword((User)session.getAttribute("user"),rawPassword);
+    }
+
+    @PostMapping("/user/edit/password")
+    public ResponseVO editPassword(@RequestBody UserForm userForm) {
+        return accountService.editPassword(userForm);
     }
 }

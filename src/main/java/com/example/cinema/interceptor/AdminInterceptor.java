@@ -8,6 +8,11 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+/**
+ * 影院员工页面拦截器
+ * @author  hxw
+ * @date    2019-5-15
+ */
 @Component
 public class AdminInterceptor implements HandlerInterceptor{
     @Override

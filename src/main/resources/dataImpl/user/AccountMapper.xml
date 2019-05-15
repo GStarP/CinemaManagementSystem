@@ -9,6 +9,10 @@
         select * from user where username=#{username}
     </select>
 
+    <update id="updatePassword" parameterType="com.example.cinema.vo.UserForm">
+        update user set  password=#{userForm.password}  where username=#{userForm.username};
+    </update>
+
     <resultMap id="User" type="com.example.cinema.po.User">
     </resultMap>
 </mapper>

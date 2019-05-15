@@ -38,5 +38,27 @@ public class AccountServiceImpl implements AccountService {
         return user;
     }
 
+    @Override
+    public ResponseVO checkPassword(User user, String rawPassword) {
+        if (user.getPassword().equals(rawPassword)) {
+            return ResponseVO.buildSuccess();
+        } else {
+            return ResponseVO.buildFailure("失败");
+        }
+    }
 
+    @Override
+    public ResponseVO editPassword(UserForm userForm) {
+        try {
+            int res = accountMapper.updatePassword(userForm);
+            if (res == 1) {
+                return ResponseVO.buildSuccess();
+            } else {
+                return ResponseVO.buildFailure("修改密码失败!");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseVO.buildFailure("修改密码失败!");
+        }
+    }
 }
