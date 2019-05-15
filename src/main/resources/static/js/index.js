@@ -11,14 +11,15 @@ $(document).ready(function () {
             formData,
             function (res) {
                 if (res.success) {
-                    sessionStorage.setItem('username', formData.username);
-                    sessionStorage.setItem('id', res.content.id);
-                    if (formData.username == "root") {
-                        sessionStorage.setItem('role', 'admin');
-                        window.location.href = "/admin/movie/manage"
-                    } else {
-                        sessionStorage.setItem('role', 'user');
-                        window.location.href = "/user/home"
+                    var user = res.content;
+                    sessionStorage.setItem('username', user.username);
+                    sessionStorage.setItem('id', user.id);
+                    if (user.auth == 0) {
+                        window.location.href = "/user/home";
+                    } else if (user.auth == 1) {
+                        window.location.href = "/admin/movie/manage";
+                    } else if (user.auth == 1) {
+                        window.location.href = "/admin/movie/manage";
                     }
                 } else {
                     alert(res.message);

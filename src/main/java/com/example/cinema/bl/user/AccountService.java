@@ -1,12 +1,12 @@
 package com.example.cinema.bl.user;
 
+import com.example.cinema.po.User;
 import com.example.cinema.vo.UserForm;
 import com.example.cinema.vo.ResponseVO;
-import com.example.cinema.vo.UserVO;
 
 /**
- * @author huwen
- * @date 2019/3/23
+ * @author hxw
+ * @date 2019/5/4
  */
 public interface AccountService {
 
@@ -20,6 +20,6 @@ public interface AccountService {
      * 用户登录，登录成功会将用户信息保存再session中
      * @return
      */
-    public UserVO login(UserForm userForm);
+    public User login(UserForm userForm);
 
 }
