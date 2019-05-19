@@ -83,4 +83,9 @@ public class ViewController {
         return "userEdit";
     }
 
+    @RequestMapping(value = "/admin/refund/manage")
+    public String getAdminRefundManage(){
+        return "adminRefundManage";
+    };
+
 }

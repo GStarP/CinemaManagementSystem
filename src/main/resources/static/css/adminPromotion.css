@@ -32,3 +32,17 @@
     display: flex;
     justify-content: space-between;
 }
+
+.a-change {
+    float: right;
+    margin-right: 10px;
+}
+
+.a-delete {
+    float: right;
+    margin-right: 10px;
+}
+
+.title-line{
+    margin-bottom: 10px;
+}
