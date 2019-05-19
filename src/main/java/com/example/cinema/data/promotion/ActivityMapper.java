@@ -26,6 +26,8 @@ public interface ActivityMapper {
 
     void deleteActivityById(int id);
 
+    void deleteActivityAndMovie(int id);
+
 
 
 

@@ -143,6 +143,7 @@ $(document).ready(function() {
         $('#selected-movies').append(moviesDomStr);
     }
 
+//TODO:优惠活动的删除和修改
     $('.content-activity').on('click','.a-change',function() {
         getRequest(
             '/activity/delete?activityId='+$(this).parent('.activity-item').children('input').val(),

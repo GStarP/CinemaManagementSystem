@@ -68,6 +68,7 @@ public class ActivityServiceImpl implements ActivityService,ActivityServiceForBl
     public ResponseVO deleteActivity(int activityId) {
         try{
             activityMapper.deleteActivityById(activityId);
+            activityMapper.deleteActivityAndMovie(activityId);
             return ResponseVO.buildSuccess();
         }catch (Exception e){
             e.printStackTrace();

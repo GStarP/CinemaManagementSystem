@@ -75,11 +75,13 @@
 
     </select>
 
-    <delete id="deleteAvtivityById">
+    <delete id="deleteActivityById">
         delete from activity where id=#{id}
-        delete from activity where activity_id=#{id}
     </delete>
 
+    <delete id="deleteActivityAndMovie">
+        delete from activity_movie where activity_id=#{id}
+    </delete>
 
     <resultMap id="Activity" type="com.example.cinema.po.Activity">
         <result column="a_description" property="description"></result>
