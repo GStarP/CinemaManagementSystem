@@ -467,7 +467,7 @@ LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user`
     DISABLE KEYS */;
 INSERT INTO `user`
-VALUES (1, 'testname', '123456', 'auth'),
+VALUES (1, 'testname', '123456', 0),
        (3, 'test', '123456', 0),
        (5, 'test1', '123456', 0),
        (7, 'test121', '123456', 0),
