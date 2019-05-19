@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>影院管理</title>
@@ -19,7 +19,7 @@
     <div class="nav-left-container">
         <div class="nav-user-container" style="margin-bottom: 50px;">
             <img class="avatar-lg" src="/images/defaultAvatar.jpg" />
-            <p class="title">Admin</p>
+            <p class="title" th:text="${session.user.username}"></p>
         </div>
         <ul class="nav nav-pills nav-stacked">
             <li role="presentation"><a href="/admin/movie/manage"><i class="icon-film"></i> 电影管理</a></li>
@@ -27,6 +27,7 @@
             <li role="presentation"><a href="/admin/promotion/manage"><i class="icon-gift"></i> 活动管理</a></li>
             <li role="presentation" class="active"><a href="#"><i class="icon-cogs"></i> 影院管理</a></li>
             <li role="presentation"><a href="/admin/cinema/statistic"><i class="icon-bar-chart"></i> 影院统计</a></li>
+            <li role="presentation"><a href="/admin/refund/manage"><i class="icon-ticket"></i> 退票管理</a></li>
         </ul>
     </div>
     <div class="content-container">

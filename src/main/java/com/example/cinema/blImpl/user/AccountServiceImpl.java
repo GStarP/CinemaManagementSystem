@@ -5,13 +5,13 @@ import com.example.cinema.data.user.AccountMapper;
 import com.example.cinema.po.User;
 import com.example.cinema.vo.UserForm;
 import com.example.cinema.vo.ResponseVO;
-import com.example.cinema.vo.UserVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
- * @author huwen
- * @date 2019/3/23
+ * 将UserVO替换为扩展后的User
+ * @author hxw
+ * @date 2019/5/14
  */
 @Service
 public class AccountServiceImpl implements AccountService {
@@ -30,13 +30,35 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public UserVO login(UserForm userForm) {
+    public User login(UserForm userForm) {
         User user = accountMapper.getAccountByName(userForm.getUsername());
         if (null == user || !user.getPassword().equals(userForm.getPassword())) {
             return null;
         }
-        return new UserVO(user);
+        return user;
     }
 
+    @Override
+    public ResponseVO checkPassword(User user, String rawPassword) {
+        if (user.getPassword().equals(rawPassword)) {
+            return ResponseVO.buildSuccess();
+        } else {
+            return ResponseVO.buildFailure("失败");
+        }
+    }
 
+    @Override
+    public ResponseVO editPassword(UserForm userForm) {
+        try {
+            int res = accountMapper.updatePassword(userForm);
+            if (res == 1) {
+                return ResponseVO.buildSuccess();
+            } else {
+                return ResponseVO.buildFailure("修改密码失败!");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseVO.buildFailure("修改密码失败!");
+        }
+    }
 }

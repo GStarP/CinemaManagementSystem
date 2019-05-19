@@ -2,19 +2,17 @@ package com.example.cinema.controller.user;
 
 import com.example.cinema.blImpl.user.AccountServiceImpl;
 import com.example.cinema.config.InterceptorConfiguration;
+import com.example.cinema.po.User;
 import com.example.cinema.vo.UserForm;
 import com.example.cinema.vo.ResponseVO;
-import com.example.cinema.vo.UserVO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 
 /**
- * @author huwen
- * @date 2019/3/23
+ * @author hxw
+ * @date 2019/5/14
  */
 @RestController()
 public class AccountController {
@@ -23,12 +21,12 @@ public class AccountController {
     private AccountServiceImpl accountService;
     @PostMapping("/login")
     public ResponseVO login(@RequestBody UserForm userForm, HttpSession session){
-        UserVO user = accountService.login(userForm);
+        User user = accountService.login(userForm);
         if(user==null){
            return ResponseVO.buildFailure(ACCOUNT_INFO_ERROR);
         }
         //注册session
-        session.setAttribute(InterceptorConfiguration.SESSION_KEY,userForm);
+        session.setAttribute(InterceptorConfiguration.SESSION_KEY,user);
         return ResponseVO.buildSuccess(user);
     }
     @PostMapping("/register")
@@ -40,5 +38,15 @@ public class AccountController {
     public String logOut(HttpSession session){
         session.removeAttribute(InterceptorConfiguration.SESSION_KEY);
         return "index";
+    }
+
+    @GetMapping("/user/checkPassword")
+    public ResponseVO checkPassword(@RequestParam("rawPwd") String rawPassword, HttpSession session) {
+        return accountService.checkPassword((User)session.getAttribute("user"),rawPassword);
+    }
+
+    @PostMapping("/user/edit/password")
+    public ResponseVO editPassword(@RequestBody UserForm userForm) {
+        return accountService.editPassword(userForm);
     }
 }

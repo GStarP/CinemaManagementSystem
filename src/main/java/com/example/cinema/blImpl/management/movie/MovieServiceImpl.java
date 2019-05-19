@@ -1,7 +1,6 @@
 package com.example.cinema.blImpl.management.movie;
 
 import com.example.cinema.bl.management.MovieService;
-import com.example.cinema.blImpl.management.schedule.MovieServiceForBl;
 import com.example.cinema.blImpl.management.schedule.ScheduleServiceForBl;
 import com.example.cinema.data.management.MovieMapper;
 import com.example.cinema.po.Movie;
