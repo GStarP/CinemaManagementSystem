@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>电影详情</title>
@@ -33,7 +33,7 @@
         <button class="nav-user-container btn dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true"
                 aria-expanded="false">
             <img class="avatar-sm" src="/images/defaultAvatar.jpg"/>
-            <span class="gray-text" style="vertical-align: middle">用户A&nbsp;<span class="caret"></span></span>
+            <span class="gray-text" style="vertical-align: middle" th:text="${session.user.username}"><span class="caret"></span></span>
         </button>
         <ul class="dropdown-menu">
             <li><a href="/user/buy">电影票</a></li>
