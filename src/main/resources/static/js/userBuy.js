@@ -28,6 +28,7 @@ $(document).ready(function () {
                 '<td>'+formateTime(ticket.startTime)+'</td>'+
                 '<td>'+formateTime(ticket.endTime)+'</td>'+
                 '<td>'+ticket.state+'</td>'+
+                '<td><a class="refund-ticket">退票</a><tb>'+
                 '</tr>'
             ;
         }
@@ -46,5 +47,10 @@ $(document).ready(function () {
         res = res+date+' '+hms;
         return res;
     }
+
+    $("#ticket-list").on('click','.refund-ticket',function(){
+        //TODO:退票
+
+    });
 
 });

@@ -17,7 +17,7 @@ $(document).ready(function(){
         $('.movie-on-list').empty();
         var movieDomStr = '';
         list.forEach(function (movie) {
-            if(movie.status==1){
+            if(movie.status!=1){
                 movie.description = movie.description || '';
                 movieDomStr +=
                     "<li class='movie-item card'>" +

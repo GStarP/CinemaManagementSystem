@@ -11,7 +11,7 @@
         select * from refund
     </select>
 
-    <delete id="deleteRefund">
+    <delete id="deleteRefundById">
         delete from refund where id=#{id}
     </delete>
 

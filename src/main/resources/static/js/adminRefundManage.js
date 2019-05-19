@@ -53,9 +53,8 @@ $(document).ready(function(){
                 "   <div class='refund-time'>时间：电影开场前"+refund.time+"天</div>"+
                 "   <div class='refund-price'>价格折算：按实际支付金额的"+refund.price+"%返还</div>"+
                 "   <div class='new-div'>"+
-                "       <button class='btn btn-primary change-btn'>修改</button>"+
-                "       <button class='btn btn-primary delete-btn'>删除</button>"+
-                "       <input type='hidden' name='refund-id' value='"+refund.id+"'/>"+
+                "       <button class='btn btn-primary change-btn' id='"+refund.id+"change'>修改</button>"+
+                "       <button class='btn btn-primary delete-btn' id='"+refund.id+"delete'>删除</button>"+
                 "   </div>"+
                 "</li>"
         });
@@ -137,9 +136,11 @@ $(document).ready(function(){
         $('#selected-movies').append(moviesDomStr);
     }
 
-    $('.change-btn').click(function() {
+
+    $(".refund-on-list").on('click','button[id$="change"]',function() {
+        console.log($(this).attr('id').substring(0,$(this).attr('id').indexOf('delete')));
         getRequest(
-            '/refund/delete?refundId='+$(this).parent('.refund-item').children('input').val(),
+            '/refund/delete?refundId='+$(this).attr('id').substring(0,$(this).attr('id').indexOf('change')),
             function(res){
                 getRefundList();
             },
@@ -151,10 +152,10 @@ $(document).ready(function(){
         $("#refundModal").modal('show');
     });
 
-    $('.delete-btn').click(function() {
-        console.log("delete");
+    $(".refund-on-list").on('click','button[id$="delete"]',function() {
+        console.log($(this).attr('id').substring(0,$(this).attr('id').indexOf('delete')));
         getRequest(
-            '/refund/delete?refundId='+$(this).parent('.refund-item').children('input').val(),
+            '/refund/delete?refundId='+$(this).attr('id').substring(0,$(this).attr('id').indexOf('delete')),
             function(res){
                 getRefundList();
             },
@@ -162,6 +163,7 @@ $(document).ready(function(){
                 alert(error);
             }
         );
+        getRefundList();
     });
 
 });

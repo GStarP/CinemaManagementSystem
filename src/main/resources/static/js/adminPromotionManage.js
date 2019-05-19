@@ -143,11 +143,11 @@ $(document).ready(function() {
         $('#selected-movies').append(moviesDomStr);
     }
 
-    $('.a-change').click(function() {
+    $('.content-activity').on('click','.a-change',function() {
         getRequest(
             '/activity/delete?activityId='+$(this).parent('.activity-item').children('input').val(),
             function(res){
-                getRefundList();
+                getActivities();
             },
             function(error){
                 alert(error);
@@ -157,11 +157,11 @@ $(document).ready(function() {
         $("#activityModal").modal('show');
     });
 
-    $('.a-delete').click(function() {
+    $('.content-activity').on('click','.a-delete',function() {
         getRequest(
             '/activity/delete?activityId='+$(this).parent('.activity-item').children('input').val(),
             function(res){
-                getRefundList();
+                getActivities();
             },
             function(error){
                 alert(error);

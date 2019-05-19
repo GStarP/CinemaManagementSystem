@@ -2,7 +2,8 @@
     list-style: none;
     display: flex;
     margin-top: 20px;
-    padding: 20px
+    padding: 20px;
+    flex-direction: column;
 }
 
 .refund-movie {
@@ -15,4 +16,14 @@
 }
 
 .refund-price {
+}
+
+.change-btn {
+    float: right;
+    margin-right: 10px;
+}
+
+.delete-btn {
+    float: right;
+    margin-right: 10px;
 }
