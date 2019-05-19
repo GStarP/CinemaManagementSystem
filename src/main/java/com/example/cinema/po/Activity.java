@@ -38,6 +38,10 @@ public class Activity {
      * 优惠券规格
      */
     private Coupon coupon;
+    /**
+     * 活动需满金额
+     */
+    private double targetAmount;
 
 
     public Activity() {
@@ -52,6 +56,7 @@ public class Activity {
         vo.setEndTime(endTime);
         vo.setStartTime(startTime);
         vo.setName(name);
+        vo.setTargetAmount(targetAmount);
         vo.setMovieList(movieList.stream().map(movie -> {
             MovieVO mvo = new MovieVO();
             mvo.setId(movie.getId());
@@ -129,5 +134,13 @@ public class Activity {
 
     public void setCoupon(Coupon coupon) {
         this.coupon = coupon;
+    }
+
+    public double getTargetAmount() {
+        return targetAmount;
+    }
+
+    public void setTargetAmount(double targetAmount) {
+        this.targetAmount = targetAmount;
     }
 }

@@ -32,6 +32,11 @@ public class ActivityForm {
      */
     private CouponForm couponForm;
 
+    /**
+     * 活动需满金额
+     */
+    private double targetAmount;
+
 
     public ActivityForm() {
 
@@ -83,5 +88,13 @@ public class ActivityForm {
 
     public void setCouponForm(CouponForm couponForm) {
         this.couponForm = couponForm;
+    }
+
+    public double getTargetAmount() {
+        return targetAmount;
+    }
+
+    public void setTargetAmount(double targetAmount) {
+        this.targetAmount = targetAmount;
     }
 }

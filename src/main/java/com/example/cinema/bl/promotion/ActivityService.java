@@ -12,7 +12,9 @@ public interface ActivityService {
 
     ResponseVO getActivities();
 
+    ResponseVO changeActivity(int activityId, ActivityForm activityForm);
 
+    ResponseVO deleteActivity(int activityId);
 
 
 }

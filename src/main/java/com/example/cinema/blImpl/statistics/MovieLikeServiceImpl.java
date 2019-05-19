@@ -3,7 +3,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.example.cinema.bl.statistics.MovieLikeService;
-import com.example.cinema.blImpl.management.schedule.MovieServiceForBl;
+import com.example.cinema.blImpl.management.movie.MovieServiceForBl;
 import com.example.cinema.data.statistics.MovieLikeMapper;
 import com.example.cinema.po.DateLike;
 import com.example.cinema.vo.DateLikeVO;
