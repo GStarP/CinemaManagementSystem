@@ -30,7 +30,7 @@
     </select>
 
     <select id="selectTicketByUser" resultMap="Ticket">
-        select * from ticket where user_id=#{userId}
+        select * from ticket where user_id=#{userId} order by time desc
     </select>
 
 
@@ -40,6 +40,10 @@
 
     <delete id="deleteTicket">
         delete from ticket where id=#{ticketId}
+    </delete>
+
+    <delete id="deleteLockedTicket">
+        delete from ticket where user_id=#{userId} and schedule_id=#{scheduleId} and state=0
     </delete>
 
     <resultMap id="Ticket" type="com.example.cinema.po.Ticket">

@@ -26,6 +26,26 @@ $(document).ready(function () {
     }
 });
 
+// 显示用户已选的座位信息列表
+function showSelectedInfo() {
+    selectedSeats.sort(function (x, y) {
+        var res = x[0] - y[0];
+        return res === 0 ? x[1] - y[1] : res;
+    });
+
+    let seatDetailStr = "";
+    if (selectedSeats.length == 0) {
+        seatDetailStr += "还未选择座位"
+        $('#order-confirm-btn').attr("disabled", "disabled")
+    } else {
+        for (let seatLoc of selectedSeats) {
+            seatDetailStr += "<span>" + (seatLoc[0] + 1) + "排" + (seatLoc[1] + 1) + "座</span>";
+        }
+        $('#order-confirm-btn').removeAttr("disabled");
+    }
+    $('#seat-detail').html(seatDetailStr);
+}
+
 function renderSchedule(schedule, seats) {
     $('#schedule-hall-name').text(schedule.hallName);
     $('#order-schedule-hall-name').text(schedule.hallName);
@@ -41,16 +61,23 @@ function renderSchedule(schedule, seats) {
         for (var j = 0; j < seats[i].length; j++) {
             var id = "seat" + i + j
 
-            if (seats[i][j] == 0) {
+            if (seats[i][j] === 0) {
                 // 未选
                 temp += "<button class='cinema-hall-seat-choose' id='" + id + "' onclick='seatClick(\"" + id + "\"," + i + "," + j + ")'></button>";
-            } else {
-                // 已选中
+            } else if (seats[i][j] === 1) {
+                // 已被其他已支付的电影票选中
                 temp += "<button class='cinema-hall-seat-lock'></button>";
+            } else {
+                // 用户自己已经锁定座位但尚未支付的座位
+                temp += "<button class='cinema-hall-seat' id='" + id + "' onclick='seatClick(\"" + id + "\"," + i + "," + j + ")'></button>";
+                selectedSeats.push([i, j]);
             }
         }
         seat += "<div>" + temp + "</div>";
     }
+
+    showSelectedInfo();
+
     var hallDom =
         "<div class='cinema-hall'>" +
         "<div>" +
@@ -81,22 +108,7 @@ function seatClick(id, i, j) {
         })
     }
 
-    selectedSeats.sort(function (x, y) {
-        var res = x[0] - y[0];
-        return res === 0 ? x[1] - y[1] : res;
-    });
-
-    let seatDetailStr = "";
-    if (selectedSeats.length == 0) {
-        seatDetailStr += "还未选择座位"
-        $('#order-confirm-btn').attr("disabled", "disabled")
-    } else {
-        for (let seatLoc of selectedSeats) {
-            seatDetailStr += "<span>" + (seatLoc[0] + 1) + "排" + (seatLoc[1] + 1) + "座</span>";
-        }
-        $('#order-confirm-btn').removeAttr("disabled");
-    }
-    $('#seat-detail').html(seatDetailStr);
+    showSelectedInfo();
 }
 
 function orderConfirmClick() {
@@ -200,7 +212,7 @@ function changeCoupon(couponIndex) {
 function payConfirmClick() {
     if (useVIP) {
         postRequest(
-            '/ticket/vip/buy/'+order.couponId,
+            '/ticket/vip/buy/' + order.couponId,
             order.ticketId,
             function (res) {
                 if (res.success) postPayRequest()
@@ -214,7 +226,7 @@ function payConfirmClick() {
         if (validateForm()) {
             if ($('#userBuy-cardNum').val() === "123123123" && $('#userBuy-cardPwd').val() === "123123") {
                 postRequest(
-                    '/ticket/buy/'+order.couponId,
+                    '/ticket/buy/' + order.couponId,
                     order.ticketId,
                     function (res) {
                         if (res.success) postPayRequest()
