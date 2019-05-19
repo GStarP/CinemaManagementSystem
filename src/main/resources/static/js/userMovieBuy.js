@@ -191,6 +191,7 @@ function renderOrder(orderInfo) {
         $('#order-discount').text("优惠金额：无");
         $('#order-actual-total').text(" ¥" + total);
         $('#pay-amount').html("<div><b>金额：</b>" + total + "元</div>");
+        $('#order-coupons').html("<option>无可用优惠券</option>");
     } else {
         coupons = orderInfo.coupons;
         for (let coupon of coupons) {

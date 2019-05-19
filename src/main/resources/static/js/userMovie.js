@@ -21,10 +21,10 @@ $(document).ready(function(){
                 movie.description = movie.description || '';
                 movieDomStr +=
                     "<li class='movie-item card'>" +
-                    "<img class='movie-img' src='" + (movie.posterUrl || "../images/defaultAvatar.jpg") + "'/>" +
+                    "<img class='movie-img' src='" + (movie.posterUrl || "../images/defaultAvatar.jpg") + "'onclick='window.location.href=\"/user/movieDetail?id=" + movie.id + "\"'/>" +
                     "<div class='movie-info'>" +
                     "<div class='movie-title'>" +
-                    "<span class='primary-text'>" + movie.name + "</span>" +
+                    "<span class='primary-text' onclick='window.location.href=\"/user/movieDetail?id=" + movie.id + "\"'>" + movie.name + "</span>" +
                     "<span class='label "+(!movie.status ? 'primary-bg' : 'error-bg')+"'>" + (new Date(movie.startDate)>=new Date()?'未上映':'热映中') + "</span>" +
                     "<span class='movie-want'><i class='icon-heart error-text'></i>" + (movie.likeCount || 0) + "人想看</span>" +
                     "</div>" +
