@@ -35,6 +35,10 @@ public class ActivityVO {
      * 优惠券规格
      */
     private Coupon coupon;
+    /**
+     * 活动需满金额
+     */
+    private double targetAmount;
 
 
     public ActivityVO() {
@@ -95,5 +99,13 @@ public class ActivityVO {
 
     public void setCoupon(Coupon coupon) {
         this.coupon = coupon;
+    }
+
+    public double getTargetAmount() {
+        return targetAmount;
+    }
+
+    public void setTargetAmount(double targetAmount) {
+        this.targetAmount = targetAmount;
     }
 }
