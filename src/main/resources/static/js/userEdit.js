@@ -65,24 +65,27 @@ $(document).ready(function () {
     });
 
     $('#submit-new-pwd').click(function () {
-        postRequest(
-            '/user/edit/password',
-            {
-                username: sessionStorage.getItem("username"),
-                password: newPwd
-            },
-            function (res) {
-                if (res.success) {
-                    alert("修改成功!");
-                    window.location.href="/user/home";
-                } else {
-                    alert(error.message);
+        if (rawPwdReady && newPwdReady && checkReady) {
+            postRequest(
+                '/user/edit/password',
+                {
+                    username: sessionStorage.getItem("username"),
+                    password: newPwd
+                },
+                function (res) {
+                    if (res.success) {
+                        alert("修改成功!");
+                        window.location.href="/user/home";
+                    } else {
+                        alert(error.message);
+                    }
+                },
+                function (error) {
+                    alert(JSON.stringify(error));
                 }
-            },
-            function (error) {
-                alert(JSON.stringify(error));
-            }
-        );
+            );
+        }
+        return;
     })
 
 });
