@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Param;
 
 /**
  * @author hxw
- * @date 2019/5/15
+ * @date 2019/5/19
  */
 @Mapper
 public interface AccountMapper {
@@ -18,7 +18,7 @@ public interface AccountMapper {
      * @param password
      * @return
      */
-    public int createNewAccount(@Param("username") String username, @Param("password") String password);
+    public int createNewAccount(@Param("username") String username, @Param("password") String password, @Param("auth") Integer auth);
 
     /**
      * 根据用户名查找账号

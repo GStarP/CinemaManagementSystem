@@ -9,9 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
- * 将UserVO替换为扩展后的User
+ * 修正注册账户
  * @author hxw
- * @date 2019/5/14
+ * @date 2019/5/19
  */
 @Service
 public class AccountServiceImpl implements AccountService {
@@ -22,7 +22,7 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public ResponseVO registerAccount(UserForm userForm) {
         try {
-            accountMapper.createNewAccount(userForm.getUsername(), userForm.getPassword());
+            accountMapper.createNewAccount(userForm.getUsername(), userForm.getPassword(), 0);
         } catch (Exception e) {
             return ResponseVO.buildFailure(ACCOUNT_EXIST);
         }
