@@ -67,7 +67,7 @@ public class ActivityServiceImpl implements ActivityService,ActivityServiceForBl
     @Override
     public ResponseVO deleteActivity(int activityId) {
         try{
-            activityMapper.daleteActivityById(activityId);
+            activityMapper.deleteActivityById(activityId);
             return ResponseVO.buildSuccess();
         }catch (Exception e){
             e.printStackTrace();

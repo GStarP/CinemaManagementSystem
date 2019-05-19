@@ -6,6 +6,7 @@ import com.example.cinema.vo.TicketForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -44,6 +45,12 @@ public class TicketController {
         return ticketService.cancelTicket(ticketId);
     }
 
+    @GetMapping("delete")
+    public ResponseVO deleteTicket(@RequestParam int ticketId){
+        List<Integer> list=new ArrayList<Integer>();
+        list.add(ticketId);
+        return ticketService.cancelTicket(list);
+    }
 
 
 

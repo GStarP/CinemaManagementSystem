@@ -207,7 +207,17 @@ public class TicketServiceImpl implements TicketService {
     public ResponseVO cancelTicket(List<Integer> id) {
         try {
             for (int i = 0; i < id.size(); i++) {
-                if (ticketMapper.selectTicketById(id.get(i)).getState() == 0) {
+                Ticket ticket=ticketMapper.selectTicketById(id.get(i));
+                if (ticket.getState() == 0) {
+                    ticketMapper.deleteTicket(id.get(i));
+                }
+                if (ticket.getState() == 1) {
+                    //TODO:返还用户的退款
+                    if (vipService.getCardByUserId(ticket.getUserId()).getSuccess()){
+                        VIPCard vipCard= (VIPCard) vipService.getCardByUserId(ticket.getUserId()).getContent();
+                        vipCard.setBalance(vipCard.getBalance()+scheduleService.getScheduleItemById(ticket.getScheduleId()).getFare());
+                        vipService.payByCard(vipCard.getId(),vipCard.getBalance());
+                    }
                     ticketMapper.deleteTicket(id.get(i));
                 }
             }

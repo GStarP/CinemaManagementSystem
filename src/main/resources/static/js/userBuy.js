@@ -28,7 +28,7 @@ $(document).ready(function () {
                 '<td>'+formateTime(ticket.startTime)+'</td>'+
                 '<td>'+formateTime(ticket.endTime)+'</td>'+
                 '<td>'+ticket.state+'</td>'+
-                '<td><a class="refund-ticket">退票</a><tb>'+
+                '<td><a class="refund-ticket" id='+ticket.id+'>退票</a><tb>'+
                 '</tr>'
             ;
         }
@@ -49,8 +49,16 @@ $(document).ready(function () {
     }
 
     $("#ticket-list").on('click','.refund-ticket',function(){
-        //TODO:退票
-
+    console.log($(this).attr('id'))
+        getRequest(
+            '/ticket/delete?ticketId='+$(this).attr('id'),
+            function(res){
+                getMovieList();
+            },
+            function(error){
+                alert(error);
+            }
+        );
     });
 
 });

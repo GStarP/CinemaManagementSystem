@@ -24,7 +24,7 @@ public interface ActivityMapper {
 
     List<Activity> selectActivitiesWithoutMovie();
 
-    void daleteActivityById(int id);
+    void deleteActivityById(int id);
 
 
 
