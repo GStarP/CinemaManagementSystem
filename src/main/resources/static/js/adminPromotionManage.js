@@ -34,7 +34,7 @@ $(document).ready(function() {
             activitiesDomStr+=
                 "<div class='activity-container'>" +
                 "    <div class='activity-card card'>" +
-                "       <div class='activity-line'>" +
+                "       <div class='activity-line title-line'>" +
                 "           <span class='title'>"+activity.name+"</span>" +
                 "           <span class='gray-text'>"+activity.description+"</span>" +
                 "       </div>" +
@@ -42,9 +42,17 @@ $(document).ready(function() {
                 "           <span>活动时间："+formatDate(new Date(activity.startTime))+"至"+formatDate(new Date(activity.endTime))+"</span>" +
                 "       </div>" +
                 "       <div class='activity-line'>" +
+                "           <span>活动需满金额："+activity.targetAmount+"</span>" +
+                "       </div>" +
+                "       <div class='activity-line'>" +
                 "           <span>参与电影：</span>" +
                 "               <ul>"+movieDomStr+"</ul>" +
                 "       </div>" +
+                "       <div class='activity-item'>"+
+                "           <a class='a-change'>修改</a>"+
+                "           <a class='a-delete'>删除</a>"+
+                "           <input type='hidden' name='activity-id' value='"+activity.id+"'/>"+
+                "       </div>"+
                 "    </div>" +
                 "    <div class='activity-coupon primary-bg'>" +
                 "        <span class='title'>优惠券："+activity.coupon.name+"</span>" +
@@ -78,6 +86,7 @@ $(document).ready(function() {
            description: $("#activity-description-input").val(),
            startTime: $("#activity-start-date-input").val(),
            endTime: $("#activity-end-date-input").val(),
+           targetAmount: $("#activity-target-input").val(),
            movieList: [...selectedMovieIds],
            couponForm: {
                description: $("#coupon-name-input").val(),
@@ -114,6 +123,7 @@ $(document).ready(function() {
         var movieId = $('#activity-movie-input').val();
         var movieName = $('#activity-movie-input').children('option:selected').text();
         if(movieId==-1){
+        //TODO:待完成的选择所有电影的功能
             selectedMovieIds.clear();
             selectedMovieNames.clear();
         } else {
@@ -132,4 +142,30 @@ $(document).ready(function() {
         });
         $('#selected-movies').append(moviesDomStr);
     }
+
+    $('.a-change').click(function() {
+        getRequest(
+            '/activity/delete?activityId='+$(this).parent('.activity-item').children('input').val(),
+            function(res){
+                getRefundList();
+            },
+            function(error){
+                alert(error);
+            }
+        );
+
+        $("#activityModal").modal('show');
+    });
+
+    $('.a-delete').click(function() {
+        getRequest(
+            '/activity/delete?activityId='+$(this).parent('.activity-item').children('input').val(),
+            function(res){
+                getRefundList();
+            },
+            function(error){
+                alert(error);
+            }
+        );
+    });
 });

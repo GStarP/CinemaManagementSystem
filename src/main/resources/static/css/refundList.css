@@ -1,0 +1,18 @@
+.refund-item {
+    list-style: none;
+    display: flex;
+    margin-top: 20px;
+    padding: 20px
+}
+
+.refund-movie {
+    flex: 1;
+    font-size: 20px;
+    flex-direction: column;
+}
+
+.refund-time {
+}
+
+.refund-price {
+}

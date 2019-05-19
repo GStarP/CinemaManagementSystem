@@ -35,6 +35,7 @@ public class ActivityServiceImpl implements ActivityService,ActivityServiceForBl
             activity.setDescription(activityForm.getName());
             activity.setStartTime(activityForm.getStartTime());
             activity.setEndTime(activityForm.getEndTime());
+            activity.setTargetAmount(activityForm.getTargetAmount());
             activity.setCoupon(coupon);
             activityMapper.insertActivity(activity);
             if(activityForm.getMovieList()!=null&&activityForm.getMovieList().size()!=0){
@@ -54,6 +55,23 @@ public class ActivityServiceImpl implements ActivityService,ActivityServiceForBl
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseVO.buildFailure("失败");
+        }
+    }
+
+    @Override
+    public ResponseVO changeActivity(int activityId, ActivityForm activityForm) {
+        //TODO:待写
+        return ResponseVO.buildSuccess();
+    }
+
+    @Override
+    public ResponseVO deleteActivity(int activityId) {
+        try{
+            activityMapper.daleteActivityById(activityId);
+            return ResponseVO.buildSuccess();
+        }catch (Exception e){
+            e.printStackTrace();
+            return ResponseVO.buildFailure("删除活动失败");
         }
     }
 
