@@ -11,6 +11,7 @@ $(document).ready(function () {
         var rawPwdInput = $('#raw-pwd-input').val();
         if (!rawPwdInput) {
             $('#raw-pwd-error-text').html("请输入原密码");
+            $('#raw-pwd-error-text').css("visibility", "visible");
             rawPwdReady = false;
         } else {
             rawPwd = rawPwdInput;
@@ -18,10 +19,11 @@ $(document).ready(function () {
                 '/user/checkPassword?rawPwd='+rawPwd,
                 function (res) {
                     if (res.success) {
-                        $('#raw-pwd-error-text').html("");
+                        $('#raw-pwd-error-text').css("visibility", "hidden");
                         rawPwdReady = true;
                     } else {
                         $('#raw-pwd-error-text').html("原密码不正确");
+                        $('#raw-pwd-error-text').css("visibility", "visible");
                         rawPwdReady = false;
                     }
                 },
@@ -37,12 +39,14 @@ $(document).ready(function () {
         var newPwdInput = $('#new-pwd-input').val();
         if (!newPwdInput) {
             $('#new-pwd-error-text').html("请输入新密码");
+            $('#new-pwd-error-text').css("visibility", "visible");
             newPwdReady = false;
         } else if (newPwdInput == rawPwd) {
             $('#new-pwd-error-text').html("新密码不能与原密码一致");
+            $('#new-pwd-error-text').css("visibility", "visible");
             newPwdReady = false;
         } else {
-            $('#new-pwd-error-text').html("");
+            $('#new-pwd-error-text').css("visibility", "hidden");
             newPwd = newPwdInput;
             newPwdReady = true;
         }
@@ -52,13 +56,15 @@ $(document).ready(function () {
         var checkPwdInput = $('#check-new-pwd').val();
         if (!checkPwdInput) {
             $('#check-pwd-error-text').html("请再次输入新密码");
+            $('#check-pwd-error-text').css("visibility", "visible");
             checkReady = false;
         } else {
             if (checkPwdInput == newPwd) {
-                $('#check-pwd-error-text').html("");
+                $('#check-pwd-error-text').css("visibility", "hidden");
                 checkReady = true;
             } else {
                 $('#check-pwd-error-text').html("输入与新密码不一致");
+                $('#check-pwd-error-text').css("visibility", "visible");
                 checkReady = false;
             }
         }
