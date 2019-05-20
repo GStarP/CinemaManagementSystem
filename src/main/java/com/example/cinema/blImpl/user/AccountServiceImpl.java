@@ -9,9 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
- * 修正注册账户
+ * 定义用户身份为常量
  * @author hxw
- * @date 2019/5/19
+ * @date 2019/5/20
  */
 @Service
 public class AccountServiceImpl implements AccountService {
@@ -22,7 +22,7 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public ResponseVO registerAccount(UserForm userForm) {
         try {
-            accountMapper.createNewAccount(userForm.getUsername(), userForm.getPassword(), 0);
+            accountMapper.createNewAccount(userForm.getUsername(), userForm.getPassword(), User.AUTH_AUDIENCE);
         } catch (Exception e) {
             return ResponseVO.buildFailure(ACCOUNT_EXIST);
         }
