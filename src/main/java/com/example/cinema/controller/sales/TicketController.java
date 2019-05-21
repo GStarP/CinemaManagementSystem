@@ -2,6 +2,7 @@ package com.example.cinema.controller.sales;
 
 import com.example.cinema.bl.sales.TicketService;
 import com.example.cinema.vo.ResponseVO;
+import com.example.cinema.vo.TicketAndCouponVO;
 import com.example.cinema.vo.TicketForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -18,18 +19,29 @@ public class TicketController {
     @Autowired
     TicketService ticketService;
 
-    @PostMapping("/vip/buy/{couponId}")
-    public ResponseVO buyTicketByVIPCard(@RequestBody List<Integer> ticketId,@PathVariable int couponId){
-        return ticketService.completeByVIPCard(ticketId,couponId);
+//    @PostMapping("/vip/buy/{couponId}")
+//    public ResponseVO buyTicketByVIPCard(@RequestBody List<Integer> ticketId,@PathVariable int couponId){
+//        return ticketService.completeByVIPCard(ticketId,couponId);
+//    }
+
+    @PostMapping("/vip/buy")
+    public ResponseVO buyTicketByVIPCard(@RequestBody TicketAndCouponVO ticketAndCouponVO){
+        return ticketService.completeByVIPCard(ticketAndCouponVO.getTicketId(), ticketAndCouponVO.getCouponId());
     }
 
     @PostMapping("/lockSeat")
     public ResponseVO lockSeat(@RequestBody TicketForm ticketForm){
         return ticketService.addTicket(ticketForm);
     }
-    @PostMapping("/buy/{couponId}")
-    public ResponseVO buyTicket(@RequestBody List<Integer> ticketId,@PathVariable int couponId){
-        return ticketService.completeTicket(ticketId,couponId);
+
+//    @PostMapping("/buy/{couponId}")
+//    public ResponseVO buyTicket(@RequestBody List<Integer> ticketId,@PathVariable int couponId){
+//        return ticketService.completeTicket(ticketId,couponId);
+//    }
+
+    @PostMapping("/buy")
+    public ResponseVO buyTicket(@RequestBody TicketAndCouponVO ticketAndCouponVO){
+        return ticketService.completeTicket(ticketAndCouponVO.getTicketId(), ticketAndCouponVO.getCouponId());
     }
     @GetMapping("/get/{userId}")
     public ResponseVO getTicketByUserId(@PathVariable int userId){
