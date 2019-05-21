@@ -212,17 +212,6 @@ function changeCoupon(couponIndex) {
 
 function payConfirmClick() {
     if (useVIP) {
-        // postRequest(
-        //     '/ticket/vip/buy/' + order.couponId,
-        //     order.ticketId,
-        //     function (res) {
-        //         if (res.success) postPayRequest()
-        //         else alert(JSON.stringify(res))
-        //     },
-        //     function (err) {
-        //         alert(JSON.stringify(err))
-        //     }
-        // );
         $.post(
             {
                 type: 'POST',
@@ -248,17 +237,6 @@ function payConfirmClick() {
     } else {
         if (validateForm()) {
             if ($('#userBuy-cardNum').val() === "123123123" && $('#userBuy-cardPwd').val() === "123123") {
-                // postRequest(
-                //     '/ticket/buy/' + order.couponId,
-                //     order.ticketId,
-                //     function (res) {
-                //         if (res.success) postPayRequest()
-                //         else alert(JSON.stringify(res))
-                //     },
-                //     function (err) {
-                //         alert(JSON.stringify(err))
-                //     }
-                // );
                 $.post(
                     {
                         type: 'POST',
