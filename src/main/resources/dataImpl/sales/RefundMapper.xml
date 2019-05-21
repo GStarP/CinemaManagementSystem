@@ -3,12 +3,16 @@
 <mapper namespace="com.example.cinema.data.sales.RefundMapper">
     <insert id="insertRefund" parameterType="com.example.cinema.po.Refund"
             useGeneratedKeys="true" keyProperty="id">
-        insert into refund(movie_id, time, price)
+        insert into refund(movie_id, time, discount)
         values(#{movieId}, #{time}, #{price})
     </insert>
 
     <select id="selectRefund" resultMap="Refund">
         select * from refund
+    </select>
+
+    <select id="selectRefundByMovieId" resultMap="Refund">
+        select * from refund where movie_id=#{movieId}
     </select>
 
     <delete id="deleteRefundById">
@@ -19,6 +23,6 @@
         <result column="id" property="id"></result>
         <result column="movie_id" property="movieId"></result>
         <result column="time" property="time"></result>
-        <result column="price" property="price"></result>
+        <result column="discount" property="price"></result>
     </resultMap>
 </mapper>

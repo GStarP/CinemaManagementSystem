@@ -38,6 +38,10 @@
         update ticket set state = #{state} where id=#{ticketId}
     </update>
 
+    <update id="updateTicketActualPay">
+        update ticket set actual_pay = #{actualPay} where id = #{ticketId}
+    </update>
+
     <delete id="deleteTicket">
         delete from ticket where id=#{ticketId}
     </delete>

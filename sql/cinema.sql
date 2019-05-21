@@ -366,6 +366,7 @@ CREATE TABLE `ticket`
     `state`        tinyint(4)     DEFAULT NULL,
     `id`           int(11)   NOT NULL AUTO_INCREMENT,
     `time`         timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+    `actual_pay`   double    DEFAULT NULL,
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 63
@@ -556,7 +557,7 @@ CREATE TABLE `refund`
     `id`       int(11) NOT NULL AUTO_INCREMENT,
     `movie_id` int(11) NOT NULL,
     `time`     int(11) NOT NULL,
-    `price`    int(11) NOT NULL,
+    `discount`    int(11) NOT NULL,
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 2

@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -35,6 +36,8 @@ public class TicketServiceImpl implements TicketService {
     ActivityServiceForBl activityService;
     @Autowired
     VIPServiceForBl vipService;
+    @Autowired
+    RefundServiceForBl refundService;
 
 
     @Override
@@ -85,6 +88,7 @@ public class TicketServiceImpl implements TicketService {
             }
             for (int i:id){
                 ticketMapper.updateTicketState(i,1);
+                ticketMapper.updateTicketActualPay(i,totalPay/id.size());
             }
         }
 
@@ -186,6 +190,7 @@ public class TicketServiceImpl implements TicketService {
             }
             for (int i:id){
                 ticketMapper.updateTicketState(i,1);
+                ticketMapper.updateTicketActualPay(i,totalPay/id.size());
             }
         }
 
@@ -207,16 +212,17 @@ public class TicketServiceImpl implements TicketService {
             for (int i = 0; i < id.size(); i++) {
                 Ticket ticket=ticketMapper.selectTicketById(id.get(i));
                 if (ticket.getState() == 0) {
-                    ticketMapper.deleteTicket(id.get(i));
+                    ticketMapper.deleteTicket(ticket.getId());
                 }
                 if (ticket.getState() == 1) {
                     //TODO:返还用户的退款
                     if (vipService.getCardByUserId(ticket.getUserId()).getSuccess()){
                         VIPCard vipCard= (VIPCard) vipService.getCardByUserId(ticket.getUserId()).getContent();
-                        vipCard.setBalance(vipCard.getBalance()+scheduleService.getScheduleItemById(ticket.getScheduleId()).getFare());
+                        double refundPrice=ticket.getActualPay()*getRefundStrategy(ticket.getScheduleId());  //应退还金额
+                        vipCard.setBalance(vipCard.getBalance()+refundPrice);
                         vipService.payByCard(vipCard.getId(),vipCard.getBalance());
                     }
-                    ticketMapper.deleteTicket(id.get(i));
+                    ticketMapper.updateTicketState(ticket.getId(),4);
                 }
             }
             return ResponseVO.buildSuccess();
@@ -250,7 +256,7 @@ public class TicketServiceImpl implements TicketService {
         }
     }
 
-    //检验优惠券是否存在，是否能用(门槛，时间)
+    //检验优惠券是否存在，是否能用(门槛，时间)，返回应付总金额
     private boolean isCouponEnable(int couponId, double totalPay, int userId){
         //检验是否使用优惠券
         if(couponId==0){
@@ -287,5 +293,23 @@ public class TicketServiceImpl implements TicketService {
     //通过id获得电影票详细信息
     private Ticket getTicketById(int ticketId){
         return ticketMapper.selectTicketById(ticketId);
+    }
+
+    //获取应该使用的退票策略，直接返回折算策略
+    private double getRefundStrategy(int scheduleId){
+        ScheduleItem scheduleItem=scheduleService.getScheduleItemById(scheduleId);
+        List<Refund> refundList=refundService.getRefundByMovieId(scheduleItem.getMovieId());
+        Date date = new Date();
+        int time= (int) ((date.getTime()-scheduleItem.getStartTime().getTime())/(1000*60*60*24));
+        int minTime=10000,discount=100;
+        for(Refund temp:refundList){
+            if (temp.getTime()>time){
+                if (temp.getTime()<minTime){
+                    minTime=temp.getTime();
+                    discount=temp.getPrice();
+                }
+            }
+        }
+        return discount/100.0;
     }
 }

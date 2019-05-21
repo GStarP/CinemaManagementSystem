@@ -18,7 +18,7 @@ import java.util.List;
  * @author CZ
  */
 @Service
-public class RefundServiceImpl implements RefundService {
+public class RefundServiceImpl implements RefundService,RefundServiceForBl {
 
     @Autowired
     RefundMapper refundMapper;
@@ -57,6 +57,7 @@ public class RefundServiceImpl implements RefundService {
 
     @Override
     public ResponseVO changeRefund(int refundId, RefundForm refundForm) {
+        //TODO:修改退票策略
         try{
             deleteRefund(refundId);
             publishRefund(refundForm);
@@ -100,6 +101,16 @@ public class RefundServiceImpl implements RefundService {
         }catch (Exception e){
             e.printStackTrace();
             return false;
+        }
+    }
+
+    @Override
+    public List<Refund> getRefundByMovieId(int movieId) {
+        try{
+            return refundMapper.selectRefundByMovieId(movieId);
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
         }
     }
 }
