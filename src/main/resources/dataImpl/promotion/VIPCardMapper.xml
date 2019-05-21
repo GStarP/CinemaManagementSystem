@@ -15,16 +15,20 @@
         select * from vip_card where user_id=#{userId}
     </select>
 
-    <resultMap id="VIPCard" type="com.example.cinema.po.VIPCard">
-        <result column="join_time" property="joinDate"></result>
-        <result column="id" property="id"></result>
-        <result column="user_id" property="userId"></result>
-        <result column="balance" property="balance"></result>
-    </resultMap>
-
     <update id="updateCardBalance" >
         update vip_card set balance = #{balance} where id=#{id}
     </update>
+
+    <resultMap id="VIPCard" type="com.example.cinema.po.VIPCard">
+        <result column="id" property="id"></result>
+        <result column="user_id" property="userId"></result>
+        <result column="balance" property="balance"></result>
+        <result column="type_id" property="cardTypeId"></result>
+        <result column="join_time" property="joinDate"></result>
+        <result column="expire_time" property="expireDate"></result>
+        <association property="cardType" column="type_id" select="com.example.cinema.data.promotion.CardTypeMapper.selectCardById"></association>
+    </resultMap>
+
 
 
 </mapper>

@@ -30,6 +30,7 @@ function getVIP() {
             alert(error);
         });
 
+    // TODO:第三阶段有多种会员卡
     getRequest(
         '/vip/getVIPInfo',
         function (res) {

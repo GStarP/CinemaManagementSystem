@@ -1,7 +1,7 @@
 package com.example.cinema.vo;
 
 
-
+//TODO:弃用，改用CardType
 /**
  * Created by liying on 2019/4/15.
  */

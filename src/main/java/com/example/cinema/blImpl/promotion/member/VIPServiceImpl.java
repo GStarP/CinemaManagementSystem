@@ -1,4 +1,4 @@
-package com.example.cinema.blImpl.promotion;
+package com.example.cinema.blImpl.promotion.member;
 
 import com.example.cinema.bl.promotion.VIPService;
 import com.example.cinema.data.promotion.VIPCardMapper;
@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
  * Created by liying on 2019/4/14.
  */
 @Service
-public class VIPServiceImpl implements VIPService,VIPServiceForBl {
+public class VIPServiceImpl implements VIPService, VIPServiceForBl {
     @Autowired
     VIPCardMapper vipCardMapper;
 
@@ -45,8 +45,9 @@ public class VIPServiceImpl implements VIPService,VIPServiceForBl {
     @Override
     public ResponseVO getVIPInfo() {
         VIPInfoVO vipInfoVO = new VIPInfoVO();
-        vipInfoVO.setDescription(VIPCard.description);
-        vipInfoVO.setPrice(VIPCard.price);
+        // TODO:第三阶段有多种会员卡类型，将description和price保存在数据库中,此方法应转移值CardType
+        vipInfoVO.setDescription("满200送30");
+        vipInfoVO.setPrice(25);
         return ResponseVO.buildSuccess(vipInfoVO);
     }
 
@@ -57,7 +58,7 @@ public class VIPServiceImpl implements VIPService,VIPServiceForBl {
         if (vipCard == null) {
             return ResponseVO.buildFailure("会员卡不存在");
         }
-        double balance = vipCard.calculate(vipCardForm.getAmount());
+        double balance = vipCard.calculateTopUpDiscount(vipCardForm.getAmount());
         vipCard.setBalance(vipCard.getBalance() + balance);
         try {
             vipCardMapper.updateCardBalance(vipCardForm.getVipId(), vipCard.getBalance());

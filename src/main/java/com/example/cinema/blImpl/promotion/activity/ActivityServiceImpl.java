@@ -1,4 +1,4 @@
-package com.example.cinema.blImpl.promotion;
+package com.example.cinema.blImpl.promotion.activity;
 
 import com.example.cinema.bl.promotion.ActivityService;
 import com.example.cinema.bl.promotion.CouponService;
@@ -17,7 +17,7 @@ import java.util.List;
  * Created by liying on 2019/4/20.
  */
 @Service
-public class ActivityServiceImpl implements ActivityService,ActivityServiceForBl {
+public class ActivityServiceImpl implements ActivityService, ActivityServiceForBl {
 
     @Autowired
     ActivityMapper activityMapper;
@@ -32,7 +32,7 @@ public class ActivityServiceImpl implements ActivityService,ActivityServiceForBl
             Coupon coupon = (Coupon) vo.getContent();
             Activity activity = new Activity();
             activity.setName(activityForm.getName());
-            activity.setDescription(activityForm.getName());
+            activity.setDescription(activityForm.getDescription()==null||activityForm.getDescription().equals("")? activityForm.getName(): activityForm.getDescription());
             activity.setStartTime(activityForm.getStartTime());
             activity.setEndTime(activityForm.getEndTime());
             activity.setTargetAmount(activityForm.getTargetAmount());
