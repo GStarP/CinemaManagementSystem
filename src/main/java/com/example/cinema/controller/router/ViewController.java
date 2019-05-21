@@ -86,6 +86,11 @@ public class ViewController {
     @RequestMapping(value = "/admin/refund/manage")
     public String getAdminRefundManage(){
         return "adminRefundManage";
-    };
+    }
+
+    @RequestMapping(value = "/admin/role/manage")
+    public String getAdminRoleManage() {
+        return "adminRoleManage";
+    }
 
 }

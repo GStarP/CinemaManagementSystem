@@ -19,6 +19,7 @@ $(document).ready(function () {
                     var user = res.content;
                     sessionStorage.setItem('username', user.username);
                     sessionStorage.setItem('id', user.id);
+                    sessionStorage.setItem('auth', user.auth);
                     //根据用户身份的不同跳转至不同页面
                     if (user.auth == AUTH_AUDIENCE) {
                         window.location.href = "/user/home";

@@ -21,8 +21,6 @@ public class AdminInterceptor implements HandlerInterceptor{
             response.sendRedirect("/index");
         } else if (((User)request.getSession().getAttribute(InterceptorConfiguration.SESSION_KEY)).getAuth() == User.AUTH_AUDIENCE){
             response.sendRedirect("/user/home");
-        } else if (((User)request.getSession().getAttribute(InterceptorConfiguration.SESSION_KEY)).getAuth() == User.AUTH_MANAGER) {
-            response.sendRedirect("/admin/movie/manage");
         }
         return true;
     }
