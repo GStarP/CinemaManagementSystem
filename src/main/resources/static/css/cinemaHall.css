@@ -23,6 +23,16 @@
     outline: none;
 }
 
+.cinema-hall-seat-none{
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+    margin: 3px;
+
+    border: none;
+    outline: none;
+}
+
 .cinema-hall-seat-choose {
     background: url("../images/seatChoose.png");
     display: inline-block;

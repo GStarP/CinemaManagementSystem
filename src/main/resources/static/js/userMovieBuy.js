@@ -67,10 +67,13 @@ function renderSchedule(schedule, seats) {
             } else if (seats[i][j] === 1) {
                 // 已被其他已支付的电影票选中
                 temp += "<button class='cinema-hall-seat-lock'></button>";
-            } else {
+            } else if (seats[i][j] === 2) {
                 // 用户自己已经锁定座位但尚未支付的座位
                 temp += "<button class='cinema-hall-seat' id='" + id + "' onclick='seatClick(\"" + id + "\"," + i + "," + j + ")'></button>";
                 selectedSeats.push([i, j]);
+            } else {
+                // 该位置没有座位 状态为-1
+                temp += "<div class='cinema-hall-seat-none' id='" + id + "'></div>";
             }
         }
         seat += "<div>" + temp + "</div>";

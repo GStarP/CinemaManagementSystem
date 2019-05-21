@@ -9,14 +9,14 @@ import com.example.cinema.po.Hall;
 public class HallVO {
     private Integer id;
     private String name;
-    private Integer row;
-    private Integer column;
+    private int[][] seats;
+    private int scale;
 
     public HallVO(Hall hall){
         this.id = hall.getId();
         this.name = hall.getName();
-        this.row = hall.getRow();
-        this.column = hall.getColumn();
+        this.seats = hall.getParsedSeats();
+        this.scale = hall.getScale();
     }
 
     public Integer getId() {
@@ -35,19 +35,19 @@ public class HallVO {
         this.name = name;
     }
 
-    public Integer getRow() {
-        return row;
+    public int[][] getSeats() {
+        return seats;
     }
 
-    public void setRow(Integer row) {
-        this.row = row;
+    public void setSeats(int[][] seats) {
+        this.seats = seats;
     }
 
-    public Integer getColumn() {
-        return column;
+    public int getScale() {
+        return scale;
     }
 
-    public void setColumn(Integer column) {
-        this.column = column;
+    public void setScale(int scale) {
+        this.scale = scale;
     }
 }
