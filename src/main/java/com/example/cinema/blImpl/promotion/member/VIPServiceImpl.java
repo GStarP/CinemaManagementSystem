@@ -5,7 +5,6 @@ import com.example.cinema.data.promotion.VIPCardMapper;
 import com.example.cinema.vo.VIPCardForm;
 import com.example.cinema.po.VIPCard;
 import com.example.cinema.vo.ResponseVO;
-import com.example.cinema.vo.VIPInfoVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,9 +18,10 @@ public class VIPServiceImpl implements VIPService, VIPServiceForBl {
     VIPCardMapper vipCardMapper;
 
     @Override
-    public ResponseVO addVIPCard(int userId) {
+    public ResponseVO addVIPCard(int userId, int cardTypeId) {
         VIPCard vipCard = new VIPCard();
         vipCard.setUserId(userId);
+        vipCard.setCardTypeId(cardTypeId);
         vipCard.setBalance(0);
         try {
             int id = vipCardMapper.insertOneCard(vipCard);
@@ -42,14 +42,6 @@ public class VIPServiceImpl implements VIPService, VIPServiceForBl {
         }
     }
 
-    @Override
-    public ResponseVO getVIPInfo() {
-        VIPInfoVO vipInfoVO = new VIPInfoVO();
-        // TODO:第三阶段有多种会员卡类型，将description和price保存在数据库中,此方法应转移值CardType
-        vipInfoVO.setDescription("满200送30");
-        vipInfoVO.setPrice(25);
-        return ResponseVO.buildSuccess(vipInfoVO);
-    }
 
     @Override
     public ResponseVO charge(VIPCardForm vipCardForm) {
