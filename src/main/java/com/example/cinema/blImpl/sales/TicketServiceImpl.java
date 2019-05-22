@@ -231,6 +231,16 @@ public class TicketServiceImpl implements TicketService {
         }
     }
 
+    @Override
+    public ResponseVO issueTicket(int id) {
+        try{
+            ticketMapper.updateTicketState(id,3);
+            return ResponseVO.buildSuccess();
+        } catch (Exception e) {
+            return ResponseVO.buildFailure("出票失败!");
+        }
+    }
+
 
     private ResponseVO getOtherInfo(TicketForm ticketForm) {
         try {

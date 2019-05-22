@@ -52,6 +52,10 @@ public class TicketController {
         return ticketService.cancelTicket(list);
     }
 
+    @GetMapping("issue")
+    public ResponseVO issueTicket(@RequestParam int ticketId){
+        return ticketService.issueTicket(ticketId);
+    }
 
 
 
