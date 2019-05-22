@@ -467,11 +467,11 @@ LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user`
     DISABLE KEYS */;
 INSERT INTO `user`
-VALUES (1, 'testname', '123456', 'auth'),
-       (3, 'test', '123456', 0),
-       (5, 'test1', '123456', 0),
-       (7, 'test121', '123456', 0),
-       (8, 'root', '123456', 1),
+VALUES (1, 'testname', '123456', 0),
+       (3, 'test', '123456', 1),
+       (5, 'test1', '123456', 1),
+       (7, 'test121', '123456', 1),
+       (8, 'root', '123456', 2),
        (10, 'roottt', '123123', 0),
        (12, 'zhourui', '123456', 0),
        (13, 'steve', '123456', 0),
@@ -575,6 +575,43 @@ VALUES (1, 12, 7, 25),
        (2, 10, 4, 100);
 /*!40000 ALTER TABLE `refund`
     ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `topup_history`
+--
+
+DROP TABLE IF EXISTS `topup_history`;
+/*!40101 SET @saved_cs_client = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `topup_history`
+(
+  `id`        int(11)   NOT NULL AUTO_INCREMENT,
+  `user_id`   int(11)            DEFAULT NULL,
+  `money`     DOUBLE             DEFAULT NULL,
+  `discount`  DOUBLE             DEFAULT NULL,
+  `balance`   DOUBLE             DEFAULT NULL,
+  `time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE = InnoDB
+  AUTO_INCREMENT = 5
+  DEFAULT CHARSET = utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `vip_card`
+--
+
+LOCK TABLES `topup_history` WRITE;
+/*!40000 ALTER TABLE `topup_history`
+  DISABLE KEYS */;
+INSERT INTO `topup_history`
+VALUES (1, 15, 300, 20, 280, '2019-05-21 13:54:38'),
+  (2, 12, 660, 60, 1200, '2019-05-21 18:47:42'),
+  (3, 12, 320, 20, 1520, '2019-05-21 18:47:43'),
+  (4, 12, 1000, 0.5, 2520, '2019-05-21 18:47:45');
+/*!40000 ALTER TABLE `topup_history`
+  ENABLE KEYS */;
 UNLOCK TABLES;
 
 --

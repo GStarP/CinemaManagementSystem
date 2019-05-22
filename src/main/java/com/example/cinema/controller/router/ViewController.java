@@ -93,4 +93,9 @@ public class ViewController {
         return "adminRoleManage";
     }
 
+    @RequestMapping(value = "/user/history/topup")
+    public String getUserTopUpHistory() {
+        return "userTopUpHistory";
+    }
+
 }
