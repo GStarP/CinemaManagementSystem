@@ -48,6 +48,6 @@ class ViewHall extends Component {
             hallDomStr += hallDom;
         });
 
-        return hallDomStr;
+        return createDOMFromString(hallDomStr);
     }
 }

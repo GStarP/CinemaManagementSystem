@@ -24,13 +24,13 @@ const createDOMFromString = (domString) => {
 };
 
 const mount = (component, wrapper) => {
-    // wrapper.appendChild(component.renderDOM());
-    wrapper.append(component.renderDOM());
+    wrapper.appendChild(component.renderDOM());
+    // wrapper.append(component.renderDOM());
     component.onStateChange = (oldEl, newEl) => {
-        // wrapper.insertBefore(newEl, oldEl);
-        wrapper.children().remove();
-        wrapper.append(newEl);
-        // wrapper.removeChild(oldEl)
+        wrapper.insertBefore(newEl, oldEl);
+        // wrapper.children().remove();
+        // wrapper.append(newEl);
+        wrapper.removeChild(oldEl)
     }
 };
 

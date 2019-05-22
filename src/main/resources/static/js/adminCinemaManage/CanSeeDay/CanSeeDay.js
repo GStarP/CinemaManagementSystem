@@ -49,7 +49,7 @@ class CanSeeDay extends Component {
     }
 
     renderDOM() {
-        const el_html =  `<span class="">用户可见排片日期：  ${this.state.canSeeDate} </span> 
+        const el_html = `<span class="">用户可见排片日期：  ${this.state.canSeeDate} </span> 
             <button style="margin-left: 20px;" class="primary-text" id="canview-modify-btn">修改</button> 
             <input type="number" class="form-control" id="canview-set-input" style="display: none;width: 200px;">
             <button style="display: none" class="primary-text" id="canview-confirm-btn">确认</button>
@@ -57,8 +57,8 @@ class CanSeeDay extends Component {
         this.el = createDOMFromString(el_html);
         this.modifyButton = this.el.querySelector("#canview-modify-btn");
         this.confirmButton = this.el.querySelector("#canview-confirm-btn");
-        this.modifyButton.addEventListener('click', ()=>this.onModifyCanViewClick(), false);
-        this.confirmButton.addEventListener('click', ()=>this.onCanViewConfirmClick(), false);
+        this.modifyButton.addEventListener('click', () => this.onModifyCanViewClick(), false);
+        this.confirmButton.addEventListener('click', () => this.onCanViewConfirmClick(), false);
         return this.el;
     }
 
