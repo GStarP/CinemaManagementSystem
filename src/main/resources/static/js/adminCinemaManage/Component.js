@@ -4,8 +4,8 @@ class Component {
     }
     setState (state) {
         const oldEl = this.el;
-        this.state = state
-        this.el = this.renderDOM()
+        this.state = {...this.state, ...state};
+        this.el = this.renderDOM();
         if (this.onStateChange) this.onStateChange(oldEl, this.el)
     }
     renderDOM () {
@@ -25,11 +25,8 @@ const createDOMFromString = (domString) => {
 
 const mount = (component, wrapper) => {
     wrapper.appendChild(component.renderDOM());
-    // wrapper.append(component.renderDOM());
     component.onStateChange = (oldEl, newEl) => {
         wrapper.insertBefore(newEl, oldEl);
-        // wrapper.children().remove();
-        // wrapper.append(newEl);
         wrapper.removeChild(oldEl)
     }
 };

@@ -1,28 +1,12 @@
 class ViewHall extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            halls: []
-        };
-        this.getCinemaHalls();
-    }
-
-    setState(state) {
-        super.setState(state);
-    }
-
-    getCinemaHalls() {
-        getRequest(
-            '/hall/all',
-            (res) => this.setState({halls: res.content}),
-            error => alert(JSON.stringify(error))
-        );
     }
 
     renderDOM() {
         $('#hall-card').empty();
         let hallDomStr = "";
-        this.state.halls.forEach(hall => {
+        this.props.halls.forEach(hall => {
             const {id, name, seats, scale} = hall;
             let seat = "";
             // 座位布局
