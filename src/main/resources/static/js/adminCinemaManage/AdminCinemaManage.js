@@ -47,7 +47,7 @@ class AdminCinemaManage extends Component {
         this.hallManageNaviWrapper = this.el.querySelector("#hall-manage-navi-wrapper");
         mount(new CanSeeDay({}), this.canSeeDayWrapper);
         mount(new HallManageNavi({
-            activeView: 0,
+            activeView: this.state.viewTab,
             onViewChange: (viewType) => this.onViewChange(viewType)
         }), this.hallManageNaviWrapper);
 

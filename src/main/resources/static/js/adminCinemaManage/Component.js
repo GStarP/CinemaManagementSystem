@@ -1,14 +1,16 @@
 class Component {
-    constructor (props = {}) {
+    constructor(props = {}) {
         this.props = props
     }
-    setState (state) {
+
+    setState(state) {
         const oldEl = this.el;
         this.state = {...this.state, ...state};
         this.el = this.renderDOM();
         if (this.onStateChange) this.onStateChange(oldEl, this.el)
     }
-    renderDOM () {
+
+    renderDOM() {
         this.el = createDOMFromString(this.render());
         if (this.onClick) {
             this.el.addEventListener('click', this.onClick.bind(this), false)

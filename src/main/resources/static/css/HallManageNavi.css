@@ -1,0 +1,10 @@
+.hall-manage-navi{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+#hall-manage-navi-item{
+    flex: 1;
+}

@@ -40,14 +40,20 @@ class HallManageNavi extends Component {
 
 
     renderDOM() {
-        // 当前被点中的tab
-        const activeView = this.state.viewType;
         const el_html = `
             <div class="hall-manage-navi">
-                <div class="hall-manage-navi-item" id="hall-manage-navi-view">查看</div>
-                <div class="hall-manage-navi-item" id="hall-manage-navi-add">添加</div>
-                <div class="hall-manage-navi-item" id="hall-manage-navi-modify">修改</div>
-                <div class="hall-manage-navi-item" id="hall-manage-navi-delete">删除</div>
+                <div class="hall-manage-navi-item" id="hall-manage-navi-view">
+                    <button class="btn btn-primary">查看</button>
+                </div>
+                <div class="hall-manage-navi-item" id="hall-manage-navi-add">
+                    <button class="btn btn-primary">添加</button>
+                </div>
+                <div class="hall-manage-navi-item" id="hall-manage-navi-modify">
+                    <button class="btn btn-primary">修改</button>
+                </div>
+                <div class="hall-manage-navi-item" id="hall-manage-navi-delete">
+                    <button class="btn btn-primary">删除</button> 
+                </div>
             </div>
         `;
         this.el = createDOMFromString(el_html);
@@ -59,6 +65,22 @@ class HallManageNavi extends Component {
         this.naviAdd.addEventListener('click', () => this.onAddClick());
         this.naviModify.addEventListener('click', () => this.onModifyClick());
         this.naviDelete.addEventListener('click', () => this.onDeleteClick());
+
+        // 当前被点中的tab
+        switch (this.state.viewType) {
+            case 0:
+                this.naviView.querySelector("button").setAttribute("class", "btn btn-block");
+                break;
+            case 1:
+                this.naviAdd.querySelector("button").setAttribute("class", "btn btn-block");
+                break;
+            case 2:
+                this.naviModify.querySelector("button").setAttribute("class", "btn btn-block");
+                break;
+            case 3:
+                this.naviDelete.querySelector("button").setAttribute("class", "btn btn-block");
+                break;
+        }
 
         return this.el;
     }
