@@ -5,7 +5,11 @@ class RemoveHall extends Component{
     }
 
     renderDOM() {
-        return createDOMFromString(`<div>remove</div>`);
+        const el_html = `
+            
+        `;
+        this.el = createDOMFromString(el_html);
+        return this.el;
     }
 
 }

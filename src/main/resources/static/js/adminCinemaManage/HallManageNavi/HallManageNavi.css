@@ -3,8 +3,11 @@
     flex-direction: row;
     justify-content: flex-end;
     align-items: center;
+
+    margin-right: 10px;
 }
 
-#hall-manage-navi-item{
-    flex: 1;
+.hall-manage-navi-item{
+    flex: none;
+    margin-left: 10px;
 }

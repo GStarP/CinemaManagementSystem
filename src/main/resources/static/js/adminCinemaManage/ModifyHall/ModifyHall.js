@@ -5,7 +5,11 @@ class ModifyHall extends Component{
     }
 
     renderDOM() {
-        return createDOMFromString(`<div>modify</div>`);
+        const el_html = `
+            
+        `;
+        this.el = createDOMFromString(el_html);
+        return this.el;
     }
 
 }

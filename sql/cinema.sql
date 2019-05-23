@@ -169,7 +169,7 @@ CREATE TABLE `hall`
 (
     `id`     int(11) NOT NULL AUTO_INCREMENT,
     `name`   varchar(255) DEFAULT NULL,
-    `seats` varchar(255)      DEFAULT NULL,
+    `seats` varchar(65535)      DEFAULT NULL,
     `scale`    int(11)      DEFAULT NULL,
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB

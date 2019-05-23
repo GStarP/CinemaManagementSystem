@@ -12,6 +12,9 @@ public class HallVO {
     private int[][] seats;
     private int scale;
 
+    public HallVO() {
+    }
+
     public HallVO(Hall hall){
         this.id = hall.getId();
         this.name = hall.getName();
