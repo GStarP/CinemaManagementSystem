@@ -1,14 +1,15 @@
 package com.example.cinema.po;
 
-import java.sql.Timestamp;
 
 /**
  * @author hxw
- * @date 2019-5-21
+ * @date 2019-5-22
  */
 public class ConsumeHistory {
     public final static Integer BUY_TICKET = 101;
     public final static Integer BUY_VIP_CARD = 102;
+    public final static String BUY_TICKET_STR = "购买电影票";
+    public final static String BUY_VIP_CARD_STR = "购买会员卡";
     /**
      * id
      */
@@ -25,10 +26,6 @@ public class ConsumeHistory {
      * 优惠金额
      */
     private Double discount;
-    /**
-     * 消费时间
-     */
-    private Timestamp time;
     /**
      * 消费方式:银行卡/会员卡
      */
@@ -72,14 +69,6 @@ public class ConsumeHistory {
 
     public void setDiscount(Double discount) {
         this.discount = discount;
-    }
-
-    public Timestamp getTime() {
-        return time;
-    }
-
-    public void setTime(Timestamp time) {
-        this.time = time;
     }
 
     public String getConsumeType() {

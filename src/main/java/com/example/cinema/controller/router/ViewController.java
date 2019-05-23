@@ -98,4 +98,14 @@ public class ViewController {
         return "userTopUpHistory";
     }
 
+    @RequestMapping(value = "/user/history/consume")
+    public String getUserConsumeHistory() {
+        return "userConsumeHistory";
+    }
+
+    @RequestMapping(value = "/user/history/consume/detail")
+    public String getConsumeHisDetail(@RequestParam("id") Integer id) {
+        return "consumeHisDetail";
+    }
+
 }

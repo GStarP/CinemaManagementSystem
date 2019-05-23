@@ -1,5 +1,6 @@
 package com.example.cinema.data.consume;
 
+import com.example.cinema.po.ConsumeHistory;
 import com.example.cinema.po.TopUpHistory;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -14,5 +15,9 @@ import java.util.List;
 public interface ConsumeMapper {
 
     List<TopUpHistory> getTopUpHistoryByUserId(@Param("userId") Integer userId);
+
+    List<ConsumeHistory> getConsumeHistoryByUserId(@Param("userId") Integer userId);
+
+    ConsumeHistory getConsumeHistoryById(@Param("id") Integer id);
 
 }

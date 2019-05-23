@@ -22,4 +22,14 @@ public class ConsumeController {
         return consumeService.getAllTopUpHistory(userId);
     }
 
+    @GetMapping("/history/consume/get")
+    ResponseVO getAllConsumeHistory(@RequestParam("userId") Integer userId) {
+        return consumeService.getBriefConsumeHis(userId);
+    }
+
+    @GetMapping("/history/consume/get/detail")
+    ResponseVO getConsumeHisDetail(@RequestParam("id") Integer id) {
+        return consumeService.getConsumeHisDetail(id);
+    }
+
 }

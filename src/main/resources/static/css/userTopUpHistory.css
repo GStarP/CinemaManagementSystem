@@ -21,6 +21,13 @@
     padding: 20px;
 }
 
+#no-his-caption {
+    text-align: center;
+    vertical-align: middle;
+    font-size: 36px;
+    color: grey;
+}
+
 .txt-one {
     margin-bottom: 10px;
 }

@@ -15,4 +15,18 @@ public interface ConsumeService {
      */
     ResponseVO getAllTopUpHistory(Integer userId);
 
+    /**
+     * 获取简略消费记录信息
+     * @param userId
+     * @return
+     */
+    ResponseVO getBriefConsumeHis(Integer userId);
+
+    /**
+     * 获取消费记录详细信息
+     * @param id
+     * @return
+     */
+    ResponseVO getConsumeHisDetail(Integer id);
+
 }

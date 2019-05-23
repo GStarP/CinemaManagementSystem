@@ -5,7 +5,8 @@ $(document).ready(function(){
     var isLike = false;
 
     getMovie();
-    if(sessionStorage.getItem('role') === 'admin')
+    //更新权限格式
+    if(sessionStorage.getItem('auth') >= AUTH_ADMIN)
         getMovieLikeChart();
 
     function getMovieLikeChart() {

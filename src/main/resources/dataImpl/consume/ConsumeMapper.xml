@@ -6,6 +6,14 @@
         SELECT * FROM topup_history WHERE user_id=#{userId}
     </select>
 
+    <select id="getConsumeHistoryByUserId" resultMap="ConsumeHistory">
+        SELECT * FROM consume_history WHERE user_id=#{userId}
+    </select>
+
+    <select id="getConsumeHistoryById" resultMap="ConsumeHistory">
+        SELECT * FROM consume_history WHERE id=#{id}
+    </select>
+
     <resultMap id="TopUpHistpry" type="com.example.cinema.po.TopUpHistory"></resultMap>
 
     <resultMap id="ConsumeHistory" type="com.example.cinema.po.ConsumeHistory"></resultMap>

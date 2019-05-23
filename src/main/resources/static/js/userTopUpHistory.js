@@ -28,6 +28,10 @@ function getTopUpHistoryList() {
  * @param histories
  */
 function renderTopUpHistory(histories) {
+    if (!histories || histories.length == 0) {
+        $('#no-his-caption').attr("style","visibility: visible");
+        return;
+    }
     var accordionContent = '';
     for (let his of histories) {
         accordionContent += getPanelHTML(his);

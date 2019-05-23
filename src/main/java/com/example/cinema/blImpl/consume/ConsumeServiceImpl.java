@@ -2,9 +2,24 @@ package com.example.cinema.blImpl.consume;
 
 import com.example.cinema.bl.consume.ConsumeService;
 import com.example.cinema.data.consume.ConsumeMapper;
+import com.example.cinema.data.management.HallMapper;
+import com.example.cinema.data.management.MovieMapper;
+import com.example.cinema.data.management.ScheduleMapper;
+import com.example.cinema.data.promotion.VIPCardMapper;
+import com.example.cinema.data.sales.TicketMapper;
+import com.example.cinema.po.ConsumeHistory;
+import com.example.cinema.po.ScheduleItem;
+import com.example.cinema.po.Ticket;
+import com.example.cinema.vo.BriefConsumeHisVO;
+import com.example.cinema.vo.BuyCardHistoryVO;
+import com.example.cinema.vo.BuyTicketHistoryVO;
 import com.example.cinema.vo.ResponseVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author hxw
@@ -15,6 +30,16 @@ public class ConsumeServiceImpl implements ConsumeService{
 
     @Autowired
     private ConsumeMapper consumeMapper;
+    @Autowired
+    private TicketMapper ticketMapper;
+    @Autowired
+    private VIPCardMapper cardMapper;
+    @Autowired
+    private ScheduleMapper scheduleMapper;
+    @Autowired
+    private MovieMapper movieMapper;
+    @Autowired
+    private HallMapper hallMapper;
 
     @Override
     public ResponseVO getAllTopUpHistory(Integer userId) {
@@ -23,6 +48,97 @@ public class ConsumeServiceImpl implements ConsumeService{
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseVO.buildFailure("获取充值记录失败!");
+        }
+    }
+
+    @Override
+    public ResponseVO getBriefConsumeHis(Integer userId) {
+        try {
+            List<ConsumeHistory> histories= consumeMapper.getConsumeHistoryByUserId(userId);
+            List<BriefConsumeHisVO> res = new ArrayList<>();
+            for (ConsumeHistory history : histories) {
+                BriefConsumeHisVO vo = new BriefConsumeHisVO();
+                vo.setId(history.getId());
+                vo.setMoney(history.getMoney());
+                vo.setType(getTypeStr(history.getType()));
+                vo.setConsumeType(history.getConsumeType());
+                vo.setTime(getConsumeTime(history));
+                res.add(vo);
+            }
+            return ResponseVO.buildSuccess(res);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseVO.buildFailure("获取消费记录失败!");
+        }
+    }
+
+    @Override
+    public ResponseVO getConsumeHisDetail(Integer id) {
+        try {
+            ConsumeHistory history = consumeMapper.getConsumeHistoryById(id);
+            if (history.getType() == ConsumeHistory.BUY_TICKET) {
+                BuyTicketHistoryVO vo = new BuyTicketHistoryVO();
+                vo.setId(history.getId());
+                vo.setMoney(history.getMoney());
+                vo.setDiscount(history.getDiscount());
+                vo.setType(getTypeStr(history.getType()));
+                vo.setConsumeType(history.getConsumeType());
+                Ticket ticket = ticketMapper.selectTicketById(history.getContentId());
+                vo.setTime(ticket.getTime());
+                vo.setColumnIndex(ticket.getColumnIndex()+1);
+                vo.setRowIndex(ticket.getRowIndex()+1);
+                ScheduleItem schedule = scheduleMapper.selectScheduleById(ticket.getScheduleId());
+                vo.setStartTime(schedule.getStartTime());
+                vo.setMovieName(movieMapper.selectMovieById(schedule.getMovieId()).getName());
+                vo.setHallName(hallMapper.selectHallById(schedule.getHallId()).getName());
+                return ResponseVO.buildSuccess(vo);
+            } else if (history.getType() == ConsumeHistory.BUY_VIP_CARD) {
+                BuyCardHistoryVO vo =new BuyCardHistoryVO();
+                vo.setId(history.getId());
+                vo.setMoney(history.getMoney());
+                vo.setDiscount(history.getDiscount());
+                vo.setType(getTypeStr(history.getType()));
+                vo.setConsumeType(history.getConsumeType());
+                vo.setTime(getConsumeTime(history));
+                //TODO:整合前暂用定值
+                vo.setCardType("白金VIP");
+                return ResponseVO.buildSuccess(vo);
+            } else {
+                return ResponseVO.buildFailure("消费类型错误!");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseVO.buildFailure("获取详细信息失败!");
+        }
+    }
+
+    /**
+     * 获取消费类型字符串
+     * @param type
+     * @return
+     */
+    private String getTypeStr(Integer type) {
+        if (type == ConsumeHistory.BUY_TICKET) {
+            return ConsumeHistory.BUY_TICKET_STR;
+        } else if (type == ConsumeHistory.BUY_VIP_CARD) {
+            return ConsumeHistory.BUY_VIP_CARD_STR;
+        } else {
+            return "";
+        }
+    }
+
+    /**
+     * 获取消费时间
+     * @param his
+     * @return
+     */
+    private Timestamp getConsumeTime(ConsumeHistory his) {
+        if (his.getType() == ConsumeHistory.BUY_TICKET) {
+            return ticketMapper.selectTicketById(his.getContentId()).getTime();
+        } else if (his.getType() == ConsumeHistory.BUY_VIP_CARD) {
+            return cardMapper.selectCardById(his.getContentId()).getJoinDate();
+        } else {
+            return null;
         }
     }
 }

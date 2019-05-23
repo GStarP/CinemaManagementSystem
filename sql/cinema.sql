@@ -599,7 +599,7 @@ CREATE TABLE `topup_history`
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `vip_card`
+-- Dumping data for table `topup_history`
 --
 
 LOCK TABLES `topup_history` WRITE;
@@ -611,6 +611,44 @@ VALUES (1, 15, 300, 20, 280, '2019-05-21 13:54:38'),
   (3, 12, 320, 20, 1520, '2019-05-21 18:47:43'),
   (4, 12, 1000, 0.5, 2520, '2019-05-21 18:47:45');
 /*!40000 ALTER TABLE `topup_history`
+  ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `topup_history`
+--
+
+DROP TABLE IF EXISTS `consume_history`;
+/*!40101 SET @saved_cs_client = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `consume_history`
+(
+  `id`          int(11)   NOT NULL AUTO_INCREMENT,
+  `user_id`     int(11)            DEFAULT NULL,
+  `money`       DOUBLE             DEFAULT NULL,
+  `discount`    DOUBLE             DEFAULT NULL,
+  `consumeType` VARCHAR(20)      DEFAULT NULL,
+  `type`        INT(11)            DEFAULT NULL,
+  `contentId`   INT(11)            DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE = InnoDB
+  AUTO_INCREMENT = 5
+  DEFAULT CHARSET = utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `consume_history`
+--
+
+LOCK TABLES `consume_history` WRITE;
+/*!40000 ALTER TABLE `consume_history`
+  DISABLE KEYS */;
+INSERT INTO `consume_history`
+VALUES (1, 15, 20.5, 0.5, '会员卡', 101, 16),
+  (2, 15, 30, 0, '银行卡', 101, 54),
+  (3, 15, 30, 0, '银行卡', 101, 55),
+  (4, 15, 25, 0, '银行卡', 102, 1);
+/*!40000 ALTER TABLE `consume_history`
   ENABLE KEYS */;
 UNLOCK TABLES;
 
