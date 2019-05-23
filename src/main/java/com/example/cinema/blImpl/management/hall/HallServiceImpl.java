@@ -1,6 +1,7 @@
 package com.example.cinema.blImpl.management.hall;
 
 import com.example.cinema.bl.management.hall.HallService;
+import com.example.cinema.blImpl.management.schedule.ScheduleServiceForBl;
 import com.example.cinema.data.management.HallMapper;
 import com.example.cinema.po.Hall;
 import com.example.cinema.vo.HallVO;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author fjj, chph
@@ -19,6 +21,9 @@ import java.util.List;
 public class HallServiceImpl implements HallService, HallServiceForBl {
     @Autowired
     private HallMapper hallMapper;
+
+    @Autowired
+    private ScheduleServiceForBl scheduleServiceForBl;
 
     @Override
     public ResponseVO searchAllHall() {
@@ -64,6 +69,24 @@ public class HallServiceImpl implements HallService, HallServiceForBl {
     }
 
     @Override
+    public ResponseVO getAvailableHalls() {
+        List<Integer> hallsInUse = scheduleServiceForBl.getScheduledHalls();
+        List<Hall> availableHalls = hallMapper.getHallsExcept(hallsInUse);
+        if (availableHalls != null) {
+            List<HallVO> result = availableHalls.stream().map(hall -> {
+                HallVO hallVO = new HallVO();
+                hallVO.setId(hall.getId());
+                hallVO.setName(hall.getName());
+                hallVO.setScale(hall.getScale());
+                hallVO.setSeats(hall.getParsedSeats());
+                return hallVO;
+            }).collect(Collectors.toList());
+            return ResponseVO.buildSuccess(result);
+        }
+        else return ResponseVO.buildFailure("获取可操作的影厅列表失败！请重试～");
+    }
+
+    @Override
     public Hall getHallById(int id) {
         try {
             return hallMapper.selectHallById(id);
@@ -74,9 +97,9 @@ public class HallServiceImpl implements HallService, HallServiceForBl {
 
     }
 
-    private List<HallVO> hallList2HallVOList(List<Hall> hallList){
+    private List<HallVO> hallList2HallVOList(List<Hall> hallList) {
         List<HallVO> hallVOList = new ArrayList<>();
-        for(Hall hall : hallList){
+        for (Hall hall : hallList) {
             hallVOList.add(new HallVO(hall));
         }
         return hallVOList;

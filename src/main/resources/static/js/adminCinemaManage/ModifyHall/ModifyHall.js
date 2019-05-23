@@ -15,7 +15,7 @@ class ModifyHall extends Component {
     // 获取可修改的影厅列表操作
     getModifiableHalls() {
         getRequest(
-            '/hall/all',
+            '/hall/available',
             (res) => this.setState({modifiableHalls: res.content}),
             error => alert(JSON.stringify(error))
         );
@@ -81,7 +81,6 @@ class ModifyHall extends Component {
                 break;
             case 1:
                 const modifyingHall = this.state.modifiableHalls.find(hall => hall.id === this.state.modifyingHallId);
-                console.log("============"+JSON.stringify(modifyingHall));
                 mount(new HallInfoForm({
                     hallId: modifyingHall.id,
                     hallName: modifyingHall.name,

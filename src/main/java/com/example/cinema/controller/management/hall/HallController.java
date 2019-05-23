@@ -37,4 +37,9 @@ public class HallController {
     public ResponseVO removeHall(int hallId) {
         return hallService.removeHall(hallId);
     }
+
+    @RequestMapping("/available")
+    public ResponseVO getAvailableHalls(){
+        return hallService.getAvailableHalls();
+    }
 }

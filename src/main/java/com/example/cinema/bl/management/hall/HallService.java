@@ -34,4 +34,10 @@ public interface HallService {
      * @return
      */
     ResponseVO removeHall(int hallId);
+
+    /**
+     * 获取没有排片的影厅
+     * @return
+     */
+    ResponseVO getAvailableHalls();
 }

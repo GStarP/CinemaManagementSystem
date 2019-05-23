@@ -44,4 +44,11 @@ public interface HallMapper {
      * @return
      */
     int updateHall(Hall hall);
+
+    /**
+     * 除了hallIds的影厅，获取其他的影厅信息
+     * @param hallIds
+     * @return
+     */
+    List<Hall> getHallsExcept(@Param("hallIds") List<Integer> hallIds);
 }
