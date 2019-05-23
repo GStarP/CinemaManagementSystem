@@ -8,18 +8,18 @@ class AdminCinemaManage extends Component {
         // viewTab =>  0:查看    1:添加    2:修改    3:删除
         this.state = {
             viewTab: 0,
-            halls: []
+            // halls: []
         };
-        this.getCinemaHalls();
+        // this.getCinemaHalls();
     }
 
-    getCinemaHalls() {
-        getRequest(
-            '/hall/all',
-            (res) => this.setState({halls: res.content}),
-            error => alert(JSON.stringify(error))
-        );
-    }
+    // getCinemaHalls() {
+    //     getRequest(
+    //         '/hall/all',
+    //         (res) => this.setState({halls: res.content}),
+    //         error => alert(JSON.stringify(error))
+    //     );
+    // }
 
     onViewChange(viewType) {
         this.setState(this.setState({
@@ -53,7 +53,7 @@ class AdminCinemaManage extends Component {
 
         switch (this.state.viewTab) {
             case 0:
-                mount(new ViewHall({halls: this.state.halls}), this.hallWrapper);
+                mount(new ViewHall({}), this.hallWrapper);
                 break;
             case 1:
                 mount(new AddHall({}), this.hallWrapper);
