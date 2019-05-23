@@ -2,10 +2,15 @@ class HallInfoForm extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            hallId: this.props.hallId,
             hallName: this.props.hallName,
             seatRow: this.props.seatRow,
             seatColumn: this.props.seatColumn,
-            seatArray: HallInfoForm.getSeatArray(this.props.seatRow, this.props.seatColumn)
+            seatArray: this.props.seats ?
+                this.props.seats :
+                HallInfoForm.getSeatArray(this.props.seatRow, this.props.seatColumn),
+            // 0:录入影厅   1:更新影厅信息
+            operationType: this.props.operationType,
         }
     }
 
@@ -38,49 +43,18 @@ class HallInfoForm extends Component {
     onSubmitClick() {
         const hallName = document.querySelector("#hall-manage-form-name-input").value;
         const seats = this.state.seatArray;
-        let seatNum = this.state.seatRow * this.state.seatColumn;
-        for (let i = 0; i < this.state.seatRow; i++) {
-            for (let j = 0; j < this.state.seatColumn; j++) {
-                seatNum -= seats[i][j];
-            }
-        }
+        const seatNum = getSeatNum(seats);
         const scale = ((seatNum) => {
             if (seatNum < 30) return 2;
             else if (seatNum < 80) return 1;
             else return 0;
         })(seatNum);
 
-        fetch(
-            '/hall/add',
-            {
-                method: 'POST',
-                headers: {
-                    'content-type': 'application/json'
-                },
-                body: JSON.stringify({
-                    name: hallName,
-                    seats: seats,
-                    scale: scale
-                })
-            })
-            .then((response) => {
-                if (response.ok) {
-                    alert("影厅信息录入成功！");
-                    // 重置输入框
-                    this.setState({
-                        hallName: '',
-                        seatRow: this.props.seatRow,
-                        seatColumn: this.props.seatColumn,
-                        seatArray: HallInfoForm.getSeatArray(this.props.seatRow, this.props.seatColumn)
-                    })
-                } else {
-                    alert(response.statusText);
-                }
-
-            })
-            .catch((error) => {
-                alert(error.json())
-            });
+        if (this.state.operationType === 0){
+            this.props.onSubmitClick(hallName, seats, scale);
+        } else {
+            this.props.onSubmitClick(this.state.hallId, hallName, seats, scale);
+        }
     }
 
     // 排布座位响应事件
