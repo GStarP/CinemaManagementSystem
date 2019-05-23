@@ -23,7 +23,7 @@ class ViewHall extends Component {
                 "<div class='cinema-hall'>" +
                 "<div>" +
                 "<span class='cinema-hall-name'>" + name + "</span>" +
-                "<span class='cinema-hall-size'>" + seats[0].length + '*' + seats.length + "</span>" +
+                "<span class='cinema-hall-size'>" + seats.length + '*' + seats[0].length + "</span>" +
                 "</div>" +
                 "<div class='cinema-seat'>" + seat +
                 "</div>" +
