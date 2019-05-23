@@ -7,6 +7,23 @@ class ManageableHallList extends Component {
         }
     }
 
+    // 获取影厅规格类型
+    getHallScale(scale){
+        let s = '';
+        switch (scale) {
+            case 0:
+                s = '大型影厅';
+                break;
+            case 1:
+                s = '常规影厅';
+                break;
+            case 2:
+                s = '小型影厅';
+                break;
+        }
+        return s;
+    }
+
     renderDOM() {
         let hallListLayout = ``;
         if (this.state.availableHalls.length > 0)
@@ -15,7 +32,7 @@ class ManageableHallList extends Component {
                 hallListLayout += `
                 <tr>
                     <td>${availableHall.name}</td>
-                    <td>${availableHall.scale}</td>
+                    <td>${this.getHallScale(availableHall.scale)}</td>
                     <td>${seatNum}</td>
                     <td>
                         <a class="manageable-hall-list-item" id="manageable-hall-list-item${availableHall.id}">

@@ -51,4 +51,12 @@ public interface HallMapper {
      * @return
      */
     List<Hall> getHallsExcept(@Param("hallIds") List<Integer> hallIds);
+
+    /**
+     * 查看是否有同名的影厅存在，但不包括当前id为hallId的影厅
+     * @param hallName
+     * @param hallId 排除的影厅id
+     * @return 数据库中影厅名为hallName的个数，为0（没有同名）或1（存在同名影厅）
+     */
+    int checkHallName(String hallName, int hallId);
 }

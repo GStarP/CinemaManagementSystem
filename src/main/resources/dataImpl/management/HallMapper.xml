@@ -41,6 +41,13 @@
         where id = #{id}
     </update>
 
+    <select id="checkHallName" resultType="int">
+        select count(id)
+        from hall
+        where name = #{hallName}
+          and id != #{hallId}
+    </select>
+
     <resultMap id="Hall" type="com.example.cinema.po.Hall">
     </resultMap>
 

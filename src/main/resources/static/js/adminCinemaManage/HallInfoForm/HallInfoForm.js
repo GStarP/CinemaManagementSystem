@@ -31,11 +31,18 @@ class HallInfoForm extends Component {
         const row = document.querySelector("#hall-manage-form-scale-row-input").value;
         const column = document.querySelector("#hall-manage-form-scale-column-input").value;
         const hallName = document.querySelector("#hall-manage-form-name-input").value;
+        // 将新的规格的影厅布局和原影厅布局合并
+        let seatLayoutMerged = HallInfoForm.getSeatArray(row, column);
+        for (let i = 0; i < row && i < this.state.seatRow; i++) {
+            for (let j = 0; j < column && j < this.state.seatColumn; j++) {
+                seatLayoutMerged[i][j] = this.state.seatArray[i][j]
+            }
+        }
         this.setState({
             hallName: hallName,
             seatRow: row,
             seatColumn: column,
-            seatArray: HallInfoForm.getSeatArray(row, column)
+            seatArray: seatLayoutMerged
         })
     }
 
@@ -50,7 +57,7 @@ class HallInfoForm extends Component {
             else return 0;
         })(seatNum);
 
-        if (this.state.operationType === 0){
+        if (this.state.operationType === 0) {
             this.props.onSubmitClick(hallName, seats, scale);
         } else {
             this.props.onSubmitClick(this.state.hallId, hallName, seats, scale);

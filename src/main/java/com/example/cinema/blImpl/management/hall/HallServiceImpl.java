@@ -37,6 +37,9 @@ public class HallServiceImpl implements HallService, HallServiceForBl {
 
     @Override
     public ResponseVO addHall(HallVO hallVO) {
+        if (hallMapper.checkHallName(hallVO.getName(), 0) != 0)
+            return ResponseVO.buildFailure("已经存在名称为\""+hallVO.getName()+"\"的影厅，请修改！");
+
         Hall hall = new Hall();
         hall.setName(hallVO.getName());
         hall.setScale(hallVO.getScale());
@@ -49,6 +52,9 @@ public class HallServiceImpl implements HallService, HallServiceForBl {
 
     @Override
     public ResponseVO updateHall(HallVO hallVO) {
+        if (hallMapper.checkHallName(hallVO.getName(), hallVO.getId()) != 0)
+            return ResponseVO.buildFailure("已经存在名称为\""+hallVO.getName()+"\"的影厅，请修改！");
+
         Hall hall = new Hall();
         hall.setId(hallVO.getId());
         hall.setName(hallVO.getName());

@@ -22,7 +22,7 @@ class ModifyHall extends Component {
     }
 
     // 提交更新影厅信息点击事件
-    onSubmitClick(hallId, hallName, seats, scale){
+    onSubmitClick(hallId, hallName, seats, scale) {
         fetch(
             '/hall/update',
             {
@@ -37,8 +37,9 @@ class ModifyHall extends Component {
                     scale: scale
                 })
             })
-            .then((response) => {
-                if (response.ok) {
+            .then((response) => response.json())
+            .then(res=>{
+                if (res.success) {
                     alert("更新影厅信息成功！");
                     // 重置输入框
                     this.setState({
@@ -47,9 +48,8 @@ class ModifyHall extends Component {
                     // 刷新可修改影厅列表
                     this.getModifiableHalls();
                 } else {
-                    alert(response.statusText);
+                    alert(res.message);
                 }
-
             })
             .catch((error) => {
                 alert(error.json())
