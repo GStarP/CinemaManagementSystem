@@ -211,10 +211,9 @@ public class TicketServiceImpl implements TicketService {
         try {
             for (int i = 0; i < id.size(); i++) {
                 Ticket ticket=ticketMapper.selectTicketById(id.get(i));
-                if (ticket.getState() == 0) {
+                if (ticket.getState() == 0 || ticket.getState() == 2 || ticket.getState() == 3 || ticket.getState() == 4) {
                     ticketMapper.deleteTicket(ticket.getId());
-                }
-                if (ticket.getState() == 1) {
+                }else if (ticket.getState() == 1) {
                     //TODO:返还用户的退款
                     if (vipService.getCardByUserId(ticket.getUserId()).getSuccess()){
                         VIPCard vipCard= (VIPCard) vipService.getCardByUserId(ticket.getUserId()).getContent();

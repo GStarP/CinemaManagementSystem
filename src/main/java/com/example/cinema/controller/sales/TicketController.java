@@ -45,14 +45,14 @@ public class TicketController {
         return ticketService.cancelTicket(ticketId);
     }
 
-    @GetMapping("delete")
+    @GetMapping("/delete")
     public ResponseVO deleteTicket(@RequestParam int ticketId){
         List<Integer> list=new ArrayList<Integer>();
         list.add(ticketId);
         return ticketService.cancelTicket(list);
     }
 
-    @GetMapping("issue")
+    @GetMapping("/issue")
     public ResponseVO issueTicket(@RequestParam int ticketId){
         return ticketService.issueTicket(ticketId);
     }

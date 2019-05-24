@@ -58,6 +58,7 @@
         <result column="row_index" property="rowIndex"></result>
         <result column="state" property="state"></result>
         <result column="time" property="time"></result>
+        <result column="actual_pay" property="actualPay"></result>
     </resultMap>
 
     <update id="cleanExpiredTicket">

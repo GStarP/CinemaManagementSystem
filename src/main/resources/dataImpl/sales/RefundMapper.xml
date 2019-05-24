@@ -11,6 +11,10 @@
         select * from refund
     </select>
 
+    <select id="selectRefundById" resultMap="Refund">
+        select * from refund where id=#{refundId}
+    </select>
+
     <select id="selectRefundByMovieId" resultMap="Refund">
         select * from refund where movie_id=#{movieId}
     </select>

@@ -49,7 +49,7 @@ $(document).ready(function(){
         list.forEach(function(refund){
             refundDomStr +=
                 "<li class='refund-item card'>"+
-                "   <div class='refund-movie'>电影："+refund.movie.name+"</div>"+
+                "   <div class='refund-movie' id="+refund.movie.id+">电影："+refund.movie.name+"</div>"+
                 "   <div class='refund-time'>时间：电影开场前"+refund.time+"天</div>"+
                 "   <div class='refund-price'>价格折算：按实际支付金额的"+refund.price+"%返还</div>"+
                 "   <div class='new-div'>"+
@@ -72,6 +72,11 @@ $(document).ready(function(){
             function (res){
                 getRefundList();
                 $("#refundModal").modal('hide');
+                $("#refundModalLabel").text("添加退票策略");
+                $('#selected-movies').empty();
+                $("#refund-time-input").attr("value","");
+                $("#refund-price-input").attr("value","");
+
             },
             function (error){
                 alert(error);
@@ -117,8 +122,10 @@ $(document).ready(function(){
         var movieName = $('#refund-movie-input').children('option:selected').text();
 
         if(movieId==-1){
-            //TODO:待完成选择所有电影功能
-            //TODO:存疑+1：如何获得电影id及电影名
+            movieList.forEach(function(movie){
+                selectedMovieIds.add(movie.id);
+                selectedMovieNames.add(movie.name);
+            });
         }else{
             selectedMovieIds.add(movieId);
             selectedMovieNames.add(movieName);
@@ -138,9 +145,12 @@ $(document).ready(function(){
 
 
     $(".refund-on-list").on('click','button[id$="change"]',function() {
-        console.log($(this).attr('id').substring(0,$(this).attr('id').indexOf('delete')));
+        refundId=$(this).attr('id').substring(0,$(this).attr('id').indexOf('change'));
+        changeRefund(refundId);
+        $("#refundModal").modal('show');
+        //删除
         getRequest(
-            '/refund/delete?refundId='+$(this).attr('id').substring(0,$(this).attr('id').indexOf('change')),
+            '/refund/delete?refundId='+refundId,
             function(res){
                 getRefundList();
             },
@@ -149,7 +159,6 @@ $(document).ready(function(){
             }
         );
 
-        $("#refundModal").modal('show');
     });
 
     $(".refund-on-list").on('click','button[id$="delete"]',function() {
@@ -167,3 +176,23 @@ $(document).ready(function(){
     });
 
 });
+
+function changeRefund(refundId){
+    getRequest(
+        '/refund/get?refundId='+refundId,
+        function(res){
+            $("#refundModalLabel").text("修改退票策略");
+            console.log(res.content+"2222222")
+            $('#selected-movies').empty();
+            $('#selected-movies').append("<span class='label label-primary'>"+res.content.movie.name+"</span>");
+            $("#refund-time-input").attr('value',res.content.time);
+            $("#refund-price-input").attr('value',res.content.price);
+
+        },
+        function(error){
+            alert(error);
+        }
+    );
+
+
+}

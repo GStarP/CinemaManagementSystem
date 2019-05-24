@@ -95,4 +95,14 @@ public class ActivityServiceImpl implements ActivityService,ActivityServiceForBl
             return null;
         }
     }
+
+    @Override
+    public ResponseVO getActivityById(int activityId){
+        try{
+            return ResponseVO.buildSuccess(activityMapper.selectById(activityId));
+        }catch(Exception e){
+            e.printStackTrace();
+            return ResponseVO.buildFailure("获取活动失败");
+        }
+    }
 }

@@ -16,5 +16,6 @@ public interface ActivityService {
 
     ResponseVO deleteActivity(int activityId);
 
+    ResponseVO getActivityById(int activityId);
 
 }
