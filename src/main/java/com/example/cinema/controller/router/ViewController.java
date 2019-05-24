@@ -48,6 +48,11 @@ public class ViewController {
     @RequestMapping(value = "/admin/movieDetail")
     public String getAdminMovieDetail(@RequestParam int id) { return "adminMovieDetail"; }
 
+    @RequestMapping(value = "/admin/coupon/present")
+    public String getCouponPresent() {
+        return "adminCouponPresent";
+    }
+
     @RequestMapping(value = "/admin/card/manage")
     public String getAdminCardManage() {
         return "adminCardManage";
