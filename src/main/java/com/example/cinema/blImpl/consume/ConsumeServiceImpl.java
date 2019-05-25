@@ -10,6 +10,7 @@ import com.example.cinema.data.sales.TicketMapper;
 import com.example.cinema.po.ConsumeHistory;
 import com.example.cinema.po.ScheduleItem;
 import com.example.cinema.po.Ticket;
+import com.example.cinema.po.VIPCard;
 import com.example.cinema.vo.BriefConsumeHisVO;
 import com.example.cinema.vo.BuyCardHistoryVO;
 import com.example.cinema.vo.BuyTicketHistoryVO;
@@ -100,8 +101,8 @@ public class ConsumeServiceImpl implements ConsumeService{
                 vo.setType(getTypeStr(history.getType()));
                 vo.setConsumeType(history.getConsumeType());
                 vo.setTime(getConsumeTime(history));
-                //TODO:整合前暂用定值
-                vo.setCardType("白金VIP");
+                VIPCard card = cardMapper.selectCardById(history.getContentId());
+                vo.setCardType(card.getCardType().getName());
                 return ResponseVO.buildSuccess(vo);
             } else {
                 return ResponseVO.buildFailure("消费类型错误!");
@@ -138,6 +139,15 @@ public class ConsumeServiceImpl implements ConsumeService{
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseVO.buildFailure("添加消费记录失败!");
+        }
+    }
+
+    @Override
+    public ResponseVO getConsumeQualifiedUsers(Double totalConsume) {
+        try {
+            return ResponseVO.buildSuccess(consumeMapper.selectConsumeQulifiedUsers(totalConsume));
+        } catch (Exception e) {
+            return ResponseVO.buildFailure("获取用户失败!");
         }
     }
 

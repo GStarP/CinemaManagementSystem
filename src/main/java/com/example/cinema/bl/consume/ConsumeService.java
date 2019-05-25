@@ -55,4 +55,11 @@ public interface ConsumeService {
     ResponseVO addConsumeHistory(Integer userId, Double money, Double discount, String consumeType,
                                  Integer type, Integer contentId);
 
+    /**
+     * 获取消费总额满一定值的用户信息
+     * @param totalConsume
+     * @return
+     */
+    ResponseVO getConsumeQualifiedUsers(Double totalConsume);
+
 }

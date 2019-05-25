@@ -2,6 +2,7 @@ package com.example.cinema.data.consume;
 
 import com.example.cinema.po.ConsumeHistory;
 import com.example.cinema.po.TopUpHistory;
+import com.example.cinema.vo.TotalConsumeUser;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -29,4 +30,5 @@ public interface ConsumeMapper {
                              @Param("discount") Double discount, @Param("consumeType") String consumeType,
                              @Param("type") Integer type, @Param("contentId") Integer contentId);
 
+    List<TotalConsumeUser> selectConsumeQulifiedUsers(@Param("totalConsume") Double totalConsume);
 }
