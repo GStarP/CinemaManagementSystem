@@ -22,4 +22,10 @@ public interface ScheduleServiceForBl {
      * @return
      */
     ScheduleItem getScheduleItemById(int id);
+
+    /**
+     * 获取所有已经排片的影厅
+     * @return
+     */
+    List<Integer> getScheduledHalls();
 }

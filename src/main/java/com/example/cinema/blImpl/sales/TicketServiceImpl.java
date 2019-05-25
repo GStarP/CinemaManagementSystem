@@ -4,9 +4,9 @@ import com.example.cinema.bl.consume.ConsumeService;
 import com.example.cinema.bl.sales.TicketService;
 import com.example.cinema.blImpl.management.hall.HallServiceForBl;
 import com.example.cinema.blImpl.management.schedule.ScheduleServiceForBl;
-import com.example.cinema.blImpl.promotion.ActivityServiceForBl;
-import com.example.cinema.blImpl.promotion.CouponServiceForBl;
-import com.example.cinema.blImpl.promotion.VIPServiceForBl;
+import com.example.cinema.blImpl.promotion.activity.ActivityServiceForBl;
+import com.example.cinema.blImpl.promotion.coupon.CouponServiceForBl;
+import com.example.cinema.blImpl.promotion.member.VIPServiceForBl;
 import com.example.cinema.data.sales.TicketMapper;
 import com.example.cinema.po.*;
 import com.example.cinema.vo.*;
@@ -72,7 +72,7 @@ public class TicketServiceImpl implements TicketService {
         //   2. 校验优惠券是否存在、是否能用(√)
         //   3. 根据活动赠送优惠券(√)
 
-        if (id.size()==0 || id==null){
+        if (id==null || id.size()==0){
             return ResponseVO.buildFailure("票不存在");
         }
 
@@ -119,7 +119,7 @@ public class TicketServiceImpl implements TicketService {
             List<Ticket> tickets = ticketMapper.selectTicketsBySchedule(scheduleId);
             ScheduleItem schedule = scheduleService.getScheduleItemById(scheduleId);
             Hall hall = hallService.getHallById(schedule.getHallId());
-            int[][] seats = new int[hall.getRow()][hall.getColumn()];
+            int[][] seats = hall.getParsedSeats();
             // 当前用户已选但未支付的座位为2，否则为1
             tickets.forEach(ticket -> {
                 if (ticket.getState() == 0)

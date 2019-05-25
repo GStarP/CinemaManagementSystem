@@ -19,13 +19,17 @@
     </select>
 
     <select id="selectCouponByUser" resultMap="Coupon">
-        select * from coupon c left join coupon_user  cu on c.id=cu.coupon_id where cu.user_id=#{userId} and c.start_time &lt; Now() and c.end_time &gt; Now()
+        select * from coupon c left join coupon_user  cu on c.id=cu.coupon_id
+        where cu.user_id=#{userId} and c.start_time &lt; Now() and c.end_time &gt; Now()
+    </select>
 
+    <select id="selectAllCoupons" resultMap="Coupon">
+        select * from coupon where coupon.end_time &gt; Now()
     </select>
 
     <select id="selectCouponByUserAndAmount" resultMap="Coupon">
-        select * from coupon c left join coupon_user  cu on c.id=cu.coupon_id where cu.user_id=#{userId} and c.start_time &lt; Now() and c.end_time &gt; Now() and #{amount}>c.target_amount
-
+        select * from coupon c left join coupon_user  cu on c.id=cu.coupon_id
+        where cu.user_id=#{userId} and c.start_time &lt; Now() and c.end_time &gt; Now() and #{amount}>c.target_amount
     </select>
 
     <resultMap id="Coupon" type="com.example.cinema.po.Coupon">
