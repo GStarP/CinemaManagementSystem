@@ -34,6 +34,10 @@
 }
 
 /* info为vip信息样式 */
+.info {
+    margin-bottom: 20px;
+}
+
 .card .info {
     display: flex;
     flex-direction: column;

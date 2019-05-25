@@ -1,4 +1,4 @@
-package com.example.cinema.blImpl.promotion;
+package com.example.cinema.blImpl.promotion.activity;
 
 import com.example.cinema.po.Activity;
 import com.example.cinema.vo.ResponseVO;

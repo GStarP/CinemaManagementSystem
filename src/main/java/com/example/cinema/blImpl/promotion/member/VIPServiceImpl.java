@@ -1,11 +1,10 @@
-package com.example.cinema.blImpl.promotion;
+package com.example.cinema.blImpl.promotion.member;
 
 import com.example.cinema.bl.promotion.VIPService;
 import com.example.cinema.data.promotion.VIPCardMapper;
 import com.example.cinema.vo.VIPCardForm;
 import com.example.cinema.po.VIPCard;
 import com.example.cinema.vo.ResponseVO;
-import com.example.cinema.vo.VIPInfoVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,14 +13,15 @@ import org.springframework.stereotype.Service;
  * Created by liying on 2019/4/14.
  */
 @Service
-public class VIPServiceImpl implements VIPService,VIPServiceForBl {
+public class VIPServiceImpl implements VIPService, VIPServiceForBl {
     @Autowired
     VIPCardMapper vipCardMapper;
 
     @Override
-    public ResponseVO addVIPCard(int userId) {
+    public ResponseVO addVIPCard(int userId, int cardTypeId) {
         VIPCard vipCard = new VIPCard();
         vipCard.setUserId(userId);
+        vipCard.setCardTypeId(cardTypeId);
         vipCard.setBalance(0);
         try {
             int id = vipCardMapper.insertOneCard(vipCard);
@@ -42,13 +42,6 @@ public class VIPServiceImpl implements VIPService,VIPServiceForBl {
         }
     }
 
-    @Override
-    public ResponseVO getVIPInfo() {
-        VIPInfoVO vipInfoVO = new VIPInfoVO();
-        vipInfoVO.setDescription(VIPCard.description);
-        vipInfoVO.setPrice(VIPCard.price);
-        return ResponseVO.buildSuccess(vipInfoVO);
-    }
 
     @Override
     public ResponseVO charge(VIPCardForm vipCardForm) {
@@ -57,7 +50,7 @@ public class VIPServiceImpl implements VIPService,VIPServiceForBl {
         if (vipCard == null) {
             return ResponseVO.buildFailure("会员卡不存在");
         }
-        double balance = vipCard.calculate(vipCardForm.getAmount());
+        double balance = vipCard.calculateTopUpDiscount(vipCardForm.getAmount());
         vipCard.setBalance(vipCard.getBalance() + balance);
         try {
             vipCardMapper.updateCardBalance(vipCardForm.getVipId(), vipCard.getBalance());

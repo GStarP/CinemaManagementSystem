@@ -1,6 +1,7 @@
 package com.example.cinema.bl.promotion;
 
 import com.example.cinema.vo.CouponForm;
+import com.example.cinema.vo.PresentForm;
 import com.example.cinema.vo.ResponseVO;
 
 /**
@@ -10,8 +11,13 @@ public interface CouponService {
 
     ResponseVO getCouponsByUser(int userId);
 
+    ResponseVO getAllCoupons();
+
     ResponseVO addCoupon(CouponForm couponForm);
 
     ResponseVO issueCoupon(int couponId,int userId);
 
+    ResponseVO getUsersByConsume(int totalConsume);
+
+    ResponseVO presentCoupon2User(PresentForm presentForm);
 }
