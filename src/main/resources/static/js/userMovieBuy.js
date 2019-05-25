@@ -67,10 +67,13 @@ function renderSchedule(schedule, seats) {
             } else if (seats[i][j] === 1) {
                 // 已被其他已支付的电影票选中
                 temp += "<button class='cinema-hall-seat-lock'></button>";
-            } else {
+            } else if (seats[i][j] === 2) {
                 // 用户自己已经锁定座位但尚未支付的座位
                 temp += "<button class='cinema-hall-seat' id='" + id + "' onclick='seatClick(\"" + id + "\"," + i + "," + j + ")'></button>";
                 selectedSeats.push([i, j]);
+            } else {
+                // 该位置没有座位 状态为-1
+                temp += "<div class='cinema-hall-seat-none' id='" + id + "'></div>";
             }
         }
         seat += "<div>" + temp + "</div>";
@@ -212,29 +215,51 @@ function changeCoupon(couponIndex) {
 
 function payConfirmClick() {
     if (useVIP) {
-        postRequest(
-            '/ticket/vip/buy/' + order.couponId,
-            order.ticketId,
-            function (res) {
-                if (res.success) postPayRequest()
-                else alert(JSON.stringify(res))
-            },
-            function (err) {
-                alert(JSON.stringify(err))
+        $.post(
+            {
+                type: 'POST',
+                url: '/ticket/vip/buy',
+                async: true,
+                data: JSON.stringify(
+                    {
+                        "ticketId": order.ticketId,
+                        "couponId":order.couponId
+                    }
+                ),
+                contentType: 'application/json',
+                processData: false,
+                success: function (res) {
+                    if (res.success) postPayRequest()
+                    else alert(JSON.stringify(res))
+                },
+                error: function (err) {
+                    alert(JSON.stringify(err))
+                }
             }
         );
     } else {
         if (validateForm()) {
             if ($('#userBuy-cardNum').val() === "123123123" && $('#userBuy-cardPwd').val() === "123123") {
-                postRequest(
-                    '/ticket/buy/' + order.couponId,
-                    order.ticketId,
-                    function (res) {
-                        if (res.success) postPayRequest()
-                        else alert(JSON.stringify(res))
-                    },
-                    function (err) {
-                        alert(JSON.stringify(err))
+                $.post(
+                    {
+                        type: 'POST',
+                        url: '/ticket/buy',
+                        async: true,
+                        data: JSON.stringify(
+                            {
+                                "ticketId": order.ticketId,
+                                "couponId":order.couponId
+                            }
+                        ),
+                        contentType: 'application/json',
+                        processData: false,
+                        success: function (res) {
+                            if (res.success) postPayRequest()
+                            else alert(JSON.stringify(res))
+                        },
+                        error: function (err) {
+                            alert(JSON.stringify(err))
+                        }
                     }
                 );
             } else {

@@ -111,4 +111,10 @@ public interface ScheduleMapper {
      */
     List<ScheduleItem> selectScheduleByMovieId(@Param("movieId") int movieId);
 
+    /**
+     * 获取有效排片中的所有影厅
+     * @return
+     */
+    List<Integer> getHallsInSchedules();
+
 }
