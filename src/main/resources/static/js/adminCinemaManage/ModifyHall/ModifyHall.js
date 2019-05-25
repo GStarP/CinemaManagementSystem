@@ -37,7 +37,7 @@ class ModifyHall extends Component {
                     scale: scale
                 })
             })
-            .then((response) => response.json())
+            .then(response => response.json())
             .then(res=>{
                 if (res.success) {
                     alert("更新影厅信息成功！");
@@ -51,8 +51,8 @@ class ModifyHall extends Component {
                     alert(res.message);
                 }
             })
-            .catch((error) => {
-                alert(error.json())
+            .catch(error => {
+                alert(error)
             });
     }
 
