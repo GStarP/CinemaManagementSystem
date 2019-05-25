@@ -1,3 +1,5 @@
+var presentId = 0;
+
 $(document).ready(function () {
 
     getRoleList();
@@ -27,6 +29,30 @@ $(document).ready(function () {
         );
     });
 
+    $('#edit-submit-btn').click(function () {
+        var editForm = getEditForm(presentId);
+        if (!validateEditForm(editForm)) {
+            return;
+        }
+            postRequest(
+                '/role/edit',
+                editForm,
+                function (res) {
+                    if (res.success) {
+                        alert("修改成功!");
+                        getRoleList();
+                        $('#editRoleModal').modal("hide");
+                    } else {
+                        alert(res.message);
+                    }
+                },
+                function (error) {
+                    alert(JSON.stringify(error));
+                }
+            );
+
+    });
+
 });
 
 /**
@@ -36,7 +62,8 @@ $(document).ready(function () {
  */
 function renderSelect() {
     if (sessionStorage.getItem('auth') == 2) {
-        var managerContent = "<option selected='selected'>影院员工</option>"
+        var managerContent = "<option selected='selected'>影院员工</option>" +
+            "<option>管理员</option>";
         $('#edit-auth-input').html(managerContent);
         $('#add-auth-input').html(managerContent);
     }
@@ -145,37 +172,16 @@ function delRole(id) {
  * @param pwd
  */
 function editRole(id,usn,pwd,auth) {
+    presentId = id;
     //渲染原有信息
-    $('#edit-usn-input').attr('placeholder',usn);
-    $('#edit-pwd-input').attr('placeholder',pwd);
-    if (auth == "影院员工") {
+    $('#edit-usn-input').val(usn);
+    $('#edit-pwd-input').val(pwd);
+    if (auth === "影院员工") {
+        $('#edit-auth-input option:eq(0)').attr('selected','selected');
+    } else if (auth === "管理员") {
         $('#edit-auth-input option:eq(1)').attr('selected','selected');
-    } else if (auth == "管理员") {
-        $('#edit-auth-input option:eq(2)').attr('selected','selected');
     }
     $('#editRoleModal').modal("toggle");
-    $('#edit-submit-btn').click(function () {
-        var editForm = getEditForm(id,auth);
-        if (!validateEditForm(editForm)) {
-            return;
-        }
-        postRequest(
-            '/role/edit',
-            editForm,
-            function (res) {
-                if (res.success) {
-                    alert("修改成功!");
-                    getRoleList();
-                    $('#editRoleModal').modal("hide");
-                } else {
-                    alert(res.message);
-                }
-            },
-            function (error) {
-                alert(JSON.stringify(error));
-            }
-        );
-    });
 }
 
 /**
@@ -184,7 +190,7 @@ function editRole(id,usn,pwd,auth) {
  * @date 2019-5-20
  * @return
  */
-function getEditForm(id,auth) {
+function getEditForm(id) {
     return {
         id: id,
         username: $('#edit-usn-input').val(),
