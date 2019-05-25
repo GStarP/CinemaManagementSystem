@@ -49,7 +49,7 @@ $(document).ready(function(){
         list.forEach(function(refund){
             refundDomStr +=
                 "<li class='refund-item card'>"+
-                "   <div class='refund-movie'>电影："+refund.movie.name+"</div>"+
+                "   <div class='refund-movie' id="+refund.movie.id+">电影："+refund.movie.name+"</div>"+
                 "   <div class='refund-time'>时间：电影开场前"+refund.time+"天</div>"+
                 "   <div class='refund-price'>价格折算：按实际支付金额的"+refund.price+"%返还</div>"+
                 "   <div class='new-div'>"+
@@ -61,19 +61,91 @@ $(document).ready(function(){
         $(".refund-on-list").append(refundDomStr);
     }
 
-    $("#refund-form-btn").click(function(){
-        var formData = getRefundForm();
-        if(!validateRefundForm(formData)){
-            return;
+     $("#refundModal").on('click','#refund-form-btn',function(){
+     console.log("refund-form-btn");
+        addRefund();
+     });
+
+
+    $('#refund-movie-input').change(function(){
+        var movieId = $('#refund-movie-input').val();
+        var movieName = $('#refund-movie-input').children('option:selected').text();
+
+        if(movieId==-1){
+            movieList.forEach(function(movie){
+                selectedMovieIds.add(movie.id);
+                selectedMovieNames.add(movie.name);
+            });
+        }else{
+            selectedMovieIds.add(movieId);
+            selectedMovieNames.add(movieName);
         }
-        postRequest(
-            '/refund/add',
-            formData,
-            function (res){
+        renderSelectedMovies();
+    });
+
+    //渲染选择的参加活动的电影
+    function renderSelectedMovies() {
+        $('#selected-movies').empty();
+        var moviesDomStr = "";
+        selectedMovieNames.forEach(function (movieName) {
+            moviesDomStr += "<span class='label label-primary'>"+movieName+"</span>";
+        });
+        $('#selected-movies').append(moviesDomStr);
+    }
+
+    //修改退票策略
+    $(".refund-on-list").on('click','button[id$="change"]',function() {
+        refundId=$(this).attr('id').substring(0,$(this).attr('id').indexOf('change'));
+        changeRefund(refundId);
+        $("#refundModal").modal('show');
+    });
+
+    $(".refund-on-list").on('click','button[id$="delete"]',function() {
+        console.log($(this).attr('id').substring(0,$(this).attr('id').indexOf('delete')));
+        getRequest(
+            '/refund/delete?refundId='+$(this).attr('id').substring(0,$(this).attr('id').indexOf('delete')),
+            function(res){
                 getRefundList();
-                $("#refundModal").modal('hide');
             },
-            function (error){
+            function(error){
+                alert(error);
+            }
+        );
+        getRefundList();
+    });
+
+    function changeRefund(refundId){
+    getRequest(
+        '/refund/get?refundId='+refundId,
+        function(res){
+            $("#refundModalLabel").text("修改退票策略");
+            console.log(res.content+"2222222")
+            $('#selected-movies').empty();
+            $('#selected-movies').append("<span class='label label-primary'>"+res.content.movie.name+"</span>");
+            selectedMovieIds.add(res.content.movie.id);
+            selectedMovieNames.add(res.content.movie.name);
+            $("#refund-time-input").attr('value',res.content.time);
+            $("#refund-price-input").attr('value',res.content.price);
+            $("#refund-form-btn").attr('id',"refund-form-btn-change");
+        },
+        function(error){
+            alert(error);
+        }
+    );
+    }
+
+    $("#refundModal").on('click','#refund-form-btn-change',function(){
+        console.log("refund-form-btn-change");
+        //新增
+        addRefund();
+
+        //删除
+        getRequest(
+            '/refund/delete?refundId='+refundId,
+            function(res){
+                getRefundList();
+            },
+            function(error){
                 alert(error);
             }
         );
@@ -111,59 +183,29 @@ $(document).ready(function(){
         return true;
     }
 
-
-    $('#refund-movie-input').change(function(){
-        var movieId = $('#refund-movie-input').val();
-        var movieName = $('#refund-movie-input').children('option:selected').text();
-
-        if(movieId==-1){
-            //TODO:待完成选择所有电影功能
-            //TODO:存疑+1：如何获得电影id及电影名
-        }else{
-            selectedMovieIds.add(movieId);
-            selectedMovieNames.add(movieName);
+    function addRefund(){
+        var formData = getRefundForm();
+        if(!validateRefundForm(formData)){
+            return;
         }
-        renderSelectedMovies();
-    });
-
-    //渲染选择的参加活动的电影
-    function renderSelectedMovies() {
-        $('#selected-movies').empty();
-        var moviesDomStr = "";
-        selectedMovieNames.forEach(function (movieName) {
-            moviesDomStr += "<span class='label label-primary'>"+movieName+"</span>";
-        });
-        $('#selected-movies').append(moviesDomStr);
+        postRequest(
+            '/refund/add',
+            formData,
+            function (res){
+                getRefundList();
+                $("#refundModal").modal('hide');
+                $("#refundModalLabel").text("添加退票策略");
+                $('#selected-movies').empty();
+                $("#refund-time-input").attr("value","");
+                $("#refund-price-input").attr("value","");
+                $("#refund-form-btn-change").attr('id',"refund-form-btn");
+                selectedMovieNames.clear();
+                selectedMovieIds.clear();
+            },
+            function (error){
+                alert(error);
+            }
+        );
     }
-
-
-    $(".refund-on-list").on('click','button[id$="change"]',function() {
-        console.log($(this).attr('id').substring(0,$(this).attr('id').indexOf('delete')));
-        getRequest(
-            '/refund/delete?refundId='+$(this).attr('id').substring(0,$(this).attr('id').indexOf('change')),
-            function(res){
-                getRefundList();
-            },
-            function(error){
-                alert(error);
-            }
-        );
-
-        $("#refundModal").modal('show');
-    });
-
-    $(".refund-on-list").on('click','button[id$="delete"]',function() {
-        console.log($(this).attr('id').substring(0,$(this).attr('id').indexOf('delete')));
-        getRequest(
-            '/refund/delete?refundId='+$(this).attr('id').substring(0,$(this).attr('id').indexOf('delete')),
-            function(res){
-                getRefundList();
-            },
-            function(error){
-                alert(error);
-            }
-        );
-        getRefundList();
-    });
-
 });
+

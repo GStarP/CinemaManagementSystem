@@ -19,9 +19,12 @@ public interface TicketMapper {
 
     void deleteTicket(int ticketId);
 
-    void deleteLockedTicket(int userId, int scheduleId);
+    //TODO:添加@Param
+    void deleteLockedTicket(@Param("userId") int userId, @Param("scheduleId") int scheduleId);
 
     void updateTicketState(@Param("ticketId") int ticketId, @Param("state") int state);
+
+    void updateTicketActualPay(@Param("ticketId") int ticketId, @Param("actualPay") double actualPay);
 
     List<Ticket> selectTicketsBySchedule(int scheduleId);
 

@@ -13,6 +13,18 @@
         update user set  password=#{userForm.password}  where username=#{userForm.username};
     </update>
 
+    <select id="getCinemaRoles" resultMap="User">
+        SELECT * FROM user WHERE auth > 0
+    </select>
+
+    <delete id="deleteRoleById">
+        DELETE FROM user WHERE id=#{id}
+    </delete>
+
+    <update id="updateRoleById">
+        UPDATE user SET username=#{username},password=#{password},auth=#{auth} WHERE id=#{id}
+    </update>
+
     <resultMap id="User" type="com.example.cinema.po.User">
     </resultMap>
 </mapper>

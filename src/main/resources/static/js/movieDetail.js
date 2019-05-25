@@ -1,3 +1,7 @@
+const AUTH_AUDIENCE = 0;
+const AUTH_ADMIN = 1;
+const AUTH_MANAGER = 2;
+
 $(document).ready(function(){
 
     var movieId = parseInt(window.location.href.split('?')[1].split('&')[0].split('=')[1]);
@@ -5,7 +9,8 @@ $(document).ready(function(){
     var isLike = false;
 
     getMovie();
-    if(sessionStorage.getItem('role') === 'admin')
+    //更新权限格式
+    if(sessionStorage.getItem('auth') >= AUTH_ADMIN)
         getMovieLikeChart();
 
     function getMovieLikeChart() {

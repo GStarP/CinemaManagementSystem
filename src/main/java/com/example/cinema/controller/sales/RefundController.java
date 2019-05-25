@@ -38,4 +38,8 @@ public class RefundController {
         return refundService.deleteRefund(refundId);
     }
 
+    @GetMapping("/get")
+    public ResponseVO getRefundById(@RequestParam int refundId){
+        return refundService.getRefundById(refundId);
+    }
 }
