@@ -34,7 +34,7 @@ $(document).ready(function () {
             switch(ticket.state){
                 case 0:
                     ticketListContent +=
-                                    '<td><a class="pay-ticket" id=p'+ticket.id+' href="user/movieDetail/buy">支付</a><tb>'+
+                                    '<td><a class="pay-ticket" id=p'+ticket.id+'>支付</a><tb>'+
                                     '</tr>';
                     break;
                 case 1:
