@@ -37,8 +37,18 @@ public class HallServiceImpl implements HallService, HallServiceForBl {
 
     @Override
     public ResponseVO addHall(HallVO hallVO) {
+        int[][] seats = hallVO.getSeats();
+        int seatCount = seats.length * seats[0].length;
+        for (int[] seat : seats) {
+            for (int j = 0; j < seats[0].length; j++) {
+                seatCount += seat[j];
+            }
+        }
+        if (seatCount > 500)
+            return ResponseVO.buildFailure("影厅座位数不能超过500，请修改！");
+
         if (hallMapper.checkHallName(hallVO.getName(), 0) != 0)
-            return ResponseVO.buildFailure("已经存在名称为\""+hallVO.getName()+"\"的影厅，请修改！");
+            return ResponseVO.buildFailure("已经存在名称为\"" + hallVO.getName() + "\"的影厅，请修改！");
 
         Hall hall = new Hall();
         hall.setName(hallVO.getName());
@@ -52,8 +62,18 @@ public class HallServiceImpl implements HallService, HallServiceForBl {
 
     @Override
     public ResponseVO updateHall(HallVO hallVO) {
+        int[][] seats = hallVO.getSeats();
+        int seatCount = seats.length * seats[0].length;
+        for (int[] seat : seats) {
+            for (int j = 0; j < seats[0].length; j++) {
+                seatCount += seat[j];
+            }
+        }
+        if (seatCount > 500)
+            return ResponseVO.buildFailure("影厅座位数不能超过500，请修改！");
+
         if (hallMapper.checkHallName(hallVO.getName(), hallVO.getId()) != 0)
-            return ResponseVO.buildFailure("已经存在名称为\""+hallVO.getName()+"\"的影厅，请修改！");
+            return ResponseVO.buildFailure("已经存在名称为\"" + hallVO.getName() + "\"的影厅，请修改！");
 
         Hall hall = new Hall();
         hall.setId(hallVO.getId());
@@ -88,8 +108,7 @@ public class HallServiceImpl implements HallService, HallServiceForBl {
                 return hallVO;
             }).collect(Collectors.toList());
             return ResponseVO.buildSuccess(result);
-        }
-        else return ResponseVO.buildFailure("获取可操作的影厅列表失败！请重试～");
+        } else return ResponseVO.buildFailure("获取可操作的影厅列表失败！请重试～");
     }
 
     @Override

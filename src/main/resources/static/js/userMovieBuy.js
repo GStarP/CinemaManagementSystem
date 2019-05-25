@@ -140,7 +140,7 @@ function orderConfirmClick() {
     );
 
     getRequest(
-        '/vip/' + sessionStorage.getItem('id') + '/get',
+        '/vip' + '/get/' + sessionStorage.getItem('id'),
         function (res) {
             isVIP = res.success;
             useVIP = res.success;
