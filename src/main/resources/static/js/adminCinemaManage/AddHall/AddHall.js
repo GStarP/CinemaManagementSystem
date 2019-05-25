@@ -9,7 +9,7 @@ class AddHall extends Component {
     }
 
     // 录入影厅信息点击事件
-    onSubmitClick(hallName, seats, scale){
+    onSubmitClick(hallName, seats, scale) {
         fetch(
             '/hall/add',
             {
@@ -23,8 +23,9 @@ class AddHall extends Component {
                     scale: scale
                 })
             })
-            .then((response) => {
-                if (response.ok) {
+            .then(response => response.json())
+            .then(response => {
+                if (response.success) {
                     alert("影厅信息录入成功！");
                     // 重置输入框
                     this.setState({
@@ -34,12 +35,12 @@ class AddHall extends Component {
                         seatArray: HallInfoForm.getSeatArray(this.props.seatRow, this.props.seatColumn)
                     })
                 } else {
-                    alert(response.statusText);
+                    alert(response.message);
                 }
 
             })
-            .catch((error) => {
-                alert(error.json())
+            .catch(error => {
+                alert(error)
             });
     }
 
@@ -55,7 +56,7 @@ class AddHall extends Component {
             seatRow: this.state.seatRow,
             seatColumn: this.state.seatColumn,
             operationType: 0,
-            onSubmitClick: (hallName, seats, scale)=>this.onSubmitClick(hallName, seats, scale)
+            onSubmitClick: (hallName, seats, scale) => this.onSubmitClick(hallName, seats, scale)
         }), this.addWrapper);
 
         return this.el;
