@@ -5,6 +5,7 @@ import com.example.cinema.po.TopUpHistory;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 /**
@@ -19,5 +20,13 @@ public interface ConsumeMapper {
     List<ConsumeHistory> getConsumeHistoryByUserId(@Param("userId") Integer userId);
 
     ConsumeHistory getConsumeHistoryById(@Param("id") Integer id);
+
+    int insertTopUpHistory(@Param("user_id") Integer userId, @Param("money") Double money,
+                           @Param("discount") Double discount, @Param("balance") Double balance,
+                           @Param("time") Timestamp time);
+
+    int insertConsumeHistory(@Param("user_id") Integer userId, @Param("money") Double money,
+                             @Param("discount") Double discount, @Param("consumeType") String consumeType,
+                             @Param("type") Integer type, @Param("contentId") Integer contentId);
 
 }

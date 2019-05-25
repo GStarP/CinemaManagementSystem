@@ -112,6 +112,35 @@ public class ConsumeServiceImpl implements ConsumeService{
         }
     }
 
+    @Override
+    public ResponseVO addTopUpHistory(Integer userId, Double money, Double discount, Double balance, Timestamp time) {
+        try {
+            if (consumeMapper.insertTopUpHistory(userId, money, discount, balance, time) == 1) {
+                return ResponseVO.buildSuccess();
+            } else {
+                return ResponseVO.buildFailure("添加充值记录失败!");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseVO.buildFailure("添加充值记录失败!");
+        }
+    }
+
+    @Override
+    public ResponseVO addConsumeHistory(Integer userId, Double money, Double discount,
+                                        String consumeType, Integer type, Integer contentId) {
+        try {
+            if (consumeMapper.insertConsumeHistory(userId, money, discount, consumeType, type, contentId) == 1) {
+                return ResponseVO.buildSuccess();
+            } else {
+                return ResponseVO.buildFailure("添加消费记录失败!");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseVO.buildFailure("添加消费记录失败!");
+        }
+    }
+
     /**
      * 获取消费类型字符串
      * @param type

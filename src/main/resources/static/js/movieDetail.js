@@ -1,3 +1,7 @@
+const AUTH_AUDIENCE = 0;
+const AUTH_ADMIN = 1;
+const AUTH_MANAGER = 2;
+
 $(document).ready(function(){
 
     var movieId = parseInt(window.location.href.split('?')[1].split('&')[0].split('=')[1]);

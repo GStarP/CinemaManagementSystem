@@ -2,6 +2,8 @@ package com.example.cinema.bl.consume;
 
 import com.example.cinema.vo.ResponseVO;
 
+import java.sql.Timestamp;
+
 /**
  * @author hxw
  * @date 2019-5-21
@@ -28,5 +30,29 @@ public interface ConsumeService {
      * @return
      */
     ResponseVO getConsumeHisDetail(Integer id);
+
+    /**
+     * 添加充值记录
+     * @param userId
+     * @param money
+     * @param discount
+     * @param balance
+     * @param time
+     * @return
+     */
+    ResponseVO addTopUpHistory(Integer userId, Double money, Double discount, Double balance, Timestamp time);
+
+    /**
+     * 添加消费记录
+     * @param userId
+     * @param money
+     * @param discount
+     * @param consumeType
+     * @param type
+     * @param contentId
+     * @return
+     */
+    ResponseVO addConsumeHistory(Integer userId, Double money, Double discount, String consumeType,
+                                 Integer type, Integer contentId);
 
 }

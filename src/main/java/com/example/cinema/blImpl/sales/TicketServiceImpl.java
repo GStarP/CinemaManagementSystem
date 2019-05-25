@@ -1,5 +1,6 @@
 package com.example.cinema.blImpl.sales;
 
+import com.example.cinema.bl.consume.ConsumeService;
 import com.example.cinema.bl.sales.TicketService;
 import com.example.cinema.blImpl.management.hall.HallServiceForBl;
 import com.example.cinema.blImpl.management.schedule.ScheduleServiceForBl;
@@ -24,6 +25,8 @@ import java.util.List;
 public class TicketServiceImpl implements TicketService {
 
     @Autowired
+    ConsumeService consumeService;
+    @Autowired
     TicketMapper ticketMapper;
     @Autowired
     ScheduleServiceForBl scheduleService;
@@ -35,7 +38,6 @@ public class TicketServiceImpl implements TicketService {
     ActivityServiceForBl activityService;
     @Autowired
     VIPServiceForBl vipService;
-
 
     @Override
     @Transactional
@@ -86,6 +88,16 @@ public class TicketServiceImpl implements TicketService {
             for (int i:id){
                 ticketMapper.updateTicketState(i,1);
             }
+        }
+
+        //添加消费记录
+        Coupon coupon = (Coupon)couponService.getCoupon(couponId).getContent();
+        if (null == coupon) {
+            consumeService.addConsumeHistory(ticket.getUserId(), totalPay, 0.0,
+                    "会员卡", ConsumeHistory.BUY_TICKET, ticket.getId());
+        } else {
+            consumeService.addConsumeHistory(ticket.getUserId(), totalPay, coupon.getDiscountAmount(),
+                    "会员卡", ConsumeHistory.BUY_TICKET, ticket.getId());
         }
 
         //赠送优惠券
@@ -187,6 +199,16 @@ public class TicketServiceImpl implements TicketService {
             for (int i:id){
                 ticketMapper.updateTicketState(i,1);
             }
+        }
+
+        //添加消费记录
+        Coupon coupon = (Coupon)couponService.getCoupon(couponId).getContent();
+        if (null == coupon) {
+            consumeService.addConsumeHistory(ticket.getUserId(), totalPay, 0.0,
+                    "会员卡", ConsumeHistory.BUY_TICKET, ticket.getId());
+        } else {
+            consumeService.addConsumeHistory(ticket.getUserId(), totalPay, coupon.getDiscountAmount(),
+                    "会员卡", ConsumeHistory.BUY_TICKET, ticket.getId());
         }
 
         //赠送优惠券
