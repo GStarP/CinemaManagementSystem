@@ -8,15 +8,19 @@
     </insert>
 
     <select id="selectCardById" resultMap="VIPCard">
-        select * from vip_card where id=#{id}
+        select * from vip_card where id=#{id} and state = 1
     </select>
 
     <select id="selectCardByUserId" resultMap="VIPCard">
-        select * from vip_card where user_id=#{userId}
+        select * from vip_card where user_id=#{userId} and state = 1
     </select>
 
     <update id="updateCardBalance" >
         update vip_card set balance = #{balance} where id=#{id}
+    </update>
+
+    <update id="deleteCardById" >
+        update vip_card set state = 0 where id=#{userId}
     </update>
 
     <resultMap id="VIPCard" type="com.example.cinema.po.VIPCard">

@@ -12,6 +12,8 @@ public interface VIPCardMapper {
 
     int insertOneCard(VIPCard vipCard);
 
+    int deleteCardById(int cardId);
+
     VIPCard selectCardById(int id);
 
     void updateCardBalance(@Param("id") int id,@Param("balance") double balance);

@@ -24,8 +24,8 @@ public class VIPServiceImpl implements VIPService, VIPServiceForBl {
         vipCard.setCardTypeId(cardTypeId);
         vipCard.setBalance(0);
         try {
-            int id = vipCardMapper.insertOneCard(vipCard);
-            return ResponseVO.buildSuccess(vipCardMapper.selectCardById(id));
+            vipCardMapper.insertOneCard(vipCard);
+            return ResponseVO.buildSuccess(vipCardMapper.selectCardById(vipCard.getId()));
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseVO.buildFailure("失败");
@@ -80,6 +80,28 @@ public class VIPServiceImpl implements VIPService, VIPServiceForBl {
         try {
             vipCardMapper.updateCardBalance(id,balance);
             return  ResponseVO.buildSuccess();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseVO.buildFailure("失败");
+        }
+    }
+
+    @Override
+    public ResponseVO changeVIPCard(int cardId, int cardTypeId) {
+        try {
+            VIPCard oldCard = vipCardMapper.selectCardById(cardId);
+            vipCardMapper.deleteCardById(cardId);
+
+            VIPCard vipCard = new VIPCard();
+            vipCard.setUserId(oldCard.getUserId());
+            vipCard.setCardTypeId(cardTypeId);
+            vipCard.setBalance(0);
+            vipCardMapper.insertOneCard(vipCard);
+
+            VIPCardForm vipCardForm = new VIPCardForm();
+            vipCardForm.setVipId(vipCard.getId());
+            vipCardForm.setAmount(oldCard.getBalance() * 0.8);
+            return  ResponseVO.buildSuccess(charge(vipCardForm));
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseVO.buildFailure("失败");
