@@ -117,12 +117,12 @@ public class MovieServiceImpl implements MovieService, MovieServiceForBl {
     }
 
     @Override
-    public ResponseVO getMovieById(int id) {
+    public Movie getMovieById(int id) {
         try {
-            return ResponseVO.buildSuccess(movieMapper.selectMovieById(id));
+            return movieMapper.selectMovieById(id);
         }catch (Exception e){
             e.printStackTrace();
-            return ResponseVO.buildFailure("获取电影失败");
+            return null;
         }
 
     }

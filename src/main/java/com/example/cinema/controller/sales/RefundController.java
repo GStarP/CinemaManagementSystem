@@ -28,11 +28,6 @@ public class RefundController {
         return refundService.publishRefund(refundForm);
     }
 
-    @PostMapping("/change/{refundId}")
-    public ResponseVO changeRefund(@PathVariable int refundId, @RequestBody RefundForm refundForm){
-        return refundService.changeRefund(refundId, refundForm);
-    }
-
     @GetMapping("/delete")
     public ResponseVO deleteRefund(@RequestParam int refundId){
         return refundService.deleteRefund(refundId);

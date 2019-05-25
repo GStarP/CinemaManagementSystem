@@ -1,6 +1,6 @@
 package com.example.cinema.blImpl.management.movie;
 
-import com.example.cinema.vo.ResponseVO;
+import com.example.cinema.po.Movie;
 
 /**
  * @author fjj
@@ -12,5 +12,5 @@ public interface MovieServiceForBl {
      * @param id
      * @return
      */
-    ResponseVO getMovieById(int id);
+    Movie getMovieById(int id);
 }

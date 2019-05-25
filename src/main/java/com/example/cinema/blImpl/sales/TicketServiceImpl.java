@@ -71,7 +71,7 @@ public class TicketServiceImpl implements TicketService {
     @Override
     @Transactional
     public ResponseVO completeTicket(List<Integer> id, int couponId) {
-        //TODO:1. 默认成功(√)
+        //   1. 默认成功(√)
         //   2. 校验优惠券是否存在、是否能用(√)
         //   3. 根据活动赠送优惠券(√)
 
@@ -172,7 +172,7 @@ public class TicketServiceImpl implements TicketService {
     @Override
     @Transactional
     public ResponseVO completeByVIPCard(List<Integer> id, int couponId) {
-        //TODO:1. 调用VIPService的方法更新会员卡余额(√)
+        //   1. 调用VIPService的方法更新会员卡余额(√)
         //   2. 校验优惠券是否存在、是否能用(√)
         //   3. 用boolean ResponseVO.success表示支付是否成功(√)
         //   4. 根据活动赠送优惠券(√)
@@ -236,7 +236,6 @@ public class TicketServiceImpl implements TicketService {
                 if (ticket.getState() == 0 || ticket.getState() == 2 || ticket.getState() == 3 || ticket.getState() == 4) {
                     ticketMapper.deleteTicket(ticket.getId());
                 }else if (ticket.getState() == 1) {
-                    //TODO:返还用户的退款
                     if (vipService.getCardByUserId(ticket.getUserId()).getSuccess()){
                         VIPCard vipCard= (VIPCard) vipService.getCardByUserId(ticket.getUserId()).getContent();
                         double refundPrice=ticket.getActualPay()*getRefundStrategy(ticket.getScheduleId());  //应退还金额

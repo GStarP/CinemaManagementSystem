@@ -57,11 +57,4 @@ public interface MovieService {
      */
     ResponseVO updateMovie(MovieForm updateMovieForm);
 
-    /**
-     * 根据id获取电影
-     * @param movieId
-     * @return
-     */
-    ResponseVO getMovieById(int movieId);
-
 }
