@@ -96,6 +96,26 @@ public class ViewController {
     @RequestMapping(value = "/admin/refund/manage")
     public String getAdminRefundManage(){
         return "adminRefundManage";
-    };
+    }
+
+    @RequestMapping(value = "/admin/role/manage")
+    public String getAdminRoleManage() {
+        return "adminRoleManage";
+    }
+
+    @RequestMapping(value = "/user/history/topup")
+    public String getUserTopUpHistory() {
+        return "userTopUpHistory";
+    }
+
+    @RequestMapping(value = "/user/history/consume")
+    public String getUserConsumeHistory() {
+        return "userConsumeHistory";
+    }
+
+    @RequestMapping(value = "/user/history/consume/detail")
+    public String getConsumeHisDetail(@RequestParam("id") Integer id) {
+        return "consumeHisDetail";
+    }
 
 }

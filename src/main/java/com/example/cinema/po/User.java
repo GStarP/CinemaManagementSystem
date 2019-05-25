@@ -2,16 +2,22 @@ package com.example.cinema.po;
 
 /**
  * @author hxw
- * @date 2019/5/14
+ * @date 2019/5/20
  */
 public class User {
-    private Integer id;
-    private String username;
-    private String password;
+
     /**
      * 身份
      * 0-观众 1-影院员工 2-管理员
      */
+    public final static Integer AUTH_AUDIENCE = 0 ;
+    public final static Integer AUTH_ADMIN = 1;
+    public final static Integer AUTH_MANAGER = 2;
+
+    private Integer id;
+    private String username;
+    private String password;
+
     private Integer auth;
 
     public Integer getId() {
