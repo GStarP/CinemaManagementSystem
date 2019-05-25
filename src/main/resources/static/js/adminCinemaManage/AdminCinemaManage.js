@@ -42,7 +42,7 @@ class AdminCinemaManage extends Component {
                 mount(new ViewHall({}), this.hallWrapper);
                 break;
             case 1:
-                mount(new AddHall({}), this.hallWrapper);
+                mount(new AddHall({seatRow:10, seatColumn:22}), this.hallWrapper);
                 break;
             case 2:
                 mount(new ModifyHall({}), this.hallWrapper);
