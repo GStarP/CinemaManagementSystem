@@ -24,8 +24,19 @@
         VALUES (#{user_id},#{money},#{discount},#{consumeType},#{type},#{contentId})
     </insert>
 
+    <select id="selectConsumeQulifiedUsers" resultMap="totalConsumeUser">
+        select * from (select userId, username, total_top+total_con as total from (select id as userId, username, ifnull(total_con,0) as total_con from user
+	      left join (select user_id,sum(money) as total_con from consume_history group by user_id) t1
+	      on user.id = t1.user_id) s1
+		    left join (select id, ifnull(total_top,0) as total_top from user
+			  left join (select user_id,sum(money) as total_top from topup_history group by user_id) t2
+			  on user.id = t2.user_id) s2 on s1.userId = s2.id) h where total > #{totalConsume} order by total desc
+    </select>
+
     <resultMap id="TopUpHistpry" type="com.example.cinema.po.TopUpHistory"></resultMap>
 
     <resultMap id="ConsumeHistory" type="com.example.cinema.po.ConsumeHistory"></resultMap>
+
+    <resultMap id="totalConsumeUser" type="com.example.cinema.vo.TotalConsumeUser"></resultMap>
 
 </mapper>
