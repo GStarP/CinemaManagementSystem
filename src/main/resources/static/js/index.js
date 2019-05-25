@@ -1,3 +1,8 @@
+
+const AUTH_AUDIENCE = 0;
+const AUTH_ADMIN = 1;
+const AUTH_MANAGER = 2;
+
 $(document).ready(function () {
 
     $("#login-btn").click(function () {
@@ -14,12 +19,13 @@ $(document).ready(function () {
                     var user = res.content;
                     sessionStorage.setItem('username', user.username);
                     sessionStorage.setItem('id', user.id);
+                    sessionStorage.setItem('auth', user.auth);
                     //根据用户身份的不同跳转至不同页面
-                    if (user.auth == 0) {
+                    if (user.auth == AUTH_AUDIENCE) {
                         window.location.href = "/user/home";
-                    } else if (user.auth == 1) {
+                    } else if (user.auth == AUTH_ADMIN) {
                         window.location.href = "/admin/movie/manage";
-                    } else if (user.auth == 2) {
+                    } else if (user.auth == AUTH_MANAGER) {
                         window.location.href = "/admin/movie/manage";
                     }
                 } else {

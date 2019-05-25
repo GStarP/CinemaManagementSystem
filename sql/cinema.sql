@@ -169,8 +169,8 @@ CREATE TABLE `hall`
 (
     `id`     int(11) NOT NULL AUTO_INCREMENT,
     `name`   varchar(255) DEFAULT NULL,
-    `column` int(11)      DEFAULT NULL,
-    `row`    int(11)      DEFAULT NULL,
+    `seats` varchar(1024)      DEFAULT NULL,
+    `scale`    int(11)      DEFAULT NULL,
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 3
@@ -185,8 +185,8 @@ LOCK TABLES `hall` WRITE;
 /*!40000 ALTER TABLE `hall`
     DISABLE KEYS */;
 INSERT INTO `hall`
-VALUES (1, '1号厅', 10, 5),
-       (2, '2号厅', 12, 8);
+VALUES (1, '1号厅', '[[0,-1,0,0,0,0,0,0,0,0],[0,-1,0,0,0,0,0,0,0,0],[0,-1,0,0,0,0,0,0,0,0],[0,-1,0,0,0,0,0,0,0,0],[0,-1,0,0,0,0,0,0,0,0]]', 2),
+       (2, '2号厅', '[[0,-1,0,0,0,0,0,0,0,0,-1,0],[0,-1,0,0,0,0,0,0,0,0,-1,0],[0,-1,0,0,0,0,0,0,0,0,-1,0],[0,-1,0,0,0,0,0,0,0,0,-1,0],[0,-1,0,0,0,0,0,0,0,0,-1,0],[0,-1,0,0,0,0,0,0,0,0,-1,0],[0,-1,0,0,0,0,0,0,0,0,-1,0],[0,-1,0,0,0,0,0,0,0,0,-1,0]]', 1);
 /*!40000 ALTER TABLE `hall`
     ENABLE KEYS */;
 UNLOCK TABLES;
@@ -472,8 +472,8 @@ VALUES (1, 'testname', '123456', 0),
        (3, 'test', '123456', 0),
        (5, 'test1', '123456', 0),
        (7, 'test121', '123456', 0),
-       (8, 'root', '123456', 1),
-       (10, 'roottt', '123123', 0),
+       (8, 'root', '123456', 2),
+       (10, 'roottt', '123123', 1),
        (12, 'zhourui', '123456', 0),
        (13, 'steve', '123456', 0),
        (15, 'dd', '123', 0);
@@ -520,10 +520,13 @@ DROP TABLE IF EXISTS `vip_card`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `vip_card`
 (
-    `id`        int(11)   NOT NULL AUTO_INCREMENT,
-    `user_id`   int(11)            DEFAULT NULL,
-    `balance`   float              DEFAULT NULL,
-    `join_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    `id`          int(11)   NOT NULL AUTO_INCREMENT,
+    `type_id`     int(11)            DEFAULT NULL,
+    `user_id`     int(11)            DEFAULT NULL,
+    `balance`     float              DEFAULT NULL,
+    `join_time`   timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    `expire_time` timestamp NULL     DEFAULT NULL,
+    `state`       int(11)            DEFAULT '1',
     PRIMARY KEY (`id`),
     UNIQUE KEY `vip_card_user_id_uindex` (`user_id`)
 ) ENGINE = InnoDB
@@ -539,9 +542,48 @@ LOCK TABLES `vip_card` WRITE;
 /*!40000 ALTER TABLE `vip_card`
     DISABLE KEYS */;
 INSERT INTO `vip_card`
-VALUES (1, 15, 375, '2019-04-21 13:54:38'),
-       (2, 12, 660, '2019-04-17 18:47:42');
+VALUES (1, 1, 15, 375, '2019-04-21 13:54:38', NULL, 1),
+       (2, 1, 12, 660, '2019-04-17 18:47:42', NULL, 1),
+       (3, 1, 3, 660, '2019-05-17 18:47:42', NULL, 1);
 /*!40000 ALTER TABLE `vip_card`
+    ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `card_type`
+--
+
+DROP TABLE IF EXISTS `card_type`;
+/*!40101 SET @saved_cs_client = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `card_type`
+(
+    `id`              int(11)     NOT NULL AUTO_INCREMENT,
+    `card_name`       varchar(45) NOT NULL,
+    `price`           double      NOT NULL,
+    `description`     varchar(45) DEFAULT NULL,
+    `top_up_target`   double      NOT NULL,
+    `top_up_discount` double      NOT NULL,
+    `ticket_target`   double      NOT NULL,
+    `ticket_discount` double      NOT NULL,
+    `state`           int(11)     DEFAULT '1',
+    PRIMARY KEY (`id`)
+) ENGINE = InnoDB
+  AUTO_INCREMENT = 6
+  DEFAULT CHARSET = utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `card_type`
+--
+
+LOCK TABLES `card_type` WRITE;
+/*!40000 ALTER TABLE `card_type`
+    DISABLE KEYS */;
+INSERT INTO `card_type`
+VALUES (1, '67卡', 25, '满200送30', 200, 30, 50, 10, 1),
+       (2, '67nb卡', 100, '充值会员卡满300送50', 300, 50, 100, 20, 1);
+/*!40000 ALTER TABLE `card_type`
     ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -579,6 +621,81 @@ VALUES (1, 12, 7, 25),
 UNLOCK TABLES;
 
 --
+-- Table structure for table `topup_history`
+--
+
+DROP TABLE IF EXISTS `topup_history`;
+/*!40101 SET @saved_cs_client = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `topup_history`
+(
+  `id`        int(11)   NOT NULL AUTO_INCREMENT,
+  `user_id`   int(11)            DEFAULT NULL,
+  `money`     DOUBLE             DEFAULT NULL,
+  `discount`  DOUBLE             DEFAULT NULL,
+  `balance`   DOUBLE             DEFAULT NULL,
+  `time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE = InnoDB
+  AUTO_INCREMENT = 5
+  DEFAULT CHARSET = utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `topup_history`
+--
+
+LOCK TABLES `topup_history` WRITE;
+/*!40000 ALTER TABLE `topup_history`
+  DISABLE KEYS */;
+INSERT INTO `topup_history`
+VALUES (1, 15, 300, 20, 280, '2019-05-21 13:54:38'),
+  (2, 12, 660, 60, 1200, '2019-05-21 18:47:42'),
+  (3, 12, 320, 20, 1520, '2019-05-21 18:47:43'),
+  (4, 12, 1000, 0.5, 2520, '2019-05-21 18:47:45');
+/*!40000 ALTER TABLE `topup_history`
+  ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `topup_history`
+--
+
+DROP TABLE IF EXISTS `consume_history`;
+/*!40101 SET @saved_cs_client = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `consume_history`
+(
+  `id`          int(11)   NOT NULL AUTO_INCREMENT,
+  `user_id`     int(11)            DEFAULT NULL,
+  `money`       DOUBLE             DEFAULT NULL,
+  `discount`    DOUBLE             DEFAULT NULL,
+  `consumeType` VARCHAR(20)      DEFAULT NULL,
+  `type`        INT(11)            DEFAULT NULL,
+  `contentId`   INT(11)            DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE = InnoDB
+  AUTO_INCREMENT = 5
+  DEFAULT CHARSET = utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `consume_history`
+--
+
+LOCK TABLES `consume_history` WRITE;
+/*!40000 ALTER TABLE `consume_history`
+  DISABLE KEYS */;
+INSERT INTO `consume_history`
+VALUES (1, 15, 20.5, 0.5, '会员卡', 101, 16),
+  (2, 15, 30, 0, '银行卡', 101, 54),
+  (3, 15, 30, 0, '银行卡', 101, 55),
+  (4, 15, 25, 0, '银行卡', 102, 1);
+/*!40000 ALTER TABLE `consume_history`
+  ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Dumping events for database 'cinema'
 --
 
@@ -594,5 +711,4 @@ UNLOCK TABLES;
 /*!40101 SET CHARACTER_SET_RESULTS = @OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION = @OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES = @OLD_SQL_NOTES */;
-
 -- Dump completed on 2019-04-24 21:20:52

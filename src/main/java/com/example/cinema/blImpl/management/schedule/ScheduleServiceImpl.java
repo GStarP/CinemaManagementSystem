@@ -153,6 +153,11 @@ public class ScheduleServiceImpl implements ScheduleService, ScheduleServiceForB
     }
 
     @Override
+    public List<Integer> getScheduledHalls() {
+        return scheduleMapper.getHallsInSchedules();
+    }
+
+    @Override
     public ResponseVO searchScheduleSevenDays(int hallId, Date startDate) {
         try {
             // 处理查询表单的起止时间

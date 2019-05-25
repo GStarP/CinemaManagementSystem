@@ -33,6 +33,8 @@
                 <span class="gray-text" style="vertical-align: middle" th:text="${session.user.username}"><span class="caret"></span></span>
             </button>
             <ul class="dropdown-menu">
+                <li><a href="/user/history/consume">消费记录</a></li>
+                <li><a href="/user/history/topup">充值记录</a></li>
                 <li><a href="#">修改密码</a></li>
                 <li><a href="/user/buy">电影票</a></li>
                 <li><a href="/user/member">卡包</a></li>
@@ -41,17 +43,29 @@
         </div>
     </div>
     <div class="content-container">
-        <div class="content-header">
-            <div class="title">修改密码</div>
-        </div>
-        <div class="edit-card">
-            原密码:<input type="password" id="raw-pwd-input"/>
-            <p class="error-text" id="raw-pwd-error-text"></p>
-            新密码:<input type="password" id="new-pwd-input"/>
-            <p class="error-text" id="new-pwd-error-text"></p>
-            确认新密码:<input type="password" id="check-new-pwd"/>
-            <p class="error-text" id="check-pwd-error-text"></p>
-            <button id="submit-new-pwd">确认修改</button>
+        <div class="card">
+            <div class="header">
+                <div class="title">修改密码</div>
+            </div>
+            <div class="edit-container">
+                <div class="edit-card">
+                    <div class="form-group">
+                        <input class="form-control" type="password" id="raw-pwd-input" placeholder="请输入原密码"/>
+                    </div>
+                    <p class="notice" id="raw-pwd-error-text"></p>
+                    <div class="form-group">
+                        <input class="form-control" type="password" id="new-pwd-input" placeholder="请输入新密码"/>
+                    </div>
+                    <p class="notice" id="new-pwd-error-text"></p>
+                    <div class="form-group">
+                        <input class="form-control" type="password" id="check-new-pwd" placeholder="请再次输入新密码"/>
+                    </div>
+                    <p class="notice" id="check-pwd-error-text"></p>
+                    <div class="btn-wrapper">
+                        <button id="submit-new-pwd" class="btn btn-primary">确认修改</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </body>

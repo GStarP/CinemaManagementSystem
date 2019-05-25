@@ -8,11 +8,6 @@ import java.sql.Timestamp;
  */
 
 public class VIPCard {
-
-    public static final double price = 25;
-
-    public static final String description="满200送30";
-
     /**
      * 用户id
      */
@@ -33,10 +28,20 @@ public class VIPCard {
      */
     private Timestamp joinDate;
 
+    /**
+     * 卡到期日期
+     */
+    private Timestamp expireDate;
 
-    public VIPCard() {
+    /**
+     * 会员卡类型id
+     */
+    private int cardTypeId;
 
-    }
+    /**
+     * 会员卡类型
+     */
+    private CardType cardType;
 
 
     public int getUserId() {
@@ -71,8 +76,32 @@ public class VIPCard {
         this.joinDate = joinDate;
     }
 
-    public double calculate(double amount) {
-        return (int)(amount/200)*30+amount;
+    public Timestamp getExpireDate() {
+        return expireDate;
+    }
+
+    public void setExpireDate(Timestamp expireDate) {
+        this.expireDate = expireDate;
+    }
+
+    public int getCardTypeId() {
+        return cardTypeId;
+    }
+
+    public void setCardTypeId(int cardTypeId) {
+        this.cardTypeId = cardTypeId;
+    }
+
+    public CardType getCardType() {
+        return cardType;
+    }
+
+    public void setCardType(CardType cardType) {
+        this.cardType = cardType;
+    }
+
+    public double calculateTopUpDiscount(double amount) {
+        return (int)(amount/cardType.getTopUpTarget())*cardType.getTopUpDiscount()+amount;
 
     }
 }

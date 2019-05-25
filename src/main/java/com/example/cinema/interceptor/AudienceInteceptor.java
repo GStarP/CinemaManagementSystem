@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * 观众页面拦截器
  * @author  hxw
- * @date    2019-5-15
+ * @date    2019-5-20
  */
 @Component
 public class AudienceInteceptor implements HandlerInterceptor{
@@ -19,9 +19,9 @@ public class AudienceInteceptor implements HandlerInterceptor{
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         if (null == request.getSession().getAttribute(InterceptorConfiguration.SESSION_KEY)) {
             response.sendRedirect("/index");
-        } else if (((User)request.getSession().getAttribute(InterceptorConfiguration.SESSION_KEY)).getAuth() == 1){
+        } else if (((User)request.getSession().getAttribute(InterceptorConfiguration.SESSION_KEY)).getAuth() == User.AUTH_ADMIN){
             response.sendRedirect("/admin/movie/manage");
-        } else if (((User)request.getSession().getAttribute(InterceptorConfiguration.SESSION_KEY)).getAuth() == 2) {
+        } else if (((User)request.getSession().getAttribute(InterceptorConfiguration.SESSION_KEY)).getAuth() == User.AUTH_MANAGER) {
             response.sendRedirect("/admin/movie/manage");
         }
         return true;

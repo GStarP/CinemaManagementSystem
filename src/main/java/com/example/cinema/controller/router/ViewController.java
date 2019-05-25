@@ -48,6 +48,16 @@ public class ViewController {
     @RequestMapping(value = "/admin/movieDetail")
     public String getAdminMovieDetail(@RequestParam int id) { return "adminMovieDetail"; }
 
+    @RequestMapping(value = "/admin/coupon/present")
+    public String getCouponPresent() {
+        return "adminCouponPresent";
+    }
+
+    @RequestMapping(value = "/admin/card/manage")
+    public String getAdminCardManage() {
+        return "adminCardManage";
+    }
+
     @RequestMapping(value = "/user/home")
     public String getUserHome() {
         return "userHome";
@@ -86,6 +96,26 @@ public class ViewController {
     @RequestMapping(value = "/admin/refund/manage")
     public String getAdminRefundManage(){
         return "adminRefundManage";
-    };
+    }
+
+    @RequestMapping(value = "/admin/role/manage")
+    public String getAdminRoleManage() {
+        return "adminRoleManage";
+    }
+
+    @RequestMapping(value = "/user/history/topup")
+    public String getUserTopUpHistory() {
+        return "userTopUpHistory";
+    }
+
+    @RequestMapping(value = "/user/history/consume")
+    public String getUserConsumeHistory() {
+        return "userConsumeHistory";
+    }
+
+    @RequestMapping(value = "/user/history/consume/detail")
+    public String getConsumeHisDetail(@RequestParam("id") Integer id) {
+        return "consumeHisDetail";
+    }
 
 }
