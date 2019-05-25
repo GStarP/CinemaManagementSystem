@@ -20,6 +20,7 @@ import java.sql.Timestamp;
 public class VIPServiceImpl implements VIPService, VIPServiceForBl {
     @Autowired
     VIPCardMapper vipCardMapper;
+
     @Autowired
     ConsumeService consumeService;
 
@@ -31,11 +32,10 @@ public class VIPServiceImpl implements VIPService, VIPServiceForBl {
         vipCard.setBalance(0);
         try {
             vipCardMapper.insertOneCard(vipCard);
-            return ResponseVO.buildSuccess(vipCardMapper.selectCardById(vipCard.getId()));
-            int id = vipCardMapper.insertOneCard(vipCard);
-            //TODO:添加消费记录,传入卡底价和优惠金额
-            consumeService.addConsumeHistory(userId,25.0,0.0,"银行卡", ConsumeHistory.BUY_VIP_CARD,id);
-            return ResponseVO.buildSuccess(vipCardMapper.selectCardById(id));
+            VIPCard vip =  vipCardMapper.selectCardById(vipCard.getId());
+            //添加消费记录,传入卡底价和优惠金额
+            consumeService.addConsumeHistory(userId, vip.getCardType().getPrice(),0.0,"银行卡", ConsumeHistory.BUY_VIP_CARD, vipCard.getId());
+            return ResponseVO.buildSuccess(vip);
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseVO.buildFailure("失败");
@@ -110,8 +110,10 @@ public class VIPServiceImpl implements VIPService, VIPServiceForBl {
             vipCard.setCardTypeId(cardTypeId);
             vipCard.setBalance(0);
             vipCardMapper.insertOneCard(vipCard);
+            VIPCard newCard =  vipCardMapper.selectCardById(vipCard.getId());
+            consumeService.addConsumeHistory(oldCard.getUserId(), newCard.getCardType().getPrice(),0.0,"银行卡", ConsumeHistory.BUY_VIP_CARD, newCard.getId());
 
-            vipCardMapper.updateCardBalance(vipCard.getId(),oldCard.getBalance() * 0.8);
+            vipCardMapper.updateCardBalance(newCard.getId(),oldCard.getBalance() * 0.8);
             return  ResponseVO.buildSuccess();
         } catch (Exception e) {
             e.printStackTrace();

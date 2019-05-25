@@ -23,7 +23,7 @@ $(document).ready(function() {
         }
         var userIds = [];
         selectedUsers.forEach(function (value) {
-            userIds.push(value.id)
+            userIds.push(value.userId)
         });
         var couponIds = [];
         selectedCoupons.forEach(function (value) {
@@ -66,30 +66,25 @@ function initUserTable() {
         pageSize: 5,                       //每页的记录行数（*）
         pageList: [5, 10, 15],        //可供选择的每页的行数（*）
         search: true,                       //是否显示表格搜索，此搜索是客户端搜索，不会进服务端，所以，个人感觉意义不大
-        strictSearch: true,
         showColumns: true,                  //是否显示所有的列
         showRefresh: true,                  //是否显示刷新按钮
         minimumCountColumns: 2,             //最少允许的列数
         clickToSelect: true,                //是否启用点击选中行
-        uniqueId: "id",                     //每一行的唯一标识，一般为主键列
+        uniqueId: "userId",                     //每一行的唯一标识，一般为主键列
         responseHandler: function(res){
             return res.content;
         },
-        //TODO:修改返回的用户数据
         columns: [{
             checkbox: true
         }, {
             title: 'id',
-            field: 'id'
+            field: 'userId'
         }, {
             title: '用户名',
             field: 'username'
         }, {
-            title: '用户密码',
-            field: 'password'
-        }, {
-            title: '用户身份',
-            field: 'auth'
+            title: '消费总额',
+            field: 'total'
         } ]
     });
 }
@@ -106,6 +101,7 @@ function initCouponTable() {
         pageNumber:1,
         pageSize: 5,
         pageList: [5, 10, 15],
+        search: true,
         showColumns: true,
         showRefresh: true,
         minimumCountColumns: 5,

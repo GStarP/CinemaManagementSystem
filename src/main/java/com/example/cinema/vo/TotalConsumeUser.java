@@ -8,7 +8,7 @@ public class TotalConsumeUser {
     /**
      * 用户id
      */
-    private Integer userId;
+    private int userId;
     /**
      * 用户名
      */
@@ -18,11 +18,11 @@ public class TotalConsumeUser {
      */
     private Double total;
 
-    public Integer getUserId() {
+    public int getUserId() {
         return userId;
     }
 
-    public void setUserId(Integer userId) {
+    public void setUserId(int userId) {
         this.userId = userId;
     }
 

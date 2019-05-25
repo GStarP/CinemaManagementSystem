@@ -17,7 +17,7 @@ public interface CouponService {
 
     ResponseVO issueCoupon(int couponId,int userId);
 
-    ResponseVO getUsersByConsume(int totalConsume);
+    ResponseVO getUsersByConsume(double totalConsume);
 
     ResponseVO presentCoupon2User(PresentForm presentForm);
 }
