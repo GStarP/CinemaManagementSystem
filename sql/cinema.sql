@@ -519,10 +519,13 @@ DROP TABLE IF EXISTS `vip_card`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `vip_card`
 (
-    `id`        int(11)   NOT NULL AUTO_INCREMENT,
-    `user_id`   int(11)            DEFAULT NULL,
-    `balance`   float              DEFAULT NULL,
-    `join_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    `id`          int(11)   NOT NULL AUTO_INCREMENT,
+    `type_id`     int(11)            DEFAULT NULL,
+    `user_id`     int(11)            DEFAULT NULL,
+    `balance`     float              DEFAULT NULL,
+    `join_time`   timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    `expire_time` timestamp NULL     DEFAULT NULL,
+    `state`       int(11)            DEFAULT '1',
     PRIMARY KEY (`id`),
     UNIQUE KEY `vip_card_user_id_uindex` (`user_id`)
 ) ENGINE = InnoDB
@@ -538,9 +541,48 @@ LOCK TABLES `vip_card` WRITE;
 /*!40000 ALTER TABLE `vip_card`
     DISABLE KEYS */;
 INSERT INTO `vip_card`
-VALUES (1, 15, 375, '2019-04-21 13:54:38'),
-       (2, 12, 660, '2019-04-17 18:47:42');
+VALUES (1, 1, 15, 375, '2019-04-21 13:54:38', NULL, 1),
+       (2, 1, 12, 660, '2019-04-17 18:47:42', NULL, 1),
+       (3, 1, 3, 660, '2019-05-17 18:47:42', NULL, 1);
 /*!40000 ALTER TABLE `vip_card`
+    ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `card_type`
+--
+
+DROP TABLE IF EXISTS `card_type`;
+/*!40101 SET @saved_cs_client = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `card_type`
+(
+    `id`              int(11)     NOT NULL AUTO_INCREMENT,
+    `card_name`       varchar(45) NOT NULL,
+    `price`           double      NOT NULL,
+    `description`     varchar(45) DEFAULT NULL,
+    `top_up_target`   double      NOT NULL,
+    `top_up_discount` double      NOT NULL,
+    `ticket_target`   double      NOT NULL,
+    `ticket_discount` double      NOT NULL,
+    `state`           int(11)     DEFAULT '1',
+    PRIMARY KEY (`id`)
+) ENGINE = InnoDB
+  AUTO_INCREMENT = 6
+  DEFAULT CHARSET = utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `card_type`
+--
+
+LOCK TABLES `card_type` WRITE;
+/*!40000 ALTER TABLE `card_type`
+    DISABLE KEYS */;
+INSERT INTO `card_type`
+VALUES (1, '67卡', 25, '满200送30', 200, 30, 50, 10, 1),
+       (2, '67nb卡', 100, '充值会员卡满300送50', 300, 50, 100, 20, 1);
+/*!40000 ALTER TABLE `card_type`
     ENABLE KEYS */;
 UNLOCK TABLES;
 
