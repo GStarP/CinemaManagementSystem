@@ -3,8 +3,8 @@ class AddHall extends Component {
         super(props);
         this.state = {
             hallName: '',
-            seatRow: 10,
-            seatColumn: 22
+            seatRow: this.props.seatRow,
+            seatColumn: this.props.seatColumn
         }
     }
 
