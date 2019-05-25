@@ -169,8 +169,8 @@ CREATE TABLE `hall`
 (
     `id`     int(11) NOT NULL AUTO_INCREMENT,
     `name`   varchar(255) DEFAULT NULL,
-    `column` int(11)      DEFAULT NULL,
-    `row`    int(11)      DEFAULT NULL,
+    `seats` varchar(65535)      DEFAULT NULL,
+    `scale`    int(11)      DEFAULT NULL,
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 3
@@ -185,8 +185,8 @@ LOCK TABLES `hall` WRITE;
 /*!40000 ALTER TABLE `hall`
     DISABLE KEYS */;
 INSERT INTO `hall`
-VALUES (1, '1号厅', 10, 5),
-       (2, '2号厅', 12, 8);
+VALUES (1, '1号厅', '[[0,-1,0,0,0,0,0,0,0,0],[0,-1,0,0,0,0,0,0,0,0],[0,-1,0,0,0,0,0,0,0,0],[0,-1,0,0,0,0,0,0,0,0],[0,-1,0,0,0,0,0,0,0,0]]', 2),
+       (2, '2号厅', '[[0,-1,0,0,0,0,0,0,0,0,-1,0],[0,-1,0,0,0,0,0,0,0,0,-1,0],[0,-1,0,0,0,0,0,0,0,0,-1,0],[0,-1,0,0,0,0,0,0,0,0,-1,0],[0,-1,0,0,0,0,0,0,0,0,-1,0],[0,-1,0,0,0,0,0,0,0,0,-1,0],[0,-1,0,0,0,0,0,0,0,0,-1,0],[0,-1,0,0,0,0,0,0,0,0,-1,0]]', 1);
 /*!40000 ALTER TABLE `hall`
     ENABLE KEYS */;
 UNLOCK TABLES;
@@ -635,5 +635,4 @@ UNLOCK TABLES;
 /*!40101 SET CHARACTER_SET_RESULTS = @OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION = @OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES = @OLD_SQL_NOTES */;
-
 -- Dump completed on 2019-04-24 21:20:52

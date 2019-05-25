@@ -107,7 +107,7 @@ public class TicketServiceImpl implements TicketService {
             List<Ticket> tickets = ticketMapper.selectTicketsBySchedule(scheduleId);
             ScheduleItem schedule = scheduleService.getScheduleItemById(scheduleId);
             Hall hall = hallService.getHallById(schedule.getHallId());
-            int[][] seats = new int[hall.getRow()][hall.getColumn()];
+            int[][] seats = hall.getParsedSeats();
             // 当前用户已选但未支付的座位为2，否则为1
             tickets.forEach(ticket -> {
                 if (ticket.getState() == 0)
