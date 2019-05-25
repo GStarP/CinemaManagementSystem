@@ -523,14 +523,13 @@ CREATE TABLE `vip_card`
     `id`          int(11)   NOT NULL AUTO_INCREMENT,
     `type_id`     int(11)            DEFAULT NULL,
     `user_id`     int(11)            DEFAULT NULL,
-    `balance`     float              DEFAULT NULL,
-    `join_time`   timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    `balance`     double             DEFAULT '0',
+    `join_time`   timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `expire_time` timestamp NULL     DEFAULT NULL,
     `state`       int(11)            DEFAULT '1',
-    PRIMARY KEY (`id`),
-    UNIQUE KEY `vip_card_user_id_uindex` (`user_id`)
+    PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
-  AUTO_INCREMENT = 8
+  AUTO_INCREMENT = 4
   DEFAULT CHARSET = utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -569,7 +568,7 @@ CREATE TABLE `card_type`
     `state`           int(11)     DEFAULT '1',
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
-  AUTO_INCREMENT = 6
+  AUTO_INCREMENT = 3
   DEFAULT CHARSET = utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
