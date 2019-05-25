@@ -30,7 +30,10 @@ public class VIPCardController {
         return vipService.charge(vipCardForm);
     }
 
-
+    @PostMapping("/change/{cardId}/{cardTypeId}")
+    public ResponseVO deleteVIP(@PathVariable int cardId, @PathVariable int cardTypeId){
+        return vipService.changeVIPCard(cardId, cardTypeId);
+    }
 
 
 }

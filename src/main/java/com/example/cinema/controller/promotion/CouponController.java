@@ -32,7 +32,7 @@ public class CouponController {
     }
 
     @GetMapping("get/users")
-    public ResponseVO getUsersByConsume(@RequestParam int totalConsume) {
+    public ResponseVO getUsersByConsume(@RequestParam double totalConsume) {
         return couponService.getUsersByConsume(totalConsume);
     }
 
