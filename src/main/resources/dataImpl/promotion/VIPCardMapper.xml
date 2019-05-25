@@ -29,7 +29,6 @@
         <result column="balance" property="balance"></result>
         <result column="type_id" property="cardTypeId"></result>
         <result column="join_time" property="joinDate"></result>
-        <result column="expire_time" property="expireDate"></result>
         <association property="cardType" column="type_id" select="com.example.cinema.data.promotion.CardTypeMapper.selectCardById"></association>
     </resultMap>
 

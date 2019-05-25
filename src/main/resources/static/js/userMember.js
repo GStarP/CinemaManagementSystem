@@ -33,7 +33,7 @@ function getVIP() {
                 vipCardId = res.content.id;
                 $("#member-balance").text("¥" + res.content.balance.toFixed(2));
                 $("#member-joinDate").text(res.content.joinDate.substring(0, 10));
-                $("#member-expireDate").text(res.content.expireDate===null?"永久有效":res.content.expireDate.substring(0, 10));
+                $("#member-expireDate").text("永久有效");
                 $("#member-topUp").text("满" + res.content.cardType.topUpTarget + "送" + res.content.cardType.topUpDiscount);
                 $("#member-ticketBuy").text("满" + res.content.cardType.ticketTarget + "减" + res.content.cardType.ticketDiscount);
             } else {

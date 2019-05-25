@@ -520,13 +520,12 @@ DROP TABLE IF EXISTS `vip_card`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `vip_card`
 (
-    `id`          int(11)   NOT NULL AUTO_INCREMENT,
-    `type_id`     int(11)            DEFAULT NULL,
-    `user_id`     int(11)            DEFAULT NULL,
-    `balance`     double             DEFAULT '0',
-    `join_time`   timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    `expire_time` timestamp NULL     DEFAULT NULL,
-    `state`       int(11)            DEFAULT '1',
+    `id`        int(11)   NOT NULL AUTO_INCREMENT,
+    `type_id`   int(11)            DEFAULT NULL,
+    `user_id`   int(11)            DEFAULT NULL,
+    `balance`   double             DEFAULT '0',
+    `join_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `state`     int(11)            DEFAULT '1',
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 4
@@ -541,9 +540,9 @@ LOCK TABLES `vip_card` WRITE;
 /*!40000 ALTER TABLE `vip_card`
     DISABLE KEYS */;
 INSERT INTO `vip_card`
-VALUES (1, 1, 15, 375, '2019-04-21 13:54:38', NULL, 1),
-       (2, 1, 12, 660, '2019-04-17 18:47:42', NULL, 1),
-       (3, 1, 3, 660, '2019-05-17 18:47:42', NULL, 1);
+VALUES (1, 1, 15, 375, '2019-04-21 13:54:38', 1),
+       (2, 1, 12, 660, '2019-04-17 18:47:42', 1),
+       (3, 1, 3, 660, '2019-05-17 18:47:42', 1);
 /*!40000 ALTER TABLE `vip_card`
     ENABLE KEYS */;
 UNLOCK TABLES;
