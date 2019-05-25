@@ -16,7 +16,7 @@
         select * from hall
         <if test="hallIds.size() != 0">
             where id not in
-            <foreach collection="list" item="hallId" index="index" separator="," open="(" close=")">
+            <foreach collection="hallIds" item="hallId" index="index" separator="," open="(" close=")">
                 #{hallId}
             </foreach>
         </if>
