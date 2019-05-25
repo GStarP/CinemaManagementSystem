@@ -24,6 +24,8 @@ public interface TicketMapper {
 
     void updateTicketState(@Param("ticketId") int ticketId, @Param("state") int state);
 
+    void updateTicketActualPay(@Param("ticketId") int ticketId, @Param("actualPay") double actualPay);
+
     List<Ticket> selectTicketsBySchedule(int scheduleId);
 
     Ticket selectTicketByScheduleIdAndSeat(@Param("scheduleId") int scheduleId, @Param("column") int columnIndex, @Param("row") int rowIndex);

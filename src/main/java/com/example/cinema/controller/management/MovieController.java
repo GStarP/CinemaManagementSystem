@@ -76,7 +76,10 @@ public class MovieController {
         return movieService.updateMovie(updateMovieForm);
     }
 
-
+    @RequestMapping(value="/movie/get",method = RequestMethod.GET)
+    public ResponseVO getMovieById(@RequestParam int id){
+        return movieService.getMovieById(id);
+    }
 
 
 }

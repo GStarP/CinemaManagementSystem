@@ -3,6 +3,7 @@ package com.example.cinema.blImpl.sales;
 import com.example.cinema.bl.sales.RefundService;
 import com.example.cinema.blImpl.management.movie.MovieServiceForBl;
 import com.example.cinema.data.sales.RefundMapper;
+import com.example.cinema.po.Movie;
 import com.example.cinema.po.Refund;
 import com.example.cinema.vo.RefundForm;
 import com.example.cinema.vo.RefundVO;
@@ -18,7 +19,7 @@ import java.util.List;
  * @author CZ
  */
 @Service
-public class RefundServiceImpl implements RefundService {
+public class RefundServiceImpl implements RefundService,RefundServiceForBl {
 
     @Autowired
     RefundMapper refundMapper;
@@ -34,7 +35,7 @@ public class RefundServiceImpl implements RefundService {
             for(Refund refund:refundList){
                 RefundVO refundVO=new RefundVO();
                 refundVO.setId(refund.getId());
-                refundVO.setMovie(movieService.getMovieById(refund.getMovieId()));
+                refundVO.setMovie((Movie) movieService.getMovieById(refund.getMovieId()).getContent());
                 refundVO.setTime(refund.getTime());
                 refundVO.setPrice(refund.getPrice());
                 refundVOList.add(refundVO);
@@ -57,6 +58,7 @@ public class RefundServiceImpl implements RefundService {
 
     @Override
     public ResponseVO changeRefund(int refundId, RefundForm refundForm) {
+        //TODO:修改退票策略
         try{
             deleteRefund(refundId);
             publishRefund(refundForm);
@@ -73,6 +75,22 @@ public class RefundServiceImpl implements RefundService {
             return ResponseVO.buildSuccess();
         }else{
             return ResponseVO.buildFailure("删除退票策略失败");
+        }
+    }
+
+    @Override
+    public ResponseVO getRefundById(int refundId) {
+        try{
+            Refund refund=refundMapper.selectRefundById(refundId);
+            RefundVO refundVO=new RefundVO();
+            refundVO.setId(refund.getId());
+            refundVO.setMovie((Movie) movieService.getMovieById(refund.getMovieId()).getContent());
+            refundVO.setTime(refund.getTime());
+            refundVO.setPrice(refund.getPrice());
+            return ResponseVO.buildSuccess(refundVO);
+        }catch(Exception e){
+            e.printStackTrace();
+            return ResponseVO.buildFailure("获取退票策略失败");
         }
     }
 
@@ -100,6 +118,16 @@ public class RefundServiceImpl implements RefundService {
         }catch (Exception e){
             e.printStackTrace();
             return false;
+        }
+    }
+
+    @Override
+    public List<Refund> getRefundByMovieId(int movieId) {
+        try{
+            return refundMapper.selectRefundByMovieId(movieId);
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
         }
     }
 }

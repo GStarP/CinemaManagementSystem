@@ -33,9 +33,14 @@ public class Ticket {
 
     /**
      * 订单状态：
-     * 0：未完成 1：已完成 2:已失效
+     * 0：未完成 1：已完成 2:已失效 3:已出票 4：已退票
      */
     private int state;
+
+    /**
+     * 实付款
+     */
+    private double actualPay;
 
     private Timestamp time;
 
@@ -67,6 +72,12 @@ public class Ticket {
                 stateString = "已完成";
                 break;
             case 2:
+                stateString = "已出票";
+                break;
+            case 3:
+                stateString = "已退票";
+                break;
+            case 4:
                 stateString = "已失效";
                 break;
             default:
@@ -92,6 +103,12 @@ public class Ticket {
                 stateString = "已完成";
                 break;
             case 2:
+                stateString = "已失效";
+                break;
+            case 3:
+                stateString = "已退票";
+                break;
+            case 4:
                 stateString = "已失效";
                 break;
             default:
@@ -149,5 +166,13 @@ public class Ticket {
 
     public void setState(int state) {
         this.state = state;
+    }
+
+    public double getActualPay() {
+        return actualPay;
+    }
+
+    public void setActualPay(double actualPay) {
+        this.actualPay = actualPay;
     }
 }

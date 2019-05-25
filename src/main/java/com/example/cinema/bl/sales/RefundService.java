@@ -36,4 +36,11 @@ public interface RefundService {
      * @return
      */
     ResponseVO deleteRefund(int refundId);
+
+    /**
+     * 用于获取指定退票策略
+     * @param refundId
+     * @return
+     */
+    ResponseVO getRefundById(int refundId);
 }

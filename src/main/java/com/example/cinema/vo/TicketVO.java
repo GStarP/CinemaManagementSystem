@@ -30,9 +30,18 @@ public class TicketVO {
 
     /**
      * 订单状态
+     * 0：未完成 1：已完成 2:已失效 3:已出票 4：已退票
      */
     private String state;
 
+    /**
+     * 实付款
+     */
+    private double actualPay;
+
+    /**
+     *
+     */
     private Timestamp time;
 
     public Timestamp getTime() {
@@ -92,5 +101,13 @@ public class TicketVO {
 
     public void setState(String state) {
         this.state = state;
+    }
+
+    public double getActualPay() {
+        return actualPay;
+    }
+
+    public void setActualPay(double actualPay) {
+        this.actualPay = actualPay;
     }
 }

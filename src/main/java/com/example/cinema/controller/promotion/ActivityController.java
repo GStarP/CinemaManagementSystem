@@ -21,7 +21,7 @@ public class ActivityController {
     public ResponseVO publishActivity(@RequestBody ActivityForm activityForm){
         return activityService.publishActivity(activityForm);
     }
-    @GetMapping("/get")
+    @GetMapping("/getAll")
     public ResponseVO getActivities(){
         return activityService.getActivities();
     }
@@ -36,5 +36,9 @@ public class ActivityController {
         return activityService.deleteActivity(activityId);
     }
 
+    @GetMapping("/get")
+    public ResponseVO getActivityById(@RequestParam int activityId){
+        return activityService.getActivityById(activityId);
+    }
 
 }

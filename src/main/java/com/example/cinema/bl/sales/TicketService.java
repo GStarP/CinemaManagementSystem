@@ -59,4 +59,9 @@ public interface TicketService {
      * @return
      */
     ResponseVO cancelTicket(List<Integer> id);
+
+    /**
+     * TODO:将票状态改为已出票
+     */
+    ResponseVO issueTicket(int id);
 }

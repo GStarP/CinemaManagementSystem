@@ -1,12 +1,13 @@
 $(document).ready(function() {
 
+    var movieList;
     getAllMovies();
 
     getActivities();
 
     function getActivities() {
         getRequest(
-            '/activity/get',
+            '/activity/getAll',
             function (res) {
                 var activities = res.content;
                 renderActivities(activities);
@@ -68,7 +69,7 @@ $(document).ready(function() {
         getRequest(
             '/movie/all/exclude/off',
             function (res) {
-                var movieList = res.content;
+                movieList = res.content;
                 $('#activity-movie-input').append("<option value="+ -1 +">所有电影</option>");
                 movieList.forEach(function (movie) {
                     $('#activity-movie-input').append("<option value="+ movie.id +">"+movie.name+"</option>");
@@ -80,7 +81,93 @@ $(document).ready(function() {
         );
     }
 
-    $("#activity-form-btn").click(function () {
+    //ES6新api 不重复集合 Set
+    var selectedMovieIds = new Set();
+    var selectedMovieNames = new Set();
+
+    $('#activity-movie-input').change(function () {
+        var movieId = $('#activity-movie-input').val();
+        var movieName = $('#activity-movie-input').children('option:selected').text();
+        if(movieId==-1){
+            movieList.forEach(function(movie){
+                selectedMovieIds.add(movie.id);
+                selectedMovieNames.add(movie.name);
+            });
+        } else {
+            selectedMovieIds.add(movieId);
+            selectedMovieNames.add(movieName);
+        }
+        renderSelectedMovies();
+    });
+
+    //渲染选择的参加活动的电影
+    function renderSelectedMovies() {
+        $('#selected-movies').empty();
+        var moviesDomStr = "";
+        selectedMovieNames.forEach(function (movieName) {
+            moviesDomStr += "<span class='label label-primary'>"+movieName+"</span>";
+        });
+        $('#selected-movies').append(moviesDomStr);
+    }
+
+    //修改活动
+    $('.content-activity').on('click','.a-change',function() {
+        activityId=$(this).parent('.activity-item').children('input').val();
+        changeActivityModal(activityId);
+    });
+
+    $('.content-activity').on('click','.a-delete',function() {
+        getRequest(
+            '/activity/delete?activityId='+$(this).parent('.activity-item').children('input').val(),
+            function(res){
+                getActivities();
+            },
+            function(error){
+                alert(error);
+            }
+        );
+    });
+
+    function changeActivityModal(activityId){
+        getRequest(
+            '/activity/get?activityId='+activityId,
+            function(res){
+                activity=res.content;
+                $("#activityModalLabel").text("修改活动");
+                $("#activity-name-input").attr('value',activity.name);
+                $("#activity-description-input").attr('value',activity.description);
+                $("#activity-start-date-input").attr('value',activity.startTime);
+                $("#activity-end-date-input").attr('value',activity.endTime);
+                $("#coupon-name-input").attr('value',activity.coupon.name);
+                $("#coupon-description-input").attr('value',activity.coupon.description);
+                $("#activity-target-input").attr('value',activity.targetAmount);
+                $("#coupon-target-input").attr('value',activity.coupon.targetAmount);
+                $("#coupon-discount-input").attr('value',activity.coupon.discountAmount);
+                $("#selected-movies").empty();
+                activity.movieList.forEach(function(movie){
+                    $("#selected-movies").append("<span class='label label-primary'>"+movie.name+"</span>");
+                    selectedMovieNames.add(movie.name);
+                    selectedMovieIds.add(movie.id);
+                });
+                $("#activity-form-btn").attr('id','activity-form-btn-change');
+                $("#activityModal").modal('show');
+            },
+            function(error){
+                alert(error);
+            }
+        )
+
+    }
+
+    function addActivity(){
+
+        if(selectedMovieIds.size==0){
+            movieList.forEach(function(movie){
+                selectedMovieIds.add(movie.id);
+                selectedMovieNames.add(movie.name);
+            });
+        }
+
        var form = {
            name: $("#activity-name-input").val(),
            description: $("#activity-description-input").val(),
@@ -113,40 +200,27 @@ $(document).ready(function() {
                 alert(JSON.stringify(error));
             }
         );
-    });
 
-    //ES6新api 不重复集合 Set
-    var selectedMovieIds = new Set();
-    var selectedMovieNames = new Set();
-
-    $('#activity-movie-input').change(function () {
-        var movieId = $('#activity-movie-input').val();
-        var movieName = $('#activity-movie-input').children('option:selected').text();
-        if(movieId==-1){
-        //TODO:待完成的选择所有电影的功能
-            selectedMovieIds.clear();
-            selectedMovieNames.clear();
-        } else {
-            selectedMovieIds.add(movieId);
-            selectedMovieNames.add(movieName);
-        }
-        renderSelectedMovies();
-    });
-
-    //渲染选择的参加活动的电影
-    function renderSelectedMovies() {
-        $('#selected-movies').empty();
-        var moviesDomStr = "";
-        selectedMovieNames.forEach(function (movieName) {
-            moviesDomStr += "<span class='label label-primary'>"+movieName+"</span>";
-        });
-        $('#selected-movies').append(moviesDomStr);
+        $("#activityModalLabel").text("发布活动");
+        $("#activity-name-input").attr('value',"");
+        $("#activity-description-input").attr('value',"");
+        $("#activity-start-date-input").attr('value',"");
+        $("#activity-end-date-input").attr('value',"");
+        $("#coupon-name-input").attr('value',"");
+        $("#coupon-description-input").attr('value',"");
+        $("#activity-target-input").attr('value',"");
+        $("#coupon-target-input").attr('value',"");
+        $("#coupon-discount-input").attr('value',"");
+        $("#selected-movies").empty();
+        selectedMovieNames.clear();
+        selectedMovieIds.clear();
     }
 
-//TODO:优惠活动的删除和修改
-    $('.content-activity').on('click','.a-change',function() {
+    $("#activityModal").on('click','#activity-form-btn-change',function(){
+        addActivity();
+        $("#activity-form-btn-change").attr('id','activity-form-btn');
         getRequest(
-            '/activity/delete?activityId='+$(this).parent('.activity-item').children('input').val(),
+            '/activity/delete?activityId='+activityId,
             function(res){
                 getActivities();
             },
@@ -154,19 +228,9 @@ $(document).ready(function() {
                 alert(error);
             }
         );
-
-        $("#activityModal").modal('show');
     });
 
-    $('.content-activity').on('click','.a-delete',function() {
-        getRequest(
-            '/activity/delete?activityId='+$(this).parent('.activity-item').children('input').val(),
-            function(res){
-                getActivities();
-            },
-            function(error){
-                alert(error);
-            }
-        );
+    $("#activityModal").on('click','#activity-form-btn',function () {
+        addActivity();
     });
 });

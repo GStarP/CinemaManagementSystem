@@ -257,7 +257,7 @@ public class ScheduleServiceImpl implements ScheduleService, ScheduleServiceForB
             }
 
             // 检查电影是否存在
-            Movie movie = movieServiceForBl.getMovieById(scheduleForm.getMovieId());
+            Movie movie = (Movie) movieServiceForBl.getMovieById(scheduleForm.getMovieId()).getContent();
             if(movie == null){
                 return ResponseVO.buildFailure(MOVIE_NOT_EXIST_ERROR_MESSAGE);
             }
