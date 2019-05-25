@@ -98,10 +98,8 @@ public class VIPServiceImpl implements VIPService, VIPServiceForBl {
             vipCard.setBalance(0);
             vipCardMapper.insertOneCard(vipCard);
 
-            VIPCardForm vipCardForm = new VIPCardForm();
-            vipCardForm.setVipId(vipCard.getId());
-            vipCardForm.setAmount(oldCard.getBalance() * 0.8);
-            return  ResponseVO.buildSuccess(charge(vipCardForm));
+            vipCardMapper.updateCardBalance(vipCard.getId(),oldCard.getBalance() * 0.8);
+            return  ResponseVO.buildSuccess();
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseVO.buildFailure("失败");
