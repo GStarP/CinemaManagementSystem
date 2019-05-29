@@ -23,7 +23,7 @@ import java.util.List;
  * Created by liying on 2019/4/16.
  */
 @Service
-public class TicketServiceImpl implements TicketService {
+public class TicketServiceImpl implements TicketService,TicketServiceForBl {
 
     @Autowired
     ConsumeService consumeService;
@@ -322,7 +322,7 @@ public class TicketServiceImpl implements TicketService {
     }
 
     //通过id获得电影票详细信息
-    private Ticket getTicketById(int ticketId){
+    public Ticket getTicketById(int ticketId){
         return ticketMapper.selectTicketById(ticketId);
     }
 
@@ -343,4 +343,6 @@ public class TicketServiceImpl implements TicketService {
         }
         return discount/100.0;
     }
+
+
 }
