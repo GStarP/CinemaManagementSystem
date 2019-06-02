@@ -1,4 +1,6 @@
 $(document).ready(function() {
+    mount(new AdminPanel({active: 6}), document.querySelector(".nav-left-container"));
+
     var cards = [];
 
     getCards();

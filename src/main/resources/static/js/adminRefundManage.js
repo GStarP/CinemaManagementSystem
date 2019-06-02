@@ -5,6 +5,7 @@
 */
 
 $(document).ready(function(){
+    mount(new AdminPanel({active: 5}), document.querySelector(".nav-left-container"));
 
     var movieList;
     var selectedMovieIds = new Set();

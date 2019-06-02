@@ -1,5 +1,5 @@
 $(document).ready(function() {
-
+    mount(new AdminPanel({active: 4}), document.querySelector(".nav-left-container"));
 
     getScheduleRate();
     
