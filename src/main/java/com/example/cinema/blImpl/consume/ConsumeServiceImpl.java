@@ -1,16 +1,19 @@
 package com.example.cinema.blImpl.consume;
 
 import com.example.cinema.bl.consume.ConsumeService;
+import com.example.cinema.bl.promotion.VIPService;
+import com.example.cinema.blImpl.management.hall.HallServiceForBl;
+import com.example.cinema.blImpl.management.movie.MovieServiceForBl;
+import com.example.cinema.blImpl.management.schedule.ScheduleServiceForBl;
+import com.example.cinema.blImpl.promotion.member.VIPServiceForBl;
+import com.example.cinema.blImpl.sales.TicketServiceForBl;
 import com.example.cinema.data.consume.ConsumeMapper;
 import com.example.cinema.data.management.HallMapper;
 import com.example.cinema.data.management.MovieMapper;
 import com.example.cinema.data.management.ScheduleMapper;
 import com.example.cinema.data.promotion.VIPCardMapper;
 import com.example.cinema.data.sales.TicketMapper;
-import com.example.cinema.po.ConsumeHistory;
-import com.example.cinema.po.ScheduleItem;
-import com.example.cinema.po.Ticket;
-import com.example.cinema.po.VIPCard;
+import com.example.cinema.po.*;
 import com.example.cinema.vo.BriefConsumeHisVO;
 import com.example.cinema.vo.BuyCardHistoryVO;
 import com.example.cinema.vo.BuyTicketHistoryVO;
@@ -32,15 +35,15 @@ public class ConsumeServiceImpl implements ConsumeService{
     @Autowired
     private ConsumeMapper consumeMapper;
     @Autowired
-    private TicketMapper ticketMapper;
+    private TicketServiceForBl ticketServiceForBl;
     @Autowired
-    private VIPCardMapper cardMapper;
+    private VIPService vipService;
     @Autowired
-    private ScheduleMapper scheduleMapper;
+    private ScheduleServiceForBl scheduleServiceForBl;
     @Autowired
-    private MovieMapper movieMapper;
+    private MovieServiceForBl movieServiceForBl;
     @Autowired
-    private HallMapper hallMapper;
+    private HallServiceForBl hallServiceForBl;
 
     @Override
     public ResponseVO getAllTopUpHistory(Integer userId) {
@@ -84,14 +87,14 @@ public class ConsumeServiceImpl implements ConsumeService{
                 vo.setDiscount(history.getDiscount());
                 vo.setType(getTypeStr(history.getType()));
                 vo.setConsumeType(history.getConsumeType());
-                Ticket ticket = ticketMapper.selectTicketById(history.getContentId());
+                Ticket ticket = ticketServiceForBl.getTicketById(history.getContentId());
                 vo.setTime(ticket.getTime());
                 vo.setColumnIndex(ticket.getColumnIndex()+1);
                 vo.setRowIndex(ticket.getRowIndex()+1);
-                ScheduleItem schedule = scheduleMapper.selectScheduleById(ticket.getScheduleId());
+                ScheduleItem schedule = scheduleServiceForBl.getScheduleItemById(ticket.getScheduleId());
                 vo.setStartTime(schedule.getStartTime());
-                vo.setMovieName(movieMapper.selectMovieById(schedule.getMovieId()).getName());
-                vo.setHallName(hallMapper.selectHallById(schedule.getHallId()).getName());
+                vo.setMovieName(((Movie)movieServiceForBl.getMovieById(schedule.getMovieId()).getContent()).getName());
+                vo.setHallName(hallServiceForBl.getHallById(schedule.getHallId()).getName());
                 return ResponseVO.buildSuccess(vo);
             } else if (history.getType() == ConsumeHistory.BUY_VIP_CARD) {
                 BuyCardHistoryVO vo =new BuyCardHistoryVO();
@@ -101,7 +104,7 @@ public class ConsumeServiceImpl implements ConsumeService{
                 vo.setType(getTypeStr(history.getType()));
                 vo.setConsumeType(history.getConsumeType());
                 vo.setTime(getConsumeTime(history));
-                VIPCard card = cardMapper.selectCardById(history.getContentId());
+                VIPCard card = (VIPCard) vipService.getCardById(history.getContentId()).getContent();
                 vo.setCardType(card.getCardType().getName());
                 return ResponseVO.buildSuccess(vo);
             } else {
@@ -173,9 +176,9 @@ public class ConsumeServiceImpl implements ConsumeService{
      */
     private Timestamp getConsumeTime(ConsumeHistory his) {
         if (his.getType() == ConsumeHistory.BUY_TICKET) {
-            return ticketMapper.selectTicketById(his.getContentId()).getTime();
+            return ticketServiceForBl.getTicketById(his.getContentId()).getTime();
         } else if (his.getType() == ConsumeHistory.BUY_VIP_CARD) {
-            return cardMapper.selectCardById(his.getContentId()).getJoinDate();
+            return ((VIPCard)vipService.getCardById(his.getContentId()).getContent()).getJoinDate();
         } else {
             return null;
         }
