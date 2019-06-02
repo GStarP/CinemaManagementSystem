@@ -59,12 +59,6 @@ public class ActivityServiceImpl implements ActivityService, ActivityServiceForB
     }
 
     @Override
-    public ResponseVO changeActivity(int activityId, ActivityForm activityForm) {
-        //TODO:待写
-        return ResponseVO.buildSuccess();
-    }
-
-    @Override
     public ResponseVO deleteActivity(int activityId) {
         try{
             activityMapper.deleteActivityById(activityId);
