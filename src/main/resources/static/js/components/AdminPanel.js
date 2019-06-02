@@ -11,7 +11,7 @@ class AdminPanel extends Component {
         }
     }
 
-    // 退出登录响应时间
+    // 退出登录响应事件
     onLogoutListener() {
         confirm('确认要退出登录吗？') && postRequest('/logout', null, () => window.location.href = '/index');
     }

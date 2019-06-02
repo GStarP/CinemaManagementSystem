@@ -1,4 +1,5 @@
 $(document).ready(function () {
+    mount(new UserHeader({active: 0}), document.querySelector("#nav-top-container"));
 
     getBriefConsumeHisList();
 

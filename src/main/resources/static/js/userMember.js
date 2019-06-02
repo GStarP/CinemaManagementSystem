@@ -4,6 +4,8 @@ var vipCardId = 0;
 
 
 $(document).ready(function () {
+    mount(new UserHeader({active: 4}), document.querySelector("#nav-top-container"));
+
     getVIP();
     getCoupon();
 
