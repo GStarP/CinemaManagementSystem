@@ -29,11 +29,6 @@ public class VIPCard {
     private Timestamp joinDate;
 
     /**
-     * 卡到期日期
-     */
-    private Timestamp expireDate;
-
-    /**
      * 会员卡类型id
      */
     private int cardTypeId;
@@ -74,14 +69,6 @@ public class VIPCard {
 
     public void setJoinDate(Timestamp joinDate) {
         this.joinDate = joinDate;
-    }
-
-    public Timestamp getExpireDate() {
-        return expireDate;
-    }
-
-    public void setExpireDate(Timestamp expireDate) {
-        this.expireDate = expireDate;
     }
 
     public int getCardTypeId() {

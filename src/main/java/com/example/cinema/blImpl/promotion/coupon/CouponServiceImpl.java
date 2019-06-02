@@ -1,5 +1,6 @@
 package com.example.cinema.blImpl.promotion.coupon;
 
+import com.example.cinema.bl.consume.ConsumeService;
 import com.example.cinema.bl.promotion.CouponService;
 import com.example.cinema.data.promotion.CouponMapper;
 import com.example.cinema.po.Coupon;
@@ -20,6 +21,9 @@ public class CouponServiceImpl implements CouponService, CouponServiceForBl {
 
     @Autowired
     CouponMapper couponMapper;
+
+    @Autowired
+    ConsumeService consumeService;
 
     @Override
     public ResponseVO getCouponsByUser(int userId) {
@@ -82,17 +86,9 @@ public class CouponServiceImpl implements CouponService, CouponServiceForBl {
     }
 
     @Override
-    public ResponseVO getUsersByConsume(int totalConsume) {
+    public ResponseVO getUsersByConsume(double totalConsume) {
         try {
-            //TODO:返回达到一定消费总额的用户
-            User test = new User();
-            test.setUsername("test");
-            test.setPassword("123456");
-            test.setId(3);
-            test.setAuth(0);
-            ArrayList<User> users = new ArrayList<User>();
-            users.add(test);
-            return ResponseVO.buildSuccess(users);
+            return consumeService.getConsumeQualifiedUsers(totalConsume);
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseVO.buildFailure("失败");

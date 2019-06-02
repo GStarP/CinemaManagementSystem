@@ -45,19 +45,6 @@
     </div>
 </div>
 <div class="content-container">
-    <!--非会员-->
-    <div class="card col-md-8 col-md-offset-2" id="nonmember-card" style="display: none;">
-        <div class="header">
-            <div class="title">会员卡</div>
-            <div class="state">非会员</div>
-        </div>
-        <div class="line">
-            <div>成为VIP会员</div>
-            <hr/>
-        </div>
-        <div id="card-list"></div>
-    </div>
-
     <!--会员-->
     <div class="card col-md-8 col-md-offset-2" id="member-card" style="visibility: hidden;">
         <div class="header">
@@ -96,6 +83,19 @@
             </div>
             <button onclick="chargeClick()">立即充值</button>
         </div>
+    </div>
+
+    <!--非会员-->
+    <div class="card col-md-8 col-md-offset-2" id="nonmember-card">
+        <div class="header">
+            <div class="title">会员卡</div>
+            <div class="state">非会员</div>
+        </div>
+        <div class="line">
+            <div>成为VIP会员</div>
+            <hr/>
+        </div>
+        <div id="card-list"></div>
     </div>
 
     <!--优惠券-->

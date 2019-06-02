@@ -104,7 +104,7 @@ CREATE TABLE `coupon`
     `end_time`        timestamp NULL DEFAULT NULL,
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
-  AUTO_INCREMENT = 9
+  AUTO_INCREMENT = 10
   DEFAULT CHARSET = utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -119,7 +119,8 @@ INSERT INTO `coupon`
 VALUES (1, '测试优惠券', '春季电影节', 20, 5, '2019-04-20 17:47:54', '2019-04-23 17:47:59'),
        (5, '测试优惠券', '品质联盟', 30, 4, '2019-04-20 21:14:46', '2019-04-24 21:14:51'),
        (6, '春节电影节优惠券', '电影节优惠券', 50, 10, '2019-04-20 21:15:11', '2019-04-21 21:14:56'),
-       (8, '测试优惠券', '123', 100, 99, '2019-04-20 16:00:00', '2019-04-26 16:00:00');
+       (8, '测试优惠券', '123', 100, 99, '2019-04-20 16:00:00', '2019-04-26 16:00:00'),
+       (9, '67优惠券', '67券', 60, 7, '2019-05-20 16:00:00', '2019-07-20 16:00:00');
 /*!40000 ALTER TABLE `coupon`
     ENABLE KEYS */;
 UNLOCK TABLES;
@@ -520,17 +521,15 @@ DROP TABLE IF EXISTS `vip_card`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `vip_card`
 (
-    `id`          int(11)   NOT NULL AUTO_INCREMENT,
-    `type_id`     int(11)            DEFAULT NULL,
-    `user_id`     int(11)            DEFAULT NULL,
-    `balance`     float              DEFAULT NULL,
-    `join_time`   timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    `expire_time` timestamp NULL     DEFAULT NULL,
-    `state`       int(11)            DEFAULT '1',
-    PRIMARY KEY (`id`),
-    UNIQUE KEY `vip_card_user_id_uindex` (`user_id`)
+    `id`        int(11)   NOT NULL AUTO_INCREMENT,
+    `type_id`   int(11)            DEFAULT NULL,
+    `user_id`   int(11)            DEFAULT NULL,
+    `balance`   double             DEFAULT '0',
+    `join_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `state`     int(11)            DEFAULT '1',
+    PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
-  AUTO_INCREMENT = 8
+  AUTO_INCREMENT = 4
   DEFAULT CHARSET = utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -542,9 +541,9 @@ LOCK TABLES `vip_card` WRITE;
 /*!40000 ALTER TABLE `vip_card`
     DISABLE KEYS */;
 INSERT INTO `vip_card`
-VALUES (1, 1, 15, 375, '2019-04-21 13:54:38', NULL, 1),
-       (2, 1, 12, 660, '2019-04-17 18:47:42', NULL, 1),
-       (3, 1, 3, 660, '2019-05-17 18:47:42', NULL, 1);
+VALUES (1, 1, 15, 375, '2019-04-21 13:54:38', 1),
+       (2, 1, 12, 660, '2019-04-17 18:47:42', 1),
+       (3, 1, 3, 660, '2019-05-17 18:47:42', 1);
 /*!40000 ALTER TABLE `vip_card`
     ENABLE KEYS */;
 UNLOCK TABLES;
@@ -569,7 +568,7 @@ CREATE TABLE `card_type`
     `state`           int(11)     DEFAULT '1',
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
-  AUTO_INCREMENT = 6
+  AUTO_INCREMENT = 3
   DEFAULT CHARSET = utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
