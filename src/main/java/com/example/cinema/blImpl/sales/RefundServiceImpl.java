@@ -3,7 +3,6 @@ package com.example.cinema.blImpl.sales;
 import com.example.cinema.bl.sales.RefundService;
 import com.example.cinema.blImpl.management.movie.MovieServiceForBl;
 import com.example.cinema.data.sales.RefundMapper;
-import com.example.cinema.po.Movie;
 import com.example.cinema.po.Refund;
 import com.example.cinema.vo.RefundForm;
 import com.example.cinema.vo.RefundVO;

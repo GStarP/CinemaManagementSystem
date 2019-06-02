@@ -61,6 +61,11 @@ public class UserTicketVO {
      */
     private Date endTime;
 
+    /**
+     * 电影id
+     */
+    private int movieId;
+
     public Timestamp getTime() {
         return time;
     }
@@ -147,5 +152,13 @@ public class UserTicketVO {
 
     public void setEndTime(Date endTime) {
         this.endTime = endTime;
+    }
+
+    public int getMovieId() {
+        return movieId;
+    }
+
+    public void setMovieId(int movieId) {
+        this.movieId = movieId;
     }
 }
