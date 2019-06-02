@@ -2,7 +2,10 @@ const AUTH_AUDIENCE = 0;
 const AUTH_ADMIN = 1;
 const AUTH_MANAGER = 2;
 
-$(document).ready(function(){
+$(document).ready(function () {
+    if (document.querySelector(".nav-left-container"))
+        // 垃圾zj，一份代码到处用。。。
+        mount(new AdminPanel({active: 0}), document.querySelector(".nav-left-container"));
 
     var movieId = parseInt(window.location.href.split('?')[1].split('&')[0].split('=')[1]);
     var userId = sessionStorage.getItem('id');
@@ -10,54 +13,54 @@ $(document).ready(function(){
 
     getMovie();
     //更新权限格式
-    if(sessionStorage.getItem('auth') >= AUTH_ADMIN)
+    if (sessionStorage.getItem('auth') >= AUTH_ADMIN)
         getMovieLikeChart();
 
     function getMovieLikeChart() {
-       getRequest(
-           '/movie/' + movieId + '/like/date',
-           function(res){
-               var data = res.content,
+        getRequest(
+            '/movie/' + movieId + '/like/date',
+            function (res) {
+                var data = res.content,
                     dateArray = [],
                     numberArray = [];
-               data.forEach(function (item) {
-                   dateArray.push(item.likeTime);
-                   numberArray.push(item.likeNum);
-               });
+                data.forEach(function (item) {
+                    dateArray.push(item.likeTime);
+                    numberArray.push(item.likeNum);
+                });
 
-               var myChart = echarts.init($("#like-date-chart")[0]);
+                var myChart = echarts.init($("#like-date-chart")[0]);
 
-               // 指定图表的配置项和数据
-               var option = {
-                   title: {
-                       text: '想看人数变化表'
-                   },
-                   xAxis: {
-                       type: 'category',
-                       data: dateArray
-                   },
-                   yAxis: {
-                       type: 'value'
-                   },
-                   series: [{
-                       data: numberArray,
-                       type: 'line'
-                   }]
-               };
+                // 指定图表的配置项和数据
+                var option = {
+                    title: {
+                        text: '想看人数变化表'
+                    },
+                    xAxis: {
+                        type: 'category',
+                        data: dateArray
+                    },
+                    yAxis: {
+                        type: 'value'
+                    },
+                    series: [{
+                        data: numberArray,
+                        type: 'line'
+                    }]
+                };
 
-               // 使用刚指定的配置项和数据显示图表。
-               myChart.setOption(option);
-           },
-           function (error) {
-               alert(error);
-           }
-       );
+                // 使用刚指定的配置项和数据显示图表。
+                myChart.setOption(option);
+            },
+            function (error) {
+                alert(error);
+            }
+        );
     }
 
     function getMovie() {
         getRequest(
-            '/movie/'+movieId + '/' + userId,
-            function(res){
+            '/movie/' + movieId + '/' + userId,
+            function (res) {
                 var data = res.content;
                 isLike = data.islike;
                 repaintMovieDetail(data);
@@ -71,7 +74,7 @@ $(document).ready(function(){
     function repaintMovieDetail(movie) {
         !isLike ? $('.icon-heart').removeClass('error-text') : $('.icon-heart').addClass('error-text');
         $('#like-btn span').text(isLike ? ' 已想看' : ' 想 看');
-        $('#movie-img').attr('src',movie.posterUrl);
+        $('#movie-img').attr('src', movie.posterUrl);
         $('#movie-name').text(movie.name);
         $('#order-movie-name').text(movie.name);
         $('#movie-description').text(movie.description);
@@ -87,12 +90,12 @@ $(document).ready(function(){
 
     // user界面才有
     $('#like-btn').click(function () {
-        var url = isLike ?'/movie/'+ movieId +'/unlike?userId='+ userId :'/movie/'+ movieId +'/like?userId='+ userId;
+        var url = isLike ? '/movie/' + movieId + '/unlike?userId=' + userId : '/movie/' + movieId + '/like?userId=' + userId;
         postRequest(
-             url,
+            url,
             null,
             function (res) {
-                 isLike = !isLike;
+                isLike = !isLike;
                 getMovie();
             },
             function (error) {
@@ -129,7 +132,7 @@ $(document).ready(function(){
      */
     $("#movie-form-btn").click(function () {
         var formData = getMovieForm();
-        if(!validateMovieForm(formData)) {
+        if (!validateMovieForm(formData)) {
             return;
         }
         postRequest(
@@ -158,7 +161,7 @@ $(document).ready(function(){
         list.push(window.location.href.split("=")[1]);
         postRequest(
             '/movie/off/batch',
-            { movieIdList: list },
+            {movieIdList: list},
             function (res) {
                 if (res.success) {
                     alert("下架成功!");

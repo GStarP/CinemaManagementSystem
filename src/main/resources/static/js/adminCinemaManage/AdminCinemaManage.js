@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    mount(new AdminCinemaManage({}), document.querySelector("#hall-manage-wrapper"))
+    mount(new AdminCinemaManage({}), document.querySelector("#body"))
 });
 
 class AdminCinemaManage extends Component {
@@ -19,16 +19,24 @@ class AdminCinemaManage extends Component {
 
     renderDOM() {
         const el_html = `
-            <div class="content-item">
-                <div id="hall-manage-navi-wrapper"></div>
-                <div class="content-card card" id="hall-card">
+            <div class="main-container">
+                <div class="nav-left-container"></div>
+                <div class="content-container" id="hall-manage-wrapper">
+                    <div id="hall-manage-navi-wrapper"></div>
+                    <div class="content-card card" id="hall-card"></div>
                 </div>
             </div>
         `;
         this.el = createDOMFromString(el_html);
 
-        this.hallWrapper = this.el.querySelector("#hall-card");
+        this.panel = this.el.querySelector(".nav-left-container");
+        this.mainContainer = this.el.querySelector(".main-container");
         this.hallManageNaviWrapper = this.el.querySelector("#hall-manage-navi-wrapper");
+        this.hallWrapper = this.el.querySelector("#hall-card");
+
+        this.mainContainer.style.height = document.documentElement.clientHeight+"px";
+
+        mount(new AdminPanel({active: 3}), this.panel);
         mount(new HallManageNavi({
             activeView: this.state.viewTab,
             onViewChange: (viewType) => this.onViewChange(viewType)
@@ -42,7 +50,7 @@ class AdminCinemaManage extends Component {
                 mount(new ViewHall({}), this.hallWrapper);
                 break;
             case 1:
-                mount(new AddHall({seatRow:10, seatColumn:22}), this.hallWrapper);
+                mount(new AddHall({seatRow: 10, seatColumn: 22}), this.hallWrapper);
                 break;
             case 2:
                 mount(new ModifyHall({}), this.hallWrapper);

@@ -9,6 +9,8 @@ var colors = [
 ];
 
 $(document).ready(function() {
+    mount(new AdminPanel({active: 1}), document.querySelector(".nav-left-container"));
+
     var hallId,
         scheduleDate = formatDate(new Date()),
         schedules = [];

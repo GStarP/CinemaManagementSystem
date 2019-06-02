@@ -1,4 +1,5 @@
 $(document).ready(function() {
+    mount(new AdminPanel({active: 2}), document.querySelector(".nav-left-container"));
 
     var movieList;
     getAllMovies();

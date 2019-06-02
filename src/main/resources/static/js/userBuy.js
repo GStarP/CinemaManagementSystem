@@ -1,6 +1,8 @@
 const ticketState = {'0': '未支付', '1': '已完成', '2': '已失效', '3':'已出票', '4':'已退票'};
 
 $(document).ready(function () {
+    mount(new UserHeader({active: 3}), document.querySelector("#nav-top-container"));
+
     getMovieList();
 
     function getMovieList() {
