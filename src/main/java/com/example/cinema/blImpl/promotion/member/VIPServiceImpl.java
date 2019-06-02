@@ -14,13 +14,13 @@ import java.sql.Timestamp;
 
 
 /**
- * @author hxw
- * @date 2019-5-24
+ * Created by liying on 2019/4/14.
  */
 @Service
 public class VIPServiceImpl implements VIPService, VIPServiceForBl {
     @Autowired
     VIPCardMapper vipCardMapper;
+
     @Autowired
     ConsumeService consumeService;
 
@@ -31,10 +31,11 @@ public class VIPServiceImpl implements VIPService, VIPServiceForBl {
         vipCard.setCardTypeId(cardTypeId);
         vipCard.setBalance(0);
         try {
-            int id = vipCardMapper.insertOneCard(vipCard);
-            //TODO:添加消费记录,传入卡底价和优惠金额
-            consumeService.addConsumeHistory(userId,25.0,0.0,"银行卡", ConsumeHistory.BUY_VIP_CARD,id);
-            return ResponseVO.buildSuccess(vipCardMapper.selectCardById(id));
+            vipCardMapper.insertOneCard(vipCard);
+            VIPCard vip =  vipCardMapper.selectCardById(vipCard.getId());
+            //添加消费记录,传入卡底价和优惠金额
+            consumeService.addConsumeHistory(userId, vip.getCardType().getPrice(),0.0,"银行卡", ConsumeHistory.BUY_VIP_CARD, vipCard.getId());
+            return ResponseVO.buildSuccess(vip);
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseVO.buildFailure("失败");
@@ -91,6 +92,28 @@ public class VIPServiceImpl implements VIPService, VIPServiceForBl {
     public ResponseVO payByCard(int id, double balance) {
         try {
             vipCardMapper.updateCardBalance(id,balance);
+            return  ResponseVO.buildSuccess();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseVO.buildFailure("失败");
+        }
+    }
+
+    @Override
+    public ResponseVO changeVIPCard(int cardId, int cardTypeId) {
+        try {
+            VIPCard oldCard = vipCardMapper.selectCardById(cardId);
+            vipCardMapper.deleteCardById(cardId);
+
+            VIPCard vipCard = new VIPCard();
+            vipCard.setUserId(oldCard.getUserId());
+            vipCard.setCardTypeId(cardTypeId);
+            vipCard.setBalance(0);
+            vipCardMapper.insertOneCard(vipCard);
+            VIPCard newCard =  vipCardMapper.selectCardById(vipCard.getId());
+            consumeService.addConsumeHistory(oldCard.getUserId(), newCard.getCardType().getPrice(),0.0,"银行卡", ConsumeHistory.BUY_VIP_CARD, newCard.getId());
+
+            vipCardMapper.updateCardBalance(newCard.getId(),oldCard.getBalance() * 0.8);
             return  ResponseVO.buildSuccess();
         } catch (Exception e) {
             e.printStackTrace();

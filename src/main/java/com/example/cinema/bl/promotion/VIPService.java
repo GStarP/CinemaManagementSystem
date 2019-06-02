@@ -19,5 +19,5 @@ public interface VIPService {
 
     ResponseVO getCardByUserId(int userId);
 
-
+    ResponseVO changeVIPCard(int cardId, int cardTypeId);
 }
