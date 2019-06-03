@@ -1,19 +1,21 @@
 package com.example.cinema.blImpl.statistics;
 
 import com.example.cinema.bl.statistics.StatisticsService;
+import com.example.cinema.blImpl.management.hall.HallServiceForBl;
+import com.example.cinema.blImpl.management.movie.MovieServiceForBl;
+import com.example.cinema.blImpl.management.schedule.ScheduleServiceForBl;
+import com.example.cinema.blImpl.sales.TicketServiceForBl;
 import com.example.cinema.data.statistics.StatisticsMapper;
 import com.example.cinema.po.AudiencePrice;
 import com.example.cinema.po.MovieScheduleTime;
 import com.example.cinema.po.MovieTotalBoxOffice;
+import com.example.cinema.po.ScheduleItem;
 import com.example.cinema.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author fjj
@@ -23,6 +25,15 @@ import java.util.List;
 public class StatisticsServiceImpl implements StatisticsService {
     @Autowired
     private StatisticsMapper statisticsMapper;
+    @Autowired
+    private HallServiceForBl hallServiceForBl;
+    @Autowired
+    private ScheduleServiceForBl scheduleServiceForBl;
+    @Autowired
+    private MovieServiceForBl movieServiceForBl;
+    @Autowired
+    private TicketServiceForBl ticketServiceForBl;
+
     @Override
     public ResponseVO getScheduleRateByDate(Date date) {
         try{
@@ -79,7 +90,26 @@ public class StatisticsServiceImpl implements StatisticsService {
     public ResponseVO getMoviePlacingRateByDate(Date date) {
         try {
             Date nextDate = getNumDayAfterDate(date, 1);
-            List<PlacingRateVO> res = statisticsMapper.selectPlacingRate(date,nextDate);
+            List<PlacingRateVO> res = new ArrayList<>();
+            List<ScheduleItem> scheduleItems = scheduleServiceForBl.getScheduleBetweenDays(date,nextDate);
+            Map<String,int[]> map = new LinkedHashMap<>();
+            for (ScheduleItem item : scheduleItems) {
+                int[] arr = new int[2];
+                arr[0] = ticketServiceForBl.getTicketNumBySchedule(item.getId());
+                arr[1] = hallServiceForBl.getHallById(item.getHallId()).getSeatsNum();
+                String movieName = movieServiceForBl.getMovieById(item.getMovieId()).getName();
+                if (map.containsKey(movieName)) {
+                    arr[0] += map.get(movieName)[0];
+                    arr[1] += map.get(movieName)[1];
+                }
+                map.put(movieName,arr);
+            }
+            for (String name : map.keySet()) {
+                PlacingRateVO vo = new PlacingRateVO();
+                vo.setName(name);
+                vo.setPlacingRate((double) map.get(name)[0] / (double) map.get(name)[1]);
+                res.add(vo);
+            }
             return ResponseVO.buildSuccess(res);
         } catch (Exception e) {
             e.printStackTrace();

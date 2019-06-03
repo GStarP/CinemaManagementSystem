@@ -339,6 +339,11 @@ public class TicketServiceImpl implements TicketService,TicketServiceForBl {
         return ticketMapper.selectTicketById(ticketId);
     }
 
+    @Override
+    public int getTicketNumBySchedule(int scheduleId) {
+        return ticketMapper.selectTicketNumBySchedule(scheduleId);
+    }
+
     //获取应该使用的退票策略，直接返回折算策略
     private double getRefundStrategy(int scheduleId){
         ScheduleItem scheduleItem=scheduleService.getScheduleItemById(scheduleId);
