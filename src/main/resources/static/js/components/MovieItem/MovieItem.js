@@ -5,7 +5,7 @@ class MovieItem extends Component {
 
     // 点击事件
     onDetailClick() {
-        window.location.href = "/admin/movieDetail?id=" + this.props.movie.id;
+        this.props.onDetailClick(this.props.movie.id);
     }
 
     renderDOM() {

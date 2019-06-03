@@ -1,42 +1,30 @@
-$(document).ready(function(){
+$(document).ready(function () {
+    mount(new UserHeader({active: -1}), document.querySelector("#nav-top-container"));
 
     getMovieList('');
 
     function getMovieList(keyword) {
         getRequest(
-            '/movie/search?keyword='+keyword,
+            '/movie/search?keyword=' + keyword,
             function (res) {
                 renderMovieList(res.content);
             },
-             function (error) {
-            alert(error);
-        });
+            function (error) {
+                alert(error);
+            });
     }
 
     function renderMovieList(list) {
         $('.movie-on-list').empty();
-        var movieDomStr = '';
-        list.forEach(function (movie) {
-            if(movie.status!=1){
-                movie.description = movie.description || '';
-                movieDomStr +=
-                    "<li class='movie-item card'>" +
-                    "<img class='movie-img' src='" + (movie.posterUrl || "../images/defaultAvatar.jpg") + "'onclick='window.location.href=\"/user/movieDetail?id=" + movie.id + "\"'/>" +
-                    "<div class='movie-info'>" +
-                    "<div class='movie-title'>" +
-                    "<span class='primary-text' onclick='window.location.href=\"/user/movieDetail?id=" + movie.id + "\"'>" + movie.name + "</span>" +
-                    "<span class='label "+(!movie.status ? 'primary-bg' : 'error-bg')+"'>" + (new Date(movie.startDate)>=new Date()?'未上映':'热映中') + "</span>" +
-                    "<span class='movie-want'><i class='icon-heart error-text'></i>" + (movie.likeCount || 0) + "人想看</span>" +
-                    "</div>" +
-                    "<div class='movie-description dark-text'><span>" + movie.description + "</span></div>" +
-                    "<div>类型：" + movie.type + "</div>" +
-                    "<div style='display: flex'><span>导演：" + movie.director + "</span><span style='margin-left: 30px;'>主演：" + movie.starring + "</span>" +
-                    "<div class='movie-operation'><a href='/user/movieDetail?id="+ movie.id +"'>详情</a></div></div>" +
-                    "</div>"+
-                    "</li>";
-            }
+        // movieItem的点击事件，跳转到详情
+        const onItemClick = movieId => window.location.href = "/user/movieDetail?id=" + movieId;
+
+        list.forEach(movie => {
+            movie.description = movie.description || '';
+            const movieItem = createDOMFromString("<li class='movie-item card'></li>");
+            mount(new MovieItem({movie: movie, onDetailClick: movieId => onItemClick(movieId)}), movieItem);
+            $('.movie-on-list').append(movieItem);
         });
-        $('.movie-on-list').append(movieDomStr);
     }
 
     $('#search-btn').click(function () {

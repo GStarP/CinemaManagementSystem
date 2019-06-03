@@ -50,12 +50,15 @@ $(document).ready(function () {
 
     function renderMovieList(list) {
         $('.movie-on-list').empty();
+        // movieItem的点击事件，跳转到详情
+        const onItemClick = movieId => window.location.href = "/admin/movieDetail?id=" + movieId;
+
         list.forEach(movie => {
             movie.description = movie.description || '';
             const movieItem = createDOMFromString("<li class='movie-item card'></li>");
-            mount(new MovieItem({movie: movie}), movieItem);
+            mount(new MovieItem({movie: movie, onDetailClick: movieId => onItemClick(movieId)}), movieItem);
             $('.movie-on-list').append(movieItem);
-        })
+        });
     }
 
     /**
