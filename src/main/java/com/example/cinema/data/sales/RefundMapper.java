@@ -14,9 +14,9 @@ public interface RefundMapper {
 
     List<Refund> selectRefund();
 
-    void insertRefund(Refund refund);
+    int insertRefund(Refund refund);
 
-    void deleteRefundById(int refundId);
+    int deleteRefundById(int refundId);
 
     List<Refund> selectRefundByMovieId(int movieId);
 

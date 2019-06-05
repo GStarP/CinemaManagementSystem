@@ -62,7 +62,7 @@
     </resultMap>
 
     <update id="cleanExpiredTicket">
-        update ticket SET  state =2 WHERE minute(timediff(now(),time))>15 and state=0;
+        update ticket SET state =2 WHERE (minute(timediff(now(),time)))>15 and state=0;
     </update>
 
 </mapper>
