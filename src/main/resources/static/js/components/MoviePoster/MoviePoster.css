@@ -1,0 +1,32 @@
+#movie-poster-container{
+    margin: 20px;
+    border: 1px solid grey;
+}
+
+#movie-poster-container:hover{
+    cursor: pointer;
+    box-shadow: 2px 2px grey;
+}
+
+#movie-poster-content{
+
+}
+
+#movie-poster-content .movie-img{
+    width: 160px;
+    height: 220px;
+}
+
+#movie-poster-content #movie-poster-summary{
+    display: flex;
+
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+#movie-sales{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #1caf9a;
+}

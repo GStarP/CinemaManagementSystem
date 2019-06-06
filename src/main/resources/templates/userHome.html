@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>电影</title>
@@ -10,7 +10,9 @@
 
     <!-- 引入css样式文件 -->
     <link rel="stylesheet" type="text/css" href="/css/common.css"/>
-    <link rel="stylesheet" type="text/css" href="/css/userHome.css"/>
+    <link rel="stylesheet" type="text/css" href="/js/UserHome/UserHome.css"/>
+    <link rel="stylesheet" type="text/css" href="/js/components/MoviePoster/MoviePoster.css"/>
+    <link rel="stylesheet" type="text/css" href="/js/components/UserHeader/UserHeader.css"/>
 
     <!-- 引入js脚本文件 -->
     <!-- jquery -->
@@ -18,74 +20,14 @@
     <!-- Bootstrap 核心 JavaScript 文件 -->
     <script src="/js/bootstrap.js"></script>
     <script src="/js/request.js"></script>
-    <script src="/js/userHome.js"></script>
+    <script src="/js/Component.js"></script>
+    <script src="/js/components/UserHeader/UserHeader.js"></script>
+    <script src="/js/components/MoviePoster/MoviePoster.js"></script>
+    <script src="/js/UserHome/UserHome.js"></script>
 
 </head>
 <body>
-    <div class="nav-top-container">
-        <div class="nav-logo title">NJU-Se电影购票系统</div>
-        <ul class="nav nav-pills">
-            <li role="presentation" class="active"><a href="#">首页</a></li>
-            <li role="presentation"><a href="/user/movie">电影</a></li>
-        </ul>
-        <div class="btn-group">
-            <button class="nav-user-container btn dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <img class="avatar-sm" src="/images/defaultAvatar.jpg" />
-                <span class="gray-text" style="vertical-align: middle" th:text="${session.user.username}"><span class="caret"></span></span>
-            </button>
-            <ul class="dropdown-menu">
-                <li><a href="/user/history/consume">消费记录</a></li>
-                <li><a href="/user/history/topup">充值记录</a></li>
-                <li><a href="/user/edit">修改密码</a></li>
-                <li><a href="/user/buy">电影票</a></li>
-                <li><a href="/user/member">卡包</a></li>
-                <li id="logout"><a href="#">登出</a></li>
-            </ul>
-        </div>
-    </div>
-    暂时没内容，点击导航 ' 电影 ' 看看吧
-    <!-- 可能不需要的功能 -->
-    <!--<div class="content-container">-->
-        <!--<div class="movie-contianer">-->
-            <!--<p class="title primary-text">热映电影</p>-->
-            <!--<ul class="movie-on-list card">-->
-            <!--</ul>-->
-            <!--<p class="title primary-text">即将上映</p>-->
-            <!--<ul class="movie-off-list card">-->
-            <!--</ul>-->
-        <!--</div>-->
-        <!--<div class="statistic-container">-->
-            <!--<p class="title primary-text">票房统计</p>-->
-            <!--<ul class="top-sell-list card">-->
-                <!--<div class="statistic-item">-->
-                    <!--<span>电影1</span>-->
-                    <!--<span class="error-text">99</span>-->
-                <!--</div>-->
-                <!--<div class="statistic-item">-->
-                    <!--<span>电影1</span>-->
-                    <!--<span class="error-text">99</span>-->
-                <!--</div>-->
-                <!--<div class="statistic-item">-->
-                    <!--<span>电影1</span>-->
-                    <!--<span class="error-text">99</span>-->
-                <!--</div>-->
-            <!--</ul>-->
-            <!--<p class="title primary-text">最受欢迎</p>-->
-            <!--<ul class="top-expectation-list card">-->
-                <!--<div class="statistic-item">-->
-                    <!--<span>电影1</span>-->
-                    <!--<span class="error-text">99</span>-->
-                <!--</div>-->
-                <!--<div class="statistic-item">-->
-                    <!--<span>电影1</span>-->
-                    <!--<span class="error-text">99</span>-->
-                <!--</div>-->
-                <!--<div class="statistic-item">-->
-                    <!--<span>电影1</span>-->
-                    <!--<span class="error-text">99</span>-->
-                <!--</div>-->
-            <!--</ul>-->
-        <!--</div>-->
-    <!--</div>-->
+    <div id="nav-top-container"></div>
+    <div id="user-home-wrapper"></div>
 </body>
 </html>
