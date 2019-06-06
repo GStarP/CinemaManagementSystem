@@ -25,7 +25,7 @@ class MovieItem extends Component {
                 <div class='movie-description dark-text'><span> ${this.props.movie.description} </span></div>
                 <div>类型： ${this.props.movie.type} </div>
                 <div style='display: flex'>
-                    <span>导演： movie.director </span>
+                    <span>导演： ${this.props.movie.director} </span>
                     <span style='margin-left: 30px;'>主演： ${this.props.movie.starring} </span>
                     <div class='movie-operation'><a href='/admin/movieDetail?id=${this.props.movie.id}'>详情</a></div>
                 </div>
