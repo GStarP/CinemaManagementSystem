@@ -11,6 +11,8 @@ import com.example.cinema.po.MovieScheduleTime;
 import com.example.cinema.po.MovieTotalBoxOffice;
 import com.example.cinema.po.ScheduleItem;
 import com.example.cinema.vo.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +25,7 @@ import java.util.*;
  */
 @Service
 public class StatisticsServiceImpl implements StatisticsService {
+    public final static Logger logger = LoggerFactory.getLogger("****Statistics****");
     @Autowired
     private StatisticsMapper statisticsMapper;
     @Autowired
@@ -94,6 +97,7 @@ public class StatisticsServiceImpl implements StatisticsService {
             List<ScheduleItem> scheduleItems = scheduleServiceForBl.getScheduleBetweenDays(date,nextDate);
             Map<String,int[]> map = new LinkedHashMap<>();
             for (ScheduleItem item : scheduleItems) {
+                logger.info(movieServiceForBl.getMovieById(item.getMovieId()).getName());
                 int[] arr = new int[2];
                 arr[0] = ticketServiceForBl.getTicketNumBySchedule(item.getId());
                 arr[1] = hallServiceForBl.getHallById(item.getHallId()).getSeatsNum();
@@ -124,12 +128,13 @@ public class StatisticsServiceImpl implements StatisticsService {
             Date today = simpleDateFormat.parse(simpleDateFormat.format(new Date()));
             Date startDate = getNumDayAfterDate(today, -days+1);
             List<MovieTotalBoxOffice> list = statisticsMapper.selectRecentTotalBoxOffice(startDate,today,movieNum);
-            List<RecentPopularMovieVO> res = new ArrayList<>();
+            List<MovieLikeMostVO> res = new ArrayList<>();
             for (int i = 0; i < list.size(); i++) {
                 if (list.get(i).getBoxOffice() != 0) {
-                    RecentPopularMovieVO vo = new RecentPopularMovieVO();
+                    MovieLikeMostVO vo = new MovieLikeMostVO();
                     vo.setName(list.get(i).getName());
                     vo.setBoxOffice(list.get(i).getBoxOffice());
+                    vo.setPosterUrl(movieServiceForBl.getMovieById(list.get(i).getMovieId()).getPosterUrl());
                     res.add(vo);
                 }
             }
