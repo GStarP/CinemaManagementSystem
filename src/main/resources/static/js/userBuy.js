@@ -35,8 +35,9 @@ $(document).ready(function () {
                 '<td>' + ticketState[ticket.state] + '</td>' ;
             switch(ticket.state){
                 case 0:
+                    url="/user/movieDetail/buy?id="+ticket.movieId+"&scheduleId="+ticket.scheduleId
                     ticketListContent +=
-                                    '<td><a class="pay-ticket" id=p'+ticket.id+'>支付</a><tb>'+
+                                    '<td><a class="pay-ticket" id=p'+ticket.id+' href='+url+'>支付</a><tb>'+
                                     '</tr>';
                     break;
                 case 1:

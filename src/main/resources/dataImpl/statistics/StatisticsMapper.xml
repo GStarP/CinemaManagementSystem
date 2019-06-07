@@ -25,19 +25,6 @@
         on schedule.id = schedule_id group by user_id
     </select>
 
-    <select id="selectPlacingRate" resultType="com.example.cinema.vo.PlacingRateVO">
-        select name, ifnull(tickets/seats,0) as placingRate from (select name, ifnull(sum(ticketNum),0) as tickets, ifnull(sum(seatsNum),0) as seats from movie
-	      left join (select ticketNum, movie_id, hall.column*hall.row as seatsNum from hall
-		    right join (select id as schedule_id, ifnull(ticketNum,0) as ticketNum, movie_id, hall_id from (select * from schedule where start_time between #{date} and #{nextDate}) s
-			  left join (select id as schedule_id, count(*) as ticketNum, start_time from schedule
-				right join (select schedule_id from ticket where state = 1) t1
-				on schedule.id = t1.schedule_id group by id) t2
-			  on s.id = t2.schedule_id) t3
-		    on hall.id = t3.hall_id) t4
-	      on movie.id = t4.movie_id group by movie.id) t5
-    </select>
-
-
     <select id="selectRecentTotalBoxOffice" resultType="com.example.cinema.po.MovieTotalBoxOffice">
         select movie.id as movieId, ifnull(boxOffice,0) as boxOffice, name from movie
         left join

@@ -40,7 +40,7 @@ public class TicketVO {
     private double actualPay;
 
     /**
-     *
+     * 购票时间
      */
     private Timestamp time;
 

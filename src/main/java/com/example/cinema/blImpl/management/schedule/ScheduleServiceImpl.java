@@ -158,6 +158,11 @@ public class ScheduleServiceImpl implements ScheduleService, ScheduleServiceForB
     }
 
     @Override
+    public List<ScheduleItem> getScheduleBetweenDays(Date startDate, Date endDate) {
+        return scheduleMapper.selectScheduleBetweenDays(startDate,endDate);
+    }
+
+    @Override
     public ResponseVO searchScheduleSevenDays(int hallId, Date startDate) {
         try {
             // 处理查询表单的起止时间
@@ -257,7 +262,7 @@ public class ScheduleServiceImpl implements ScheduleService, ScheduleServiceForB
             }
 
             // 检查电影是否存在
-            Movie movie = (Movie) movieServiceForBl.getMovieById(scheduleForm.getMovieId()).getContent();
+            Movie movie = movieServiceForBl.getMovieById(scheduleForm.getMovieId());
             if(movie == null){
                 return ResponseVO.buildFailure(MOVIE_NOT_EXIST_ERROR_MESSAGE);
             }

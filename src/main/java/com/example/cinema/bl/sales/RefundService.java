@@ -24,13 +24,6 @@ public interface RefundService {
     ResponseVO publishRefund(RefundForm refundForm);
 
     /**
-     * 用于修改退票策略
-     * @param refundForm
-     * @return
-     */
-    ResponseVO changeRefund(int refundID, RefundForm refundForm);
-
-    /**
      * 用于删除退票策略
      * @param refundId
      * @return

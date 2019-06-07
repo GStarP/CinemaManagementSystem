@@ -26,11 +26,6 @@ public class ActivityController {
         return activityService.getActivities();
     }
 
-    @PostMapping("/change/{activityId}")
-    public ResponseVO changeActivity(@PathVariable int activityId, @RequestBody ActivityForm activityForm){
-        return activityService.changeActivity(activityId, activityForm);
-    }
-
     @GetMapping("/delete")
     public ResponseVO deleteActivity(@RequestParam int activityId){
         return activityService.deleteActivity(activityId);

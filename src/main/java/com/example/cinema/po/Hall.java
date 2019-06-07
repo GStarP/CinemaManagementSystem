@@ -62,4 +62,16 @@ public class Hall {
     public void setGeneratedSeats(int[][] seats){
         this.setSeats(new Gson().toJson(seats));
     }
+
+    //获得影厅可用座位总数
+    public int getSeatsNum() {
+        int[][] seats = getParsedSeats();
+        int sum = 0;
+        for (int i = 0; i < seats.length; i++) {
+            for (int j = 0; j < seats[i].length; j++) {
+                sum += (seats[i][j] + 1);
+            }
+        }
+        return sum;
+    }
 }

@@ -8,8 +8,21 @@ import com.example.cinema.blImpl.promotion.activity.ActivityServiceForBl;
 import com.example.cinema.blImpl.promotion.coupon.CouponServiceForBl;
 import com.example.cinema.blImpl.promotion.member.VIPServiceForBl;
 import com.example.cinema.data.sales.TicketMapper;
-import com.example.cinema.po.*;
-import com.example.cinema.vo.*;
+import com.example.cinema.po.Coupon;
+import com.example.cinema.po.Hall;
+import com.example.cinema.po.ScheduleItem;
+import com.example.cinema.po.Ticket;
+import com.example.cinema.po.VIPCard;
+import com.example.cinema.po.ConsumeHistory;
+import com.example.cinema.po.Activity;
+import com.example.cinema.po.Refund;
+import com.example.cinema.vo.ResponseVO;
+import com.example.cinema.vo.ScheduleWithSeatVO;
+import com.example.cinema.vo.TicketForm;
+import com.example.cinema.vo.UserTicketVO;
+import com.example.cinema.vo.TicketWithCouponVO;
+import com.example.cinema.vo.SeatForm;
+import com.example.cinema.vo.TicketVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,7 +36,7 @@ import java.util.List;
  * Created by liying on 2019/4/16.
  */
 @Service
-public class TicketServiceImpl implements TicketService {
+public class TicketServiceImpl implements TicketService,TicketServiceForBl {
 
     @Autowired
     ConsumeService consumeService;
@@ -71,7 +84,7 @@ public class TicketServiceImpl implements TicketService {
     @Override
     @Transactional
     public ResponseVO completeTicket(List<Integer> id, int couponId) {
-        //TODO:1. 默认成功(√)
+        //   1. 默认成功(√)
         //   2. 校验优惠券是否存在、是否能用(√)
         //   3. 根据活动赠送优惠券(√)
 
@@ -160,6 +173,7 @@ public class TicketServiceImpl implements TicketService {
                 vo.setStartTime(scheduleItem.getStartTime());
                 vo.setEndTime(scheduleItem.getEndTime());
                 vo.setState(ticket.getState());
+                vo.setMovieId(scheduleItem.getMovieId());
                 res.add(vo);
             }
             return ResponseVO.buildSuccess(res);
@@ -172,7 +186,7 @@ public class TicketServiceImpl implements TicketService {
     @Override
     @Transactional
     public ResponseVO completeByVIPCard(List<Integer> id, int couponId) {
-        //TODO:1. 调用VIPService的方法更新会员卡余额(√)
+        //   1. 调用VIPService的方法更新会员卡余额(√)
         //   2. 校验优惠券是否存在、是否能用(√)
         //   3. 用boolean ResponseVO.success表示支付是否成功(√)
         //   4. 根据活动赠送优惠券(√)
@@ -236,7 +250,6 @@ public class TicketServiceImpl implements TicketService {
                 if (ticket.getState() == 0 || ticket.getState() == 2 || ticket.getState() == 3 || ticket.getState() == 4) {
                     ticketMapper.deleteTicket(ticket.getId());
                 }else if (ticket.getState() == 1) {
-                    //TODO:返还用户的退款
                     if (vipService.getCardByUserId(ticket.getUserId()).getSuccess()){
                         VIPCard vipCard= (VIPCard) vipService.getCardByUserId(ticket.getUserId()).getContent();
                         double refundPrice=ticket.getActualPay()*getRefundStrategy(ticket.getScheduleId());  //应退还金额
@@ -322,8 +335,13 @@ public class TicketServiceImpl implements TicketService {
     }
 
     //通过id获得电影票详细信息
-    private Ticket getTicketById(int ticketId){
+    public Ticket getTicketById(int ticketId){
         return ticketMapper.selectTicketById(ticketId);
+    }
+
+    @Override
+    public int getTicketNumBySchedule(int scheduleId) {
+        return ticketMapper.selectTicketNumBySchedule(scheduleId);
     }
 
     //获取应该使用的退票策略，直接返回折算策略
@@ -343,4 +361,6 @@ public class TicketServiceImpl implements TicketService {
         }
         return discount/100.0;
     }
+
+
 }
