@@ -13,6 +13,7 @@
     <link rel="stylesheet" type="text/css" href="/js/UserHome/UserHome.css"/>
     <link rel="stylesheet" type="text/css" href="/js/components/MoviePoster/MoviePoster.css"/>
     <link rel="stylesheet" type="text/css" href="/js/components/UserHeader/UserHeader.css"/>
+    <link rel="stylesheet" type="text/css" href="/js/components/Banner/Banner.css"/>
 
     <!-- 引入js脚本文件 -->
     <!-- jquery -->
@@ -23,11 +24,30 @@
     <script src="/js/Component.js"></script>
     <script src="/js/components/UserHeader/UserHeader.js"></script>
     <script src="/js/components/MoviePoster/MoviePoster.js"></script>
+    <script src="/js/userHome/MovieRank/MovieRank.js"></script>
+    <script src="/js/components/Banner/Banner.js"></script>
     <script src="/js/UserHome/UserHome.js"></script>
 
 </head>
 <body>
     <div id="nav-top-container"></div>
     <div id="user-home-wrapper"></div>
+    <script>
+        //延迟1s否则组件js未执行完毕
+        setTimeout(function () {
+            //轮播Banner自动滚动(在组件里实在实现不了)
+            var timer = setInterval(function () {
+                $(".banner-3").click();
+            },3000);
+            $('#user-home-banner').mouseenter(function () {
+                clearInterval(timer);
+            });
+            $('#user-home-banner').mouseleave(function () {
+                timer = setInterval(function () {
+                    $(".banner-3").click();
+                },3000);
+            });
+        },1000);
+    </script>
 </body>
 </html>

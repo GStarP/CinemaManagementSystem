@@ -132,6 +132,7 @@ public class StatisticsServiceImpl implements StatisticsService {
             for (int i = 0; i < list.size(); i++) {
                 if (list.get(i).getBoxOffice() != 0) {
                     MovieLikeMostVO vo = new MovieLikeMostVO();
+                    vo.setMovieId(list.get(i).getMovieId());
                     vo.setName(list.get(i).getName());
                     vo.setBoxOffice(list.get(i).getBoxOffice());
                     vo.setPosterUrl(movieServiceForBl.getMovieById(list.get(i).getMovieId()).getPosterUrl());

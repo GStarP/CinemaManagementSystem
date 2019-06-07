@@ -6,6 +6,10 @@ package com.example.cinema.vo;
  */
 public class MovieLikeMostVO {
     /**
+     * 电影id
+     */
+    private Integer movieId;
+    /**
      * 指定时间段内总票房
      */
     private Integer boxOffice;
@@ -40,5 +44,13 @@ public class MovieLikeMostVO {
 
     public void setPosterUrl(String posterUrl) {
         this.posterUrl = posterUrl;
+    }
+
+    public Integer getMovieId() {
+        return movieId;
+    }
+
+    public void setMovieId(Integer movieId) {
+        this.movieId = movieId;
     }
 }
