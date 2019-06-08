@@ -13,19 +13,9 @@ class UserHome extends Component {
             </div>
         `;
         this.el = createDOMFromString(el_html);
-        this.container = this.el.querySelector("#user-home-movies");
-        for (let i = 0; i < 10; i++) {
-            const child = createDOMFromString("<div></div>");
-            mount(new MoviePoster({
-                movie: {
-                    id: 10,
-                    name: "夏目友人帐",
-                    likeCount: 10,
-                    posterUrl: "http://n.sinaimg.cn/translate/640/w600h840/20190312/ampL-hufnxfm4278816.jpg"
-                }
-            }), child);
-            this.container.appendChild(child);
-        }
+        this.hotMovies = this.el.querySelector("#user-home-movies");
+        mount(new HotMovies({}), this.hotMovies);
+
         return this.el;
     }
 }
