@@ -10,7 +10,7 @@ class MovieItem extends Component {
 
     renderDOM() {
         const el_html = `
-        <div class='movie-item card'>
+        <div class='movie-item card' id="movie-item-container">
             <img class='movie-img' src='${this.props.movie.posterUrl || "../images/defaultAvatar.jpg"}'/>
             <div class='movie-info'>
                 <div class='movie-title'>
@@ -27,12 +27,14 @@ class MovieItem extends Component {
                 <div style='display: flex'>
                     <span>导演： ${this.props.movie.director} </span>
                     <span style='margin-left: 30px;'>主演： ${this.props.movie.starring} </span>
-                    <div class='movie-operation'><a href='/admin/movieDetail?id=${this.props.movie.id}'>详情</a></div>
+                    <div class='movie-operation'><a href='#'>详情</a></div>
                 </div>
             </div>
         </div>
         `;
         this.el = createDOMFromString(el_html);
+        this.movieOperation = this.el.querySelector(".movie-operation");
+        this.movieOperation.addEventListener('click', () => this.onDetailClick());
         this.el.addEventListener('click', () => this.onDetailClick());
 
         return this.el;
