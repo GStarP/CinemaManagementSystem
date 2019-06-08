@@ -20,7 +20,7 @@ class MoviePoster extends Component {
                     </div>
                 </div>
                 <div id="movie-sales">
-                    购票
+                    ${this.props.type}
                 </div>
             </div>
         `;

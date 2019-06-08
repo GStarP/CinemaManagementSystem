@@ -10,7 +10,7 @@ class MovieRank extends Component {
     renderDOM() {
         const el_html = `
             <div class="movie-rank-layout">
-                <div id="movie-rank-title">近期最热</div>
+                <div id="movie-rank-title">票房排行</div>
                 <div id="movie-rank-list"></div>
             </div>`;
         this.el = createDOMFromString(el_html);

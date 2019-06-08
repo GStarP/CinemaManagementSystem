@@ -78,9 +78,7 @@
 }
 
 #user-home-movies{
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
+
 }
 
 #user-home-ranking{

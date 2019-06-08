@@ -1,4 +1,4 @@
-class HotMovies extends Component{
+class ComingMovies extends Component {
     constructor(props) {
         super(props);
 
@@ -6,16 +6,16 @@ class HotMovies extends Component{
 
     renderDOM() {
         const el_html = `
-            <div id="hot-movies-container">
-                <div id="hot-movies-title">
-                    近期最热
+            <div id="coming-movies-container">
+                <div id="coming-movies-title">
+                    即将上映
                 </div>
-                <div id="hot-movies-grid">
+                <div id="coming-movies-grid">
                 </div>
             </div>
         `;
         this.el = createDOMFromString(el_html);
-        this.hotMovies = this.el.querySelector("#hot-movies-grid");
+        this.comingMovies = this.el.querySelector("#coming-movies-grid");
 
         for (let i = 0; i < 10; i++) {
             const child = createDOMFromString("<div></div>");
@@ -26,9 +26,9 @@ class HotMovies extends Component{
                     likeCount: 10,
                     posterUrl: "http://n.sinaimg.cn/translate/640/w600h840/20190312/ampL-hufnxfm4278816.jpg",
                 },
-                type: "购票"
+                type: "详情"
             }), child);
-            this.hotMovies.appendChild(child);
+            this.comingMovies.appendChild(child);
         }
 
         return this.el;
