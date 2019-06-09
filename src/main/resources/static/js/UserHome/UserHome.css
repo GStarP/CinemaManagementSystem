@@ -81,10 +81,21 @@
 
 }
 
+#user-home-banner-ranking{
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+    width: 100%;
+}
+
 #user-home-ranking{
-    width: 25%;
+    flex: 1;
+    margin-left: 20px;
+    margin-right: 20px;
 }
 
 #user-home-banner {
-    width: 75%;
+    flex: 3;
+    margin-left: 20px;
+    margin-right: 20px;
 }
