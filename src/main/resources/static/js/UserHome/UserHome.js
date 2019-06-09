@@ -28,48 +28,48 @@ class UserHome extends Component {
 $(document).ready(function () {
     mount(new UserHome({}), document.querySelector("#user-home-wrapper"));
     mount(new UserHeader({}), document.querySelector("#nav-top-container"));
-    const movies = [{
-        movieId: 10,
-        name: '复仇者联盟',
-        boxOffice: 12345
-    }, {
-        movieId: 12,
-        name: 'X战警',
-        boxOffice: 888
-    }, {
-        movieId: 12,
-        name: 'A战警',
-        boxOffice: 887
-    }, {
-        movieId: 12,
-        name: 'B战警',
-        boxOffice: 850
-    }, {
-        movieId: 12,
-        name: 'C战警',
-        boxOffice: 400
-    }, {
-        movieId: 12,
-        name: 'D战警',
-        boxOffice: 100
-    }, {
-        movieId: 12,
-        name: 'E战警',
-        boxOffice: 887
-    }, {
-        movieId: 12,
-        name: 'F战警',
-        boxOffice: 850
-    }, {
-        movieId: 12,
-        name: 'G战警',
-        boxOffice: 400
-    }, {
-        movieId: 12,
-        name: 'H战警',
-        boxOffice: 100
-    }];
-    mount(new MovieRank({hotMovies: movies}), document.querySelector("#user-home-ranking"));
+    // const movies = [{
+    //     movieId: 10,
+    //     name: '复仇者联盟',
+    //     boxOffice: 12345
+    // }, {
+    //     movieId: 12,
+    //     name: 'X战警',
+    //     boxOffice: 888
+    // }, {
+    //     movieId: 12,
+    //     name: 'A战警',
+    //     boxOffice: 887
+    // }, {
+    //     movieId: 12,
+    //     name: 'B战警',
+    //     boxOffice: 850
+    // }, {
+    //     movieId: 12,
+    //     name: 'C战警',
+    //     boxOffice: 400
+    // }, {
+    //     movieId: 12,
+    //     name: 'D战警',
+    //     boxOffice: 100
+    // }, {
+    //     movieId: 12,
+    //     name: 'E战警',
+    //     boxOffice: 887
+    // }, {
+    //     movieId: 12,
+    //     name: 'F战警',
+    //     boxOffice: 850
+    // }, {
+    //     movieId: 12,
+    //     name: 'G战警',
+    //     boxOffice: 400
+    // }, {
+    //     movieId: 12,
+    //     name: 'H战警',
+    //     boxOffice: 100
+    // }];
+    mount(new MovieRank({}), document.querySelector("#user-home-ranking"));
     const images = [{
         url: 'https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=1246180815,1068531272&fm=26&gp=0.jpg',
         navigate: '#'

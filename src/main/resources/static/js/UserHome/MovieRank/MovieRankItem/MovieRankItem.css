@@ -9,17 +9,22 @@
 #movie-rank-item-left {
     display: flex;
     justify-content: left;
+    /*防止文本过长将父容器撑开*/
+    width: 250px;
 }
 
 #movie-rank-item-index {
     /*font-size: 18px;*/
     font-style: italic;
     font-weight: bold;
-    width: 24px;
+    width: 26px;
 }
 
 #movie-rank-item-name {
     /*font-size: 16px;*/
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 #movie-rank-item-value {
