@@ -1,7 +1,20 @@
 class ComingMovies extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+            comingMovies: []
+        };
+        this.getComingMovies();
+    }
 
+    // 从后端获取即将上映电影列表
+    getComingMovies() {
+        fetch('/movie/coming/top', {method: 'GET'})
+            .then(response => response.json())
+            .then(res => this.setState({
+                comingMovies: res.content
+            }))
+            .catch(error => alert(error));
     }
 
     renderDOM() {
@@ -17,19 +30,14 @@ class ComingMovies extends Component {
         this.el = createDOMFromString(el_html);
         this.comingMovies = this.el.querySelector("#coming-movies-grid");
 
-        for (let i = 0; i < 10; i++) {
+        this.state.comingMovies.forEach(movie => {
             const child = createDOMFromString("<div></div>");
             mount(new MoviePoster({
-                movie: {
-                    id: 10,
-                    name: "夏目友人帐",
-                    likeCount: 10,
-                    posterUrl: "http://n.sinaimg.cn/translate/640/w600h840/20190312/ampL-hufnxfm4278816.jpg",
-                },
+                movie: movie,
                 type: "详情"
             }), child);
             this.comingMovies.appendChild(child);
-        }
+        });
 
         return this.el;
     }

@@ -66,6 +66,11 @@ public class MovieController {
         return movieService.getMovieByKeyword(keyword);
     }
 
+    @RequestMapping(value = "/movie/coming/top", method = RequestMethod.GET)
+    public ResponseVO getComingMovies(){
+        return movieService.searchComingMoviesTop();
+    }
+
     @RequestMapping(value = "/movie/off/batch",method = RequestMethod.POST)
     public ResponseVO pullOfBatchOfMovie(@RequestBody MovieBatchOffForm movieBatchOffForm){
         return movieService.pullOfBatchOfMovie(movieBatchOffForm);

@@ -31,6 +31,12 @@ public interface MovieService {
     ResponseVO searchAllMovie();
 
     /**
+     * 获取即将上映的电影列表
+     * @return
+     */
+    ResponseVO searchComingMoviesTop();
+
+    /**
      * 搜索全部电影(不包括已经下架的)
      * @return
      */
