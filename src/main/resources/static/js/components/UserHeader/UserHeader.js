@@ -23,6 +23,7 @@ class UserHeader extends Component {
                 <ul class="nav nav-pills">
                     <li role="presentation"><a href="/user/home">首页</a></li>
                     <li role="presentation"><a href="/user/movie">电影</a></li>
+                    <li role="presentation"><a href="/user/lottery">抽奖</a></li>
                 </ul>
                 <div class="btn-group">
                     <button class="nav-user-container btn dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
