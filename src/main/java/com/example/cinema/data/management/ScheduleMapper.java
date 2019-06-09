@@ -117,4 +117,12 @@ public interface ScheduleMapper {
      */
     List<Integer> getHallsInSchedules();
 
+    /**
+     * 获取指定日期段内全部排片
+     * @param startDate
+     * @param endDate
+     * @return
+     */
+    List<ScheduleItem> selectScheduleBetweenDays(@Param("startDate") Date startDate, @Param("endDate") Date endDate);
+
 }

@@ -1,6 +1,7 @@
 var presentId = 0;
 
 $(document).ready(function () {
+    mount(new AdminPanel({active: 8}), document.querySelector(".nav-left-container"));
 
     getRoleList();
 

@@ -1,4 +1,6 @@
 $(document).ready(function() {
+    mount(new AdminPanel({active: 7}), document.querySelector(".nav-left-container"));
+
     initUserTable();
     initCouponTable();
 

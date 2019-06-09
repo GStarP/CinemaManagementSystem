@@ -1,5 +1,5 @@
 $(document).ready(function() {
-
+    mount(new AdminPanel({active: 4}), document.querySelector(".nav-left-container"));
 
     getScheduleRate();
     
@@ -182,7 +182,7 @@ $(document).ready(function() {
                 });
                 var option = {
                     title : {
-                        text: date+'上座率',
+                        text: date + '上座率',
                         x:'center'
                     },
                     xAxis: {
@@ -200,7 +200,8 @@ $(document).ready(function() {
                     },
                     series: [{
                         data: tableData,
-                        type: 'line'
+                        type: 'bar',
+                        barMaxWidth: '100'
                     }]
                 };
                 var scheduleRateChart = echarts.init($("#place-rate-container")[0]);

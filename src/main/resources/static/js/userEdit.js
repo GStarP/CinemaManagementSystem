@@ -6,6 +6,7 @@ var newPwdReady = false;
 var checkReady = false;
 
 $(document).ready(function () {
+    mount(new UserHeader({active: 2}), document.querySelector("#nav-top-container"));
 
     $('#raw-pwd-input').blur(function () {
         var rawPwdInput = $('#raw-pwd-input').val();

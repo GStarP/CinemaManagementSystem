@@ -1,5 +1,5 @@
 $(document).ready(function () {
-
+    mount(new UserHeader({active: 1}), document.querySelector("#nav-top-container"));
 
     getTopUpHistoryList();
 
