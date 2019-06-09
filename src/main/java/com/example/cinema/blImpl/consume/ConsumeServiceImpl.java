@@ -93,7 +93,7 @@ public class ConsumeServiceImpl implements ConsumeService{
                 vo.setRowIndex(ticket.getRowIndex()+1);
                 ScheduleItem schedule = scheduleServiceForBl.getScheduleItemById(ticket.getScheduleId());
                 vo.setStartTime(schedule.getStartTime());
-                vo.setMovieName(((Movie)movieServiceForBl.getMovieById(schedule.getMovieId()).getContent()).getName());
+                vo.setMovieName(movieServiceForBl.getMovieById(schedule.getMovieId()).getName());
                 vo.setHallName(hallServiceForBl.getHallById(schedule.getHallId()).getName());
                 return ResponseVO.buildSuccess(vo);
             } else if (history.getType() == ConsumeHistory.BUY_VIP_CARD) {

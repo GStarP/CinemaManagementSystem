@@ -46,7 +46,8 @@ class UserHeader extends Component {
 
         this.logoutButton.addEventListener('click', () => this.onLogoutListener());
         // 权限展示
-        this.menuItems[this.state.active].querySelector("a").href = "#";
+        if (this.state.active >= 0)
+            this.menuItems[this.state.active].querySelector("a").href = "#";
 
         return this.el;
     }

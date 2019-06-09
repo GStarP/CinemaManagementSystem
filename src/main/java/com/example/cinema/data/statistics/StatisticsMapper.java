@@ -38,14 +38,6 @@ public interface StatisticsMapper {
     List<AudiencePrice> selectAudiencePrice(@Param("date") Date date, @Param("nextDate") Date nextDate);
 
     /**
-     * 查询各电影指定日期上座率
-     * @param date
-     * @param nextDate
-     * @return
-     */
-    List<PlacingRateVO> selectPlacingRate(@Param("date") Date date, @Param("nextDate") Date nextDate);
-
-    /**
      * 查询指定日期段内各电影总票房的前几位
      * @param startDate
      * @param today
