@@ -14,8 +14,7 @@
 
 #banner-list ul li{
     position: absolute;
-    top: 0;
-    left: 0;
+    margin-left: -5%;
     list-style: none;
     transition: all 0.3s ease-out;
 }
@@ -28,7 +27,7 @@
 }
 .banner-1{
     transform:translate3d(0px,0,0) scale(0.81);
-    transform-origin:30% 50%;
+    transform-origin:100% 50%;
     opacity: 0.8;
     z-index: 2;
 }
@@ -39,7 +38,7 @@
 }
 .banner-3{
     transform:translate3d(449px,0,0) scale(0.81);
-    transform-origin:70% 50%;
+    transform-origin:0% 50%;
     opacity: 0.8;
     z-index: 2;
 }
