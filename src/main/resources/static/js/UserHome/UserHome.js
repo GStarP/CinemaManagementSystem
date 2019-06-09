@@ -52,6 +52,22 @@ $(document).ready(function () {
         movieId: 12,
         name: 'D战警',
         boxOffice: 100
+    }, {
+        movieId: 12,
+        name: 'E战警',
+        boxOffice: 887
+    }, {
+        movieId: 12,
+        name: 'F战警',
+        boxOffice: 850
+    }, {
+        movieId: 12,
+        name: 'G战警',
+        boxOffice: 400
+    }, {
+        movieId: 12,
+        name: 'H战警',
+        boxOffice: 100
     }];
     mount(new MovieRank({hotMovies: movies}), document.querySelector("#user-home-ranking"));
     const images = [{
