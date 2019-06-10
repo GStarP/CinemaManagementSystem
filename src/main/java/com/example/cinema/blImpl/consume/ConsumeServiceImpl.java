@@ -107,6 +107,9 @@ public class ConsumeServiceImpl implements ConsumeService{
                 VIPCard card = (VIPCard) vipService.getCardById(history.getContentId()).getContent();
                 vo.setCardType(card.getCardType().getName());
                 return ResponseVO.buildSuccess(vo);
+            } else if (history.getType() == ConsumeHistory.BUY_LOTTERY) {
+                //TODO:抽奖的消费记录
+                return ResponseVO.buildSuccess();
             } else {
                 return ResponseVO.buildFailure("消费类型错误!");
             }
@@ -160,10 +163,13 @@ public class ConsumeServiceImpl implements ConsumeService{
      * @return
      */
     private String getTypeStr(Integer type) {
+        //无法使用switch
         if (type == ConsumeHistory.BUY_TICKET) {
             return ConsumeHistory.BUY_TICKET_STR;
         } else if (type == ConsumeHistory.BUY_VIP_CARD) {
             return ConsumeHistory.BUY_VIP_CARD_STR;
+        } else if (type == ConsumeHistory.BUY_LOTTERY) {
+            return ConsumeHistory.BUY_LOTTERY_STR;
         } else {
             return "";
         }

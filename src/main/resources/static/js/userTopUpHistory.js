@@ -29,6 +29,7 @@ function getTopUpHistoryList() {
  */
 function renderTopUpHistory(histories) {
     if (!histories || histories.length == 0) {
+        $('#topup-his-list').attr("style","visibility: hidden");
         $('#no-his-caption').attr("style","visibility: visible");
         return;
     }
@@ -36,31 +37,23 @@ function renderTopUpHistory(histories) {
     for (let his of histories) {
         accordionContent += getPanelHTML(his);
     }
-    $('#accordion').html(accordionContent);
+    $('#topup-his-list').html(accordionContent);
 }
 
 /**
  * 获取充值记录子项HTML代码
  * @author hxw
- * @date 2019-5-21
+ * @date 2019-6-10
  * @param his
  * @return
  */
 function getPanelHTML(his) {
-    return "<div class='panel panel-default'>" +
-             "<div class='panel-heading'>" +
-               "<h4 class='panel-title'>" +
-                 "<a class='content-wrapper' data-toggle='collapse' data-parent='#accordion' href='#collapse"+his.id+"'>" +
-                   "<div class='txt-one'><b>充值金额</b> : "+his.money+"</div><div class='txt-two'><b>充值时间</b> : "+formateTime(his.time) + "</div>" +
-                 "</a>" +
-               "</h4>" +
-             "</div>" +
-             "<div class='panel-collapse collapse' id='collapse"+his.id+"'>" +
-               "<div class='panel-body content-wrapper'>" +
-                 "<div class='txt-one'><b>优惠金额</b> : "+his.discount+"</div><div class='txt-two'><b>会员卡余额</b> : "+his.balance + "</div>" +
-               "</div>" +
-             "</div>" +
-           "</div>";
+    return "<tr>" +
+                "<td>" + his.money + "</td>" +
+                "<td>" + his.discount + "</td>" +
+                "<td>" + formateTime(his.time) + "</td>" +
+                "<td>" + his.balance + "</td>" +
+           "</tr>";
 }
 
 function formateTime(time) {

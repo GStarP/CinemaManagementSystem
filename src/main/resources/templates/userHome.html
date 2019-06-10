@@ -43,16 +43,21 @@
         //延迟1s否则组件js未执行完毕
         setTimeout(function () {
             //轮播Banner自动滚动(在组件里实在实现不了)
-            var timer = setInterval(function () {
+            var timers = [];
+            let firstTimer = setInterval(function () {
                 $(".banner-3").click();
             },3000);
+            timers.push(firstTimer);
             $('#user-home-banner').mouseenter(function () {
-                clearInterval(timer);
+                for (let t of timers) {
+                    clearInterval(t);
+                }
             });
             $('#user-home-banner').mouseleave(function () {
-                timer = setInterval(function () {
+                let timer = setInterval(function () {
                     $(".banner-3").click();
                 },3000);
+                timers.push(timer);
             });
         },1000);
     </script>

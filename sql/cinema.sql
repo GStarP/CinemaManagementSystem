@@ -800,6 +800,43 @@ VALUES (1, 15, 20.5, 0.5, '会员卡', 101, 16),
 UNLOCK TABLES;
 
 --
+-- Table structure for table `banner`
+--
+
+DROP TABLE IF EXISTS `banner`;
+/*!40101 SET @saved_cs_client = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `banner`
+(
+  `img1`        VARCHAR(250) NOT NULL,
+  `navi1`       VARCHAR(250) NOT NULL,
+  `img2`        VARCHAR(250) NOT NULL,
+  `navi2`       VARCHAR(250) NOT NULL,
+  `img3`        VARCHAR(250) NOT NULL,
+  `navi3`       VARCHAR(250) NOT NULL
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `banner`
+--
+
+LOCK TABLES `banner` WRITE;
+/*!40000 ALTER TABLE `banner`
+  DISABLE KEYS */;
+INSERT INTO `banner`
+VALUES ('https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=1246180815,1068531272&fm=26&gp=0.jpg',
+        '#',
+        'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1559894859551&di=4c6309c77d87473a15c2c0b2da4f6aa7&imgtype=0&src=http%3A%2F%2Fimg4.a0bi.com%2Fupload%2Fttq%2F20180131%2F1517407295942.jpg',
+        '#',
+        'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1560489614&di=c0d417ec78d087bec02e61b7ec7f7bcb&imgtype=jpg&er=1&src=http%3A%2F%2Fi0.hdslb.com%2Fbfs%2Farticle%2F0a728a07a1dd3bca30ecd9c6e8f84b2573d52699.jpg',
+        '#');
+/*!40000 ALTER TABLE `banner`
+  ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Dumping events for database 'cinema'
 --
 
