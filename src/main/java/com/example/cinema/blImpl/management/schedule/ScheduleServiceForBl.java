@@ -2,6 +2,7 @@ package com.example.cinema.blImpl.management.schedule;
 
 import com.example.cinema.po.ScheduleItem;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -28,4 +29,12 @@ public interface ScheduleServiceForBl {
      * @return
      */
     List<Integer> getScheduledHalls();
+
+    /**
+     * 获取指定日期区间的全部排片
+     * @param startDate
+     * @param endDate
+     * @return
+     */
+    List<ScheduleItem> getScheduleBetweenDays(Date startDate, Date endDate);
 }

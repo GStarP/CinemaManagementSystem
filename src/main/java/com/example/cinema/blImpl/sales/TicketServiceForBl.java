@@ -14,4 +14,11 @@ public interface TicketServiceForBl {
      * @return
      */
     Ticket getTicketById(int id);
+
+    /**
+     * 获取指定场次的购票数量
+     * @param scheduleId
+     * @return
+     */
+    int getTicketNumBySchedule(int scheduleId);
 }

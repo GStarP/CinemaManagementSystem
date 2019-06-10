@@ -118,4 +118,9 @@ public class ViewController {
         return "consumeHisDetail";
     }
 
+    @RequestMapping(value = "/user/lottery")
+    public String getUserLottery() {
+        return "userLottery";
+    }
+
 }

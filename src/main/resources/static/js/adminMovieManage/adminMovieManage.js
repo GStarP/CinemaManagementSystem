@@ -1,11 +1,11 @@
-$(document).ready(function(){
+$(document).ready(function () {
     mount(new AdminPanel({active: 0}), document.querySelector(".nav-left-container"));
 
     getMovieList();
 
     $("#movie-form-btn").click(function () {
         var formData = getMovieForm();
-        if(!validateMovieForm(formData)) {
+        if (!validateMovieForm(formData)) {
             return;
         }
         postRequest(
@@ -15,7 +15,7 @@ $(document).ready(function(){
                 getMovieList();
                 $("#movieModal").modal('hide');
             },
-             function (error) {
+            function (error) {
                 alert(error);
             });
     });
@@ -50,26 +50,15 @@ $(document).ready(function(){
 
     function renderMovieList(list) {
         $('.movie-on-list').empty();
-        var movieDomStr = '';
-        list.forEach(function (movie) {
+        // movieItem的点击事件，跳转到详情
+        const onItemClick = movieId => window.location.href = "/admin/movieDetail?id=" + movieId;
+
+        list.forEach(movie => {
             movie.description = movie.description || '';
-            movieDomStr +=
-                "<li class='movie-item card'>" +
-                "<img class='movie-img' src='" + (movie.posterUrl || "../images/defaultAvatar.jpg") + "'onclick='window.location.href=\"/user/movieDetail?id=" + movie.id + "\"'/>" +
-                "<div class='movie-info'>" +
-                "<div class='movie-title'>" +
-                "<span class='primary-text' onclick='window.location.href=\"/user/movieDetail?id=" + movie.id + "\"'>" + movie.name + "</span>" +
-                "<span class='label "+(!movie.status ? 'primary-bg' : 'error-bg')+"'>" + (movie.status ? '已下架' : (new Date(movie.startDate)>=new Date()?'未上映':'热映中')) + "</span>" +
-                "<span class='movie-want'><i class='icon-heart error-text'></i>" + (movie.likeCount || 0) + "人想看</span>" +
-                "</div>" +
-                "<div class='movie-description dark-text'><span>" + movie.description + "</span></div>" +
-                "<div>类型：" + movie.type + "</div>" +
-                "<div style='display: flex'><span>导演：" + movie.director + "</span><span style='margin-left: 30px;'>主演：" + movie.starring + "</span>" +
-                "<div class='movie-operation'><a href='/admin/movieDetail?id="+ movie.id +"'>详情</a></div></div>" +
-                "</div>"+
-                "</li>";
+            const movieItem = createDOMFromString("<li class='movie-item card'></li>");
+            mount(new MovieItem({movie: movie, onDetailClick: movieId => onItemClick(movieId)}), movieItem);
+            $('.movie-on-list').append(movieItem);
         });
-        $('.movie-on-list').append(movieDomStr);
     }
 
     /**
