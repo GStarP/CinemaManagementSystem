@@ -50,6 +50,9 @@ public class LotteryServiceImpl implements LotteryService{
             List<LotteryCouponVO> res = new ArrayList<>();
             //十连必出优惠金额最高的优惠券
             boolean flag = false;
+            if (num != 10) {
+                flag = true;
+            }
             for (int i = 0; i < num; i++) {
                 int rd = (int) (Math.random() * lotteryPool.size());
                 Coupon coupon = lotteryPool.get(rd);
@@ -59,7 +62,7 @@ public class LotteryServiceImpl implements LotteryService{
                 if (i == num-1 && !flag) {
                     coupon = findMaxCoupon(qualifiedCoupon);
                 }
-                couponServiceForBl.issueCoupon(coupon.getId(), userId);
+                //couponServiceForBl.issueCoupon(coupon.getId(), userId);
                 LotteryCouponVO vo = new LotteryCouponVO();
                 vo.setCouponName(coupon.getName());
                 vo.setTargetAmount(coupon.getTargetAmount());

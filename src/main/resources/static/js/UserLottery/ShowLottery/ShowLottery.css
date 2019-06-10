@@ -42,38 +42,56 @@
     flex-direction: row;
     flex-wrap: wrap;
     align-content: center;
+    justify-content: center;
 }
 
 .coupon-item {
     background-image: url("../../../images/couponBackground.png");
     background-size: cover;
+    display: flex;
+    flex-direction: row;
+}
+
+.coupon-one-item {
+    width: 32%;
+    height: 48%;
 }
 
 .coupon-ten-item {
     width: 16%;
     height: 24%;
     margin: 2.5% 2% 2.5% 2%;
-    display: flex;
-    flex-direction: row;
 }
 
-.coupon-ten-amount-wrapper {
+.coupon-amount-wrapper {
     width: 80%;
     height: 100%;
     display: flex;
     flex-direction: column;
     text-align: center;
     justify-content: center;
+    color: white;
+}
+
+.coupon-one-discount-amount {
+    font-weight: bold;
+    font-size: 48px;
+}
+
+.coupon-one-movie-name {
+    width: 20%;
+    height: 100%;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    margin-right: 10%;
+    color: white;
+    font-size: 24px;
 }
 
 .coupon-ten-discount-amount {
     font-weight: bold;
-    color: white;
     font-size: 28px;
-}
-
-.coupon-ten-target-amount {
-    color: white;
 }
 
 .coupon-ten-movie-name {

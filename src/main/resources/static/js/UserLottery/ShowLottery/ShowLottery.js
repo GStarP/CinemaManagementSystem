@@ -12,11 +12,12 @@ class ShowLottery extends Component {
         let couponList = ``;
         switch (this.props.num) {
             case 1:
-                let coupon = coupons[0];
+                console.log(this.state.coupons);
+                let coupon = this.state.coupons[0] || { discountAmount: 1, targetAmount: 1, couponName: '优惠券'};
                 couponList = `
                     <div id="show-lottery-coupon-one">
                         <div class="coupon-item coupon-one-item">
-                            <div class="coupon-one-amount-warpper">
+                            <div class="coupon-amount-wrapper">
                                 <div class="coupon-one-discount-amount">￥${coupon.discountAmount}</div>
                                 <div class="coupon-one-target-amount">需满${coupon.targetAmount}元</div>
                             </div>
@@ -30,7 +31,7 @@ class ShowLottery extends Component {
                 this.state.coupons.forEach(coupon => {
                     couponsHTML += `
                         <div class="coupon-item coupon-ten-item">
-                            <div class="coupon-ten-amount-wrapper">
+                            <div class="coupon-amount-wrapper">
                                 <div class="coupon-ten-discount-amount">￥${coupon.discountAmount}</div>
                                 <div class="coupon-ten-target-amount">需满${coupon.targetAmount}元</div>
                             </div>
