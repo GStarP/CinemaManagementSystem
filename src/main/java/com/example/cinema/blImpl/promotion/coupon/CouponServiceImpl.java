@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by liying on 2019/4/17.
@@ -43,6 +44,11 @@ public class CouponServiceImpl implements CouponService, CouponServiceForBl {
             e.printStackTrace();
             return ResponseVO.buildFailure("失败");
         }
+    }
+
+    @Override
+    public List<Coupon> getAllCoupon() {
+        return couponMapper.selectAllCoupons();
     }
 
     @Override
