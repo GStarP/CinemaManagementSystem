@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -73,7 +75,15 @@ public class ActivityServiceImpl implements ActivityService, ActivityServiceForB
     @Override
     public ResponseVO getActivitiesByMovie(int movieId) {
         try {
-            return ResponseVO.buildSuccess(activityMapper.selectActivitiesByMovie(movieId));
+            List<Activity> activities=activityMapper.selectActivitiesByMovie(movieId);
+            List<Activity> newActivities=new ArrayList<>();
+            Timestamp timestamp=new Timestamp(System.currentTimeMillis());
+            for (Activity temp:activities){
+                if (timestamp.after(temp.getStartTime()) && timestamp.before(temp.getEndTime())){
+                    newActivities.add(temp);
+                }
+            }
+            return ResponseVO.buildSuccess(newActivities);
         }catch (Exception e){
             e.printStackTrace();
             return ResponseVO.buildFailure("失败");

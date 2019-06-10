@@ -4,7 +4,6 @@ const AUTH_MANAGER = 2;
 
 $(document).ready(function () {
     if (document.querySelector(".nav-left-container"))
-        // 垃圾zj，一份代码到处用。。。
         mount(new AdminPanel({active: 0}), document.querySelector(".nav-left-container"));
 
     var movieId = parseInt(window.location.href.split('?')[1].split('&')[0].split('=')[1]);

@@ -24,7 +24,9 @@ $(document).ready(function () {
             }
         );
     }
+
 });
+
 
 // 显示用户已选的座位信息列表
 function showSelectedInfo() {
@@ -187,7 +189,7 @@ function renderOrder(orderInfo) {
     var total = orderInfo.total.toFixed(2);
     $('#order-total').text(total);
     $('#order-footer-total').text("总金额： ¥" + total);
-
+    alert(total);
 
     var couponTicketStr = "";
     if (orderInfo.coupons.length == 0) {
@@ -203,6 +205,21 @@ function renderOrder(orderInfo) {
         $('#order-coupons').html(couponTicketStr);
         changeCoupon(0);
     }
+
+    console.log("添加退票策略");
+    //TODO:有问题 cz
+    getRequest(
+        '/refund/all',
+        function (res) {
+            if (res.success){
+                renderRefund(res.content);
+                console.log("success");
+            }
+        },
+        function (error) {
+            alert(error);
+        }
+    );
 }
 
 function changeCoupon(couponIndex) {
@@ -289,4 +306,18 @@ function validateForm() {
         $('#userBuy-cardPwd-error').css("visibility", "visible");
     }
     return isValidate;
+}
+
+function renderRefund(refunds){
+    var bodyContent='*退票策略：此电影上映';
+    for (var i=0; i<refunds.length; i++){
+        bodyContent=bodyContent+refunds[i].time+'天前退票，返还实付票价的'+refund[i].price+'%，上映';
+    }
+    bodyContent=bodyContent.substring(0,bodyContent.length-3)+'。';
+    if (refunds.length==0){
+        bodyContent='*退票策略：此电影全款退票。';
+    }
+    $('.refund-show').empty().html(bodyContent);
+    alert(bodyContent);
+    console.log(bodyContent);
 }

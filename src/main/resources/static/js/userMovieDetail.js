@@ -6,6 +6,8 @@ $(document).ready(function () {
 
     getSchedule();
 
+    getActivity();
+
     function getSchedule() {
         getRequest(
             '/schedule/search/audience?movieId=' + movieId,
@@ -24,7 +26,32 @@ $(document).ready(function () {
         );
     }
 
+    function getActivity(){
+        //TODO:添加优惠活动
+        getRequest(
+            '/activity/getByMovieId?movieId=' + movieId,
+            function (res) {
+                if (res.success){
+                    renderActivity(res.content);
+                }
+            },
+            function (error) {
+                alert(error);
+            }
+        )
+    }
+
 });
+
+function renderActivity(activities){
+    var bodyContent='';
+    for (var i=0; i<activities.length; i++){
+        bodyContent=bodyContent+'<p>购买此电影票满 '+activities[i].targetAmount+' ，赠送满 '+activities[i].coupon.targetAmount+' 减 '+activities[i].coupon.discountAmount+' 优惠券一张</p>'
+    }
+    $('.activity-content').empty().html(bodyContent);
+    alert(bodyContent);
+    console.log(bodyContent);
+}
 
 function repaintScheduleDate(curDateLoc) {
     var dateContent = ""

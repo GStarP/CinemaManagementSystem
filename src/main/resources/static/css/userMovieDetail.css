@@ -11,3 +11,18 @@
     height: 60px;
     vertical-align: middle;
 }
+
+.activity-show {
+    display: flex;
+    flex-direction: row;
+}
+
+.activity-name {
+    font-size: 20px;
+    padding-top: 5px;
+    padding-right: 20px;
+}
+
+.activity-content {
+    padding-top: 5px;
+}
