@@ -3,18 +3,19 @@ class Banner extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            images: props.images
+            bannerinfo: {}
         };
+        this.getBannerInfo();
     }
 
     renderDOM() {
         const el_html = `
             <div id="banner-box">
                 <div id="banner-list">
-                    <div class="banner banner-1" href="${this.state.images[0].navi}"><img src="${this.state.images[0].url}"/></div>
+                    <div class="banner banner-1" href="${this.state.bannerinfo.navi1}"><img src="${this.state.bannerinfo.img1}"/></div>
                     <!--banner-2是位于正中显示的banner-->
-                    <div class="banner banner-2" href="${this.state.images[1].navi}"><img src="${this.state.images[1].url}"/></div>
-                    <div class="banner banner-3" href="${this.state.images[2].navi}"><img src="${this.state.images[2].url}"/></div>
+                    <div class="banner banner-2" href="${this.state.bannerinfo.navi2}"><img src="${this.state.bannerinfo.img2}"/></div>
+                    <div class="banner banner-3" href="${this.state.bannerinfo.navi3}"><img src="${this.state.bannerinfo.img3}"/></div>
                 </div>
                 <div id="button-list">
                     <a id="banner1-btn" href="#"><div class="bg-grey"></div></a>
@@ -37,6 +38,24 @@ class Banner extends Component {
         })
 
         return this.el;
+    }
+
+    getBannerInfo() {
+        getRequest(
+            '/banner/get',
+            (res) => {
+                if (res.success) {
+                    this.setState({
+                        bannerinfo: res.content
+                    });
+                } else {
+                    alert(res.message);
+                }
+            },
+            (err) => {
+                alert(JSON.stringify(err));
+            }
+        )
     }
 
     judgeAction(element) {
