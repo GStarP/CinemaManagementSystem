@@ -56,7 +56,7 @@ class ShowLottery extends Component {
         `;
         this.el = createDOMFromString(el_html);
         this.el.querySelector("#show-lottery-back").addEventListener('click', () => {
-            let container = document.querySelector("#user-lottery-container");
+            let container = document.querySelector("#lottery-coupon-container");
             container.removeChild(container.firstChild);
         });
         return this.el;
