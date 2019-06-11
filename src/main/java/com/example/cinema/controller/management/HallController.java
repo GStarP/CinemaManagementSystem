@@ -1,6 +1,6 @@
-package com.example.cinema.controller.management.hall;
+package com.example.cinema.controller.management;
 
-import com.example.cinema.bl.management.hall.HallService;
+import com.example.cinema.bl.management.HallService;
 import com.example.cinema.vo.HallVO;
 import com.example.cinema.vo.ResponseVO;
 import org.springframework.beans.factory.annotation.Autowired;

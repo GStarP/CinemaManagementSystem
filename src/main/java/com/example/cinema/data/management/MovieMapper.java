@@ -68,4 +68,11 @@ public interface MovieMapper {
      * @return
      */
     int updateMovie(MovieForm updateMovieForm);
+
+    /**
+     * 获取即将上映的电影列表
+     * @param count
+     * @return 电影列表，按照上映时间升序排列
+     */
+    List<Movie> getComingMovies(@Param("count")Integer count);
 }

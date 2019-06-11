@@ -8,8 +8,10 @@ package com.example.cinema.po;
 public class ConsumeHistory {
     public final static Integer BUY_TICKET = 101;
     public final static Integer BUY_VIP_CARD = 102;
+    public final static Integer BUY_LOTTERY = 103;
     public final static String BUY_TICKET_STR = "购买电影票";
     public final static String BUY_VIP_CARD_STR = "购买会员卡";
+    public final static String BUY_LOTTERY_STR = "抽奖";
     /**
      * id
      */
@@ -31,11 +33,11 @@ public class ConsumeHistory {
      */
     private String consumeType;
     /**
-     * 消费类型:101-购买电影票,102-购买会员卡
+     * 消费类型:101-购买电影票,102-购买会员卡,103-抽奖
      */
     private Integer type;
     /**
-     * 消费内容id:购买电影票-ticket.Id,购买会员卡-vip_card.id
+     * 消费内容id:购买电影票-ticket.Id,购买会员卡-vip_card.id,抽奖-无用
      */
     private Integer contentId;
 
