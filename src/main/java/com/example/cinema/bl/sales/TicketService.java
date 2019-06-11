@@ -64,4 +64,9 @@ public interface TicketService {
      * TODO:将票状态改为已出票
      */
     ResponseVO issueTicket(int id);
+
+    /**
+     * TODO:获得票的退款策略
+     */
+    ResponseVO getTicketRefund(int id);
 }

@@ -80,7 +80,8 @@
 }
 
 hr.dashed-line {
-    border: 1px dashed #eeeeee
+    border: 1px dashed #eeeeee;
+    margin-bottom: 5px;
 }
 
 .success-notice {
@@ -94,4 +95,11 @@ hr.dashed-line {
 .success-notice .hint {
     margin-top: 25px;
     font-size: 20px;
+}
+
+.refund-show {
+    font-size: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    color: gray;
 }
