@@ -31,6 +31,9 @@ public class LotteryServiceImpl implements LotteryService{
                     sum += coupon.getDiscountAmount();
                 }
             }
+            if (qualifiedCoupon.size() == 0) {
+                return ResponseVO.buildFailure("没有符合条件的优惠券");
+            }
             List<Coupon> lotteryPool = new ArrayList<>();
             for (Coupon coupon : qualifiedCoupon) {
                 //由优惠金额总计除以优惠金额得到权重(与被抽到的概率成正相关)
@@ -62,7 +65,7 @@ public class LotteryServiceImpl implements LotteryService{
                 if (i == num-1 && !flag) {
                     coupon = findMaxCoupon(qualifiedCoupon);
                 }
-                //couponServiceForBl.issueCoupon(coupon.getId(), userId);
+                couponServiceForBl.issueCoupon(coupon.getId(), userId);
                 LotteryCouponVO vo = new LotteryCouponVO();
                 vo.setCouponName(coupon.getName());
                 vo.setTargetAmount(coupon.getTargetAmount());
