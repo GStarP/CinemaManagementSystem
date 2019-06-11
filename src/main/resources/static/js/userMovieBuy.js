@@ -320,7 +320,7 @@ function renderRefund(refunds){
         }
     }
     bodyContent=bodyContent.substring(0,bodyContent.length-3)+'。';
-    if (bodyContent==='*退票策略：此电影上映'){
+    if (bodyContent==='*退票策略：此电。'){
         bodyContent='*退票策略：此电影全款退票。';
     }
     $('.refund-show').empty().html(bodyContent);

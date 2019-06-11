@@ -706,8 +706,8 @@ CREATE TABLE `refund`
 (
     `id`       int(11) NOT NULL AUTO_INCREMENT,
     `movie_id` int(11) NOT NULL,
-    `time`     int(11) NOT NULL,
-    `discount` int(11) NOT NULL,
+    `time`     DOUBLE  NOT NULL,
+    `discount` DOUBLE NOT NULL,
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 2
