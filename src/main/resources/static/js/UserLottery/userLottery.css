@@ -1,4 +1,10 @@
+#user-lottery-container {
+    display: flex;
+    justify-content: center;
+}
+
 #user-lottery-container > div {
+    width: 100%;
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
@@ -7,7 +13,8 @@
 }
 
 #user-lottery-container > div > div{
-    margin: 3%;
+    margin-top: 3%;
+    margin-bottom: 3%;
 }
 
 #user-lottery-name {
