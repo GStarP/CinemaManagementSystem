@@ -67,7 +67,7 @@ public class LotteryServiceImpl implements LotteryService{
                 }
                 couponServiceForBl.issueCoupon(coupon.getId(), userId);
                 LotteryCouponVO vo = new LotteryCouponVO();
-                vo.setCouponName(coupon.getName());
+                vo.setCouponName(coupon.getDescription());
                 vo.setTargetAmount(coupon.getTargetAmount());
                 vo.setDiscountAmount(coupon.getDiscountAmount());
                 //避免优惠金额最高的优惠券总是出现在最后

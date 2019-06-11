@@ -11,11 +11,11 @@ public class Coupon {
      */
     private int id;
     /**
-     * 优惠券描述
+     * 优惠券名称
      */
     private String description;
     /**
-     * 优惠券名称
+     * 活动名称
      */
     private String name;
     /**
