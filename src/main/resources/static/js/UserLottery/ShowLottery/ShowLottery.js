@@ -52,7 +52,9 @@ class ShowLottery extends Component {
                     <button id="show-lottery-back" class="btn btn-success">返回</button>
                 </div>
             </div>
-            <div class="full-screen-background"></div>
+            <div class="full-screen-background">
+                <img id="cool-animation" src="../../../images/star.png"/>
+            </div>
         `;
         this.el = createDOMFromString(el_html);
         this.el.querySelector("#show-lottery-back").addEventListener('click', () => {
