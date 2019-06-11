@@ -3,7 +3,7 @@ class LotteryButton extends Component {
     constructor(props) {
         super(props);
         this.props= {
-            categories: [[1,5],[5,10],[10,20]]
+            categories: [[1,10],[10,30],[30,60]]
         }
     }
 

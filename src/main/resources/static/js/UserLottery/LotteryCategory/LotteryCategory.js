@@ -10,19 +10,19 @@ class LotteryCategory extends Component {
             <div class="lottery-category" id="category-0">
                 <div class="lottery-category-description">
                     <div class="lottery-category-name">R优惠券</div>
-                    <div class="lottery-category-price">0.5元/次</div>
+                    <div class="lottery-category-price">5元/次</div>
                 </div>
             </div>
             <div class="lottery-category" id="category-1">
                 <div class="lottery-category-description">
                     <div class="lottery-category-name">SR优惠券</div>
-                    <div class="lottery-category-price">1元/次</div>
+                    <div class="lottery-category-price">20元/次</div>
                 </div>
             </div>
             <div class="lottery-category" id="category-2">
                 <div class="lottery-category-description">
                     <div class="lottery-category-name">SSR优惠券</div>
-                    <div class="lottery-category-price">1.5元/次</div>
+                    <div class="lottery-category-price">45元/次</div>
                 </div>
             </div>
         `;
