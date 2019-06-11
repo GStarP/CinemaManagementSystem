@@ -18,6 +18,17 @@
         order by boxOffice desc
     </select>
 
+    <select id="selectMovieTotalBoxOfficeTop10" resultType="com.example.cinema.po.MovieTotalBoxOffice">
+        select movie.id as movieId, boxOffice,name from movie
+        left join
+          (select movie_id as movieId,sum(fare) as boxOffice from schedule
+          right join
+          (select schedule_id from ticket where state = 1) t
+          on schedule.id = t.schedule_id group by movie_id) s
+        on s.movieId = movie.id
+        order by boxOffice desc limit 10;
+    </select>
+
     <select id="selectAudiencePrice" resultType="com.example.cinema.po.AudiencePrice">
         select user_id as userId, sum(fare) as totalPrice from schedule right join
               (select * from ticket where schedule_id in

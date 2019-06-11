@@ -1,4 +1,5 @@
 package com.example.cinema.blImpl.statistics;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -6,7 +7,10 @@ import com.example.cinema.bl.statistics.MovieLikeService;
 import com.example.cinema.blImpl.management.movie.MovieServiceForBl;
 import com.example.cinema.data.statistics.MovieLikeMapper;
 import com.example.cinema.po.DateLike;
+import com.example.cinema.po.Movie;
+import com.example.cinema.po.MovieLike;
 import com.example.cinema.vo.DateLikeVO;
+import com.example.cinema.vo.MovieLikeVO;
 import com.example.cinema.vo.ResponseVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -79,14 +83,36 @@ public class MovieLikeServiceImpl implements MovieLikeService {
         }
     }
 
-    private boolean userLikeTheMovie(int userId, int movieId) {
-        return movieLikeMapper.selectLikeMovie(movieId, userId) == 0 ? false : true;
-    }
-    
+    @Override
+    public ResponseVO getMovieLikeTop10() {
+        List<MovieLike> movieLikes = movieLikeMapper.getMovieLikeTop(10);
+        List<MovieLikeVO> movieLikeMostVOs = new ArrayList<>();
+        movieLikes.forEach(movieLike -> {
+            MovieLikeVO movieLikeVO = new MovieLikeVO();
+            movieLikeVO.setMovieId(movieLike.getMovieId());
+            movieLikeVO.setLikeCount(movieLike.getCount());
+            Movie movie = movieServiceForBl.getMovieById(movieLike.getMovieId());
+            movieLikeVO.setName(movie.getName());
+            movieLikeVO.setPosterUrl(movie.getPosterUrl());
+            movieLikeMostVOs.add(movieLikeVO);
+        });
 
-    private List<DateLikeVO> dateLikeList2DateLikeVOList(List<DateLike> dateLikeList){
+        try {
+            return ResponseVO.buildSuccess(movieLikeMostVOs);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseVO.buildFailure("获取想看人数列表失败！");
+        }
+    }
+
+    private boolean userLikeTheMovie(int userId, int movieId) {
+        return movieLikeMapper.selectLikeMovie(movieId, userId) != 0;
+    }
+
+
+    private List<DateLikeVO> dateLikeList2DateLikeVOList(List<DateLike> dateLikeList) {
         List<DateLikeVO> dateLikeVOList = new ArrayList<>();
-        for(DateLike dateLike : dateLikeList){
+        for (DateLike dateLike : dateLikeList) {
             dateLikeVOList.add(new DateLikeVO(dateLike));
         }
         return dateLikeVOList;

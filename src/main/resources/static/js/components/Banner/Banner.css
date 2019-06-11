@@ -1,45 +1,47 @@
 #banner-box{
     width: 100%;
-    height: 400px;
+    height: 100%;
 
     position: relative;
 }
 
 #banner-list{
     width: 100%;
-    height: 360px;
+    height: 90%;
     overflow: hidden;
     position: absolute;
 }
 
-#banner-list ul li{
+#banner-list div{
     position: absolute;
-    top: 0;
-    left: 0;
+    margin-left: -5%;
     list-style: none;
     transition: all 0.3s ease-out;
 }
-
-#banner-list ul li a img{
-    width: 650px;
-    height: 360px;
+.banner {
+    width: 60%;
+    height: 100%;
+}
+#banner-list div img{
+    width: 100%;
+    height: 100%;
     border:none;
     float: left;
 }
 .banner-1{
-    transform:translate3d(0px,0,0) scale(0.81);
-    transform-origin:30% 50%;
+    transform:translate3d(0,0,0) scale(0.8);
+    transform-origin:100% 50%;
     opacity: 0.8;
     z-index: 2;
 }
 .banner-2{
-    transform:translate3d(224px,0,0) scale(1);
+    transform:translate3d(40%,0,0) scale(1);
     z-index: 3;
     opacity: 1;
 }
 .banner-3{
-    transform:translate3d(449px,0,0) scale(0.81);
-    transform-origin:70% 50%;
+    transform:translate3d(80%,0,0) scale(0.8);
+    transform-origin:0% 50%;
     opacity: 0.8;
     z-index: 2;
 }
@@ -47,7 +49,7 @@
 #button-list{
     position: absolute;
     width: 100%;
-    height: 40px;
+    height: 10%;
     bottom: 0;
     display: flex;
     justify-content: center;
