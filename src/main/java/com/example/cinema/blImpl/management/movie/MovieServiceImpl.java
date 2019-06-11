@@ -65,6 +65,28 @@ public class MovieServiceImpl implements MovieService, MovieServiceForBl {
     }
 
     @Override
+    public ResponseVO searchComingMoviesTop() {
+        try {
+            return ResponseVO.buildSuccess(movieList2MovieLikeVOList(movieMapper.getComingMovies(10)));
+        }catch (Exception e){
+            return ResponseVO.buildFailure("获取即将上映电影列表失败！");
+        }
+    }
+
+    private List<MovieLikeVO> movieList2MovieLikeVOList(List<Movie> comingMovies) {
+        List<MovieLikeVO> movieLikeVOs = new ArrayList<>();
+        comingMovies.forEach(comingMovie->{
+            MovieLikeVO movieLikeVO = new MovieLikeVO();
+            movieLikeVO.setMovieId(comingMovie.getId());
+            movieLikeVO.setName(comingMovie.getName());
+            movieLikeVO.setPosterUrl(comingMovie.getPosterUrl());
+            movieLikeVO.setLikeCount(comingMovie.getLikeCount());
+            movieLikeVOs.add(movieLikeVO);
+        });
+        return movieLikeVOs;
+    }
+
+    @Override
     public ResponseVO searchOtherMoviesExcludeOff() {
         try {
             return ResponseVO.buildSuccess(movieList2MovieVOList(movieMapper.selectOtherMoviesExcludeOff()));

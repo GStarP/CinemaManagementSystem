@@ -1,3 +1,17 @@
+.card .table-wrapper {
+    padding: 20px;
+}
+
+.table-wrapper .table th {
+    text-align: center;
+}
+
+.table-wrapper .table td{
+    height: 60px;
+    vertical-align: middle;
+    text-align: center;
+}
+
 .card {
     padding: 30px 40px;
     color: #444444;
@@ -26,8 +40,4 @@
     vertical-align: middle;
     font-size: 36px;
     color: grey;
-}
-
-.txt-one {
-    margin-bottom: 10px;
 }

@@ -39,9 +39,9 @@ public class StatisticsServiceImpl implements StatisticsService {
 
     @Override
     public ResponseVO getScheduleRateByDate(Date date) {
-        try{
+        try {
             Date requireDate = date;
-            if(requireDate == null){
+            if (requireDate == null) {
                 requireDate = new Date();
             }
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -50,7 +50,7 @@ public class StatisticsServiceImpl implements StatisticsService {
             Date nextDate = getNumDayAfterDate(requireDate, 1);
             return ResponseVO.buildSuccess(movieScheduleTimeList2MovieScheduleTimeVOList(statisticsMapper.selectMovieScheduleTimes(requireDate, nextDate)));
 
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             return ResponseVO.buildFailure("失败");
         }
@@ -60,7 +60,17 @@ public class StatisticsServiceImpl implements StatisticsService {
     public ResponseVO getTotalBoxOffice() {
         try {
             return ResponseVO.buildSuccess(movieTotalBoxOfficeList2MovieTotalBoxOfficeVOList(statisticsMapper.selectMovieTotalBoxOffice()));
-        }catch (Exception e){
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseVO.buildFailure("失败");
+        }
+    }
+
+    @Override
+    public ResponseVO getTotalBoxOfficeTop10() {
+        try {
+            return ResponseVO.buildSuccess(movieTotalBoxOfficeList2MovieTotalBoxOfficeVOList(statisticsMapper.selectMovieTotalBoxOfficeTop10()));
+        } catch (Exception e) {
             e.printStackTrace();
             return ResponseVO.buildFailure("失败");
         }
@@ -73,7 +83,7 @@ public class StatisticsServiceImpl implements StatisticsService {
             Date today = simpleDateFormat.parse(simpleDateFormat.format(new Date()));
             Date startDate = getNumDayAfterDate(today, -6);
             List<AudiencePriceVO> audiencePriceVOList = new ArrayList<>();
-            for(int i = 0; i < 7; i++){
+            for (int i = 0; i < 7; i++) {
                 AudiencePriceVO audiencePriceVO = new AudiencePriceVO();
                 Date date = getNumDayAfterDate(startDate, i);
                 audiencePriceVO.setDate(date);
@@ -83,7 +93,7 @@ public class StatisticsServiceImpl implements StatisticsService {
                 audiencePriceVOList.add(audiencePriceVO);
             }
             return ResponseVO.buildSuccess(audiencePriceVOList);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             return ResponseVO.buildFailure("失败");
         }
@@ -94,8 +104,8 @@ public class StatisticsServiceImpl implements StatisticsService {
         try {
             Date nextDate = getNumDayAfterDate(date, 1);
             List<PlacingRateVO> res = new ArrayList<>();
-            List<ScheduleItem> scheduleItems = scheduleServiceForBl.getScheduleBetweenDays(date,nextDate);
-            Map<String,int[]> map = new LinkedHashMap<>();
+            List<ScheduleItem> scheduleItems = scheduleServiceForBl.getScheduleBetweenDays(date, nextDate);
+            Map<String, int[]> map = new LinkedHashMap<>();
             for (ScheduleItem item : scheduleItems) {
                 logger.info(movieServiceForBl.getMovieById(item.getMovieId()).getName());
                 int[] arr = new int[2];
@@ -106,7 +116,7 @@ public class StatisticsServiceImpl implements StatisticsService {
                     arr[0] += map.get(movieName)[0];
                     arr[1] += map.get(movieName)[1];
                 }
-                map.put(movieName,arr);
+                map.put(movieName, arr);
             }
             for (String name : map.keySet()) {
                 PlacingRateVO vo = new PlacingRateVO();
@@ -126,8 +136,8 @@ public class StatisticsServiceImpl implements StatisticsService {
         try {
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
             Date today = simpleDateFormat.parse(simpleDateFormat.format(new Date()));
-            Date startDate = getNumDayAfterDate(today, -days+1);
-            List<MovieTotalBoxOffice> list = statisticsMapper.selectRecentTotalBoxOffice(startDate,today,movieNum);
+            Date startDate = getNumDayAfterDate(today, -days + 1);
+            List<MovieTotalBoxOffice> list = statisticsMapper.selectRecentTotalBoxOffice(startDate, today, movieNum);
             List<MovieLikeMostVO> res = new ArrayList<>();
             for (int i = 0; i < list.size(); i++) {
                 if (list.get(i).getBoxOffice() != 0) {
@@ -148,29 +158,30 @@ public class StatisticsServiceImpl implements StatisticsService {
 
     /**
      * 获得num天后的日期
+     *
      * @param oldDate
      * @param num
      * @return
      */
-    Date getNumDayAfterDate(Date oldDate, int num){
+    Date getNumDayAfterDate(Date oldDate, int num) {
         Calendar calendarTime = Calendar.getInstance();
         calendarTime.setTime(oldDate);
         calendarTime.add(Calendar.DAY_OF_YEAR, num);
         return calendarTime.getTime();
     }
 
-    private List<MovieScheduleTimeVO> movieScheduleTimeList2MovieScheduleTimeVOList(List<MovieScheduleTime> movieScheduleTimeList){
+    private List<MovieScheduleTimeVO> movieScheduleTimeList2MovieScheduleTimeVOList(List<MovieScheduleTime> movieScheduleTimeList) {
         List<MovieScheduleTimeVO> movieScheduleTimeVOList = new ArrayList<>();
-        for(MovieScheduleTime movieScheduleTime : movieScheduleTimeList){
+        for (MovieScheduleTime movieScheduleTime : movieScheduleTimeList) {
             movieScheduleTimeVOList.add(new MovieScheduleTimeVO(movieScheduleTime));
         }
         return movieScheduleTimeVOList;
     }
 
 
-    private List<MovieTotalBoxOfficeVO> movieTotalBoxOfficeList2MovieTotalBoxOfficeVOList(List<MovieTotalBoxOffice> movieTotalBoxOfficeList){
+    private List<MovieTotalBoxOfficeVO> movieTotalBoxOfficeList2MovieTotalBoxOfficeVOList(List<MovieTotalBoxOffice> movieTotalBoxOfficeList) {
         List<MovieTotalBoxOfficeVO> movieTotalBoxOfficeVOList = new ArrayList<>();
-        for(MovieTotalBoxOffice movieTotalBoxOffice : movieTotalBoxOfficeList){
+        for (MovieTotalBoxOffice movieTotalBoxOffice : movieTotalBoxOfficeList) {
             movieTotalBoxOfficeVOList.add(new MovieTotalBoxOfficeVO(movieTotalBoxOffice));
         }
         return movieTotalBoxOfficeVOList;

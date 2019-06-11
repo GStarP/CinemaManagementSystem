@@ -23,6 +23,12 @@ public interface StatisticsService {
     ResponseVO getTotalBoxOffice();
 
     /**
+     * 获取所有电影的累计票房前十的列表(降序排序，且包含已下架的电影)
+     * @return
+     */
+    ResponseVO getTotalBoxOfficeTop10();
+
+    /**
      * 客单价：（某天的客单价=当天观众购票所花金额/购票人次数）
      * 返回值为过去7天内每天客单价
      * @return

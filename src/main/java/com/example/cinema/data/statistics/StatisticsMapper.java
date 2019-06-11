@@ -30,6 +30,12 @@ public interface StatisticsMapper {
     List<MovieTotalBoxOffice> selectMovieTotalBoxOffice();
 
     /**
+     * 获取所有电影的累计票房前十的列表(降序排序，且包含已下架的电影)
+     * @return
+     */
+    List<MovieTotalBoxOffice> selectMovieTotalBoxOfficeTop10();
+
+    /**
      * 查询某天每个客户的购票金额
      * @param date
      * @param nextDate

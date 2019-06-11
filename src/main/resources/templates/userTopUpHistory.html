@@ -31,9 +31,20 @@
         <div class="header">
             <div class="title">充值记录</div>
         </div>
-        <div class="panel-group" id="accordion">
-            <div id="no-his-caption" style="visibility: hidden">暂时没有充值记录</div>
+        <div class="table-wrapper">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>充值金额</th>
+                    <th>优惠金额</th>
+                    <th>充值时间</th>
+                    <th>会员卡余额</th>
+                </tr>
+                </thead>
+                <tbody id="topup-his-list"></tbody>
+            </table>
         </div>
+        <div id="no-his-caption" style="visibility: hidden">暂时没有充值记录</div>
     </div>
 </div>
 </body>

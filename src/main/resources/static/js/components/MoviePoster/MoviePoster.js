@@ -6,7 +6,7 @@ class MoviePoster extends Component {
 
     // 电影海报点击事件
     onPosterClick() {
-        window.location.href = "/user/movieDetail?id=" + this.props.movie.id;
+        window.location.href = "/user/movieDetail?id=" + this.props.movie.movieId;
     }
 
     renderDOM() {
