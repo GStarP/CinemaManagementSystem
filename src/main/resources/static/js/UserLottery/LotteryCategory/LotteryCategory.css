@@ -1,3 +1,7 @@
+#user-lottery-category{
+ width: 100%;
+}
+
 #user-lottery-category > div {
     display: flex;
     flex-direction: row;
