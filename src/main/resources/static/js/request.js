@@ -35,6 +35,16 @@ function deleteRequest(url, data, onSuccess, onError) {
     });
 }
 
+function syncGetRequest(url, onSuccess, onError) {
+    $.ajax({
+        type: 'GET',
+        url: url,
+        async: false,
+        success: onSuccess,
+        error: onError
+    });
+}
+
 
 function formatDate(date){
     var year = date.getFullYear();

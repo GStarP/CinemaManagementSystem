@@ -45,12 +45,15 @@ $(document).ready(function () {
 
 function renderActivity(activities){
     var bodyContent='';
-    for (var i=0; i<activities.length; i++){
-        bodyContent=bodyContent+'<p>购买此电影票满 '+activities[i].targetAmount+' ，赠送满 '+activities[i].coupon.targetAmount+' 减 '+activities[i].coupon.discountAmount+' 优惠券一张</p>'
+    if (activities.length===0){
+        bodyContent='抱歉，本电影暂无优惠活动。';
+    }else{
+        for (var i=0; i<activities.length; i++){
+            bodyContent=bodyContent+'<p>购买此电影票满 '+activities[i].targetAmount+' ，赠送满 '+activities[i].coupon.targetAmount+' 减 '+activities[i].coupon.discountAmount+' 优惠券一张</p>'
+        }
     }
+
     $('.activity-content').empty().html(bodyContent);
-    alert(bodyContent);
-    console.log(bodyContent);
 }
 
 function repaintScheduleDate(curDateLoc) {

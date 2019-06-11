@@ -40,7 +40,6 @@ public class TicketController {
 
     @GetMapping("/get/occupiedSeats")
     public ResponseVO getOccupiedSeats(@RequestParam int scheduleId){
-        System.out.println("i com here");
         return ticketService.getBySchedule(scheduleId);
     }
     @PostMapping("/cancel")
@@ -60,6 +59,9 @@ public class TicketController {
         return ticketService.issueTicket(ticketId);
     }
 
-
+    @GetMapping("/getTicketRefund")
+    public ResponseVO getTicketRefund(@RequestParam int ticketId){
+        return ticketService.getTicketRefund(ticketId);
+    }
 
 }

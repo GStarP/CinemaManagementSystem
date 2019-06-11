@@ -1,5 +1,6 @@
 .table-wrapper {
     padding: 20px;
+    padding-bottom: 5px;
 }
 
 .table-wrapper .table b {
@@ -15,6 +16,8 @@
 .activity-show {
     display: flex;
     flex-direction: row;
+    background-color: whitesmoke;
+    padding-left: 20px;
 }
 
 .activity-name {
@@ -24,5 +27,6 @@
 }
 
 .activity-content {
-    padding-top: 5px;
+    padding-top: 9px;
+    padding-left: 10px;
 }

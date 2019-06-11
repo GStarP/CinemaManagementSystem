@@ -82,20 +82,44 @@ $(document).ready(function () {
     }
 
     $("#ticket-list").on('click','.refund-ticket',function(){
-    console.log($(this).attr('id').substring(1)),
-        getRequest(
-            '/ticket/delete?ticketId='+$(this).attr('id').substring(1),
-            function(res){
-                getMovieList();
-            },
-            function(error){
-                alert(error);
+        var bodyContent='';
+        syncGetRequest(
+            '/ticket/getTicketRefund?ticketId='+$(this).attr('id').substring(1),
+            function (res) {
+                if (res.success){
+                    if (res.content===100) {
+                        bodyContent='现在退票将全款返还支付金额，请确认是否退票。';
+                    }else if (res.content===0){
+                        bodyContent='现在退票不返还支付金额，请确认是否退票。';
+                    }else{
+                        bodyContent='现在退款将返还支付金额的'+res.content+'%，请确认是否退票。';
+                    }
+
+                }
             }
         );
+
+
+        var r=confirm(bodyContent);
+        if (r){
+            console.log($(this).attr('id').substring(1));
+            getRequest(
+                '/ticket/delete?ticketId='+$(this).attr('id').substring(1),
+                function(res){
+                    getMovieList();
+                },
+                function(error){
+                    alert(error);
+                }
+            );
+        }
+
     });
 
     $("#ticket-list").on('click','.issue-ticket',function(){
-        console.log($(this).attr('id').substring(1)),
+        var r=confirm("出票后将不可退票，请确认是否出票。");
+        if (r){
+            console.log($(this).attr('id').substring(1)),
                 getRequest(
                     '/ticket/issue?ticketId='+$(this).attr('id').substring(1),
                     function(res){
@@ -105,6 +129,7 @@ $(document).ready(function () {
                         alert(error);
                     }
                 );
+        }
     })
 
     $("#ticket-list").on('click','.delete-ticket',function(){
