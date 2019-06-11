@@ -275,6 +275,16 @@ public class TicketServiceImpl implements TicketService,TicketServiceForBl {
         }
     }
 
+    @Override
+    public ResponseVO getTicketRefund(int id) {
+        try{
+            Ticket ticket=ticketMapper.selectTicketById(id);
+            double discount=getRefundStrategy(ticket.getScheduleId());
+            return ResponseVO.buildSuccess(discount);
+        }catch (Exception e) {
+            return ResponseVO.buildFailure("获取退票折算策略失败!");
+        }
+    }
 
     private ResponseVO getOtherInfo(TicketForm ticketForm) {
         try {

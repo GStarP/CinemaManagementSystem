@@ -59,6 +59,9 @@ public class TicketController {
         return ticketService.issueTicket(ticketId);
     }
 
-
+    @GetMapping("/getTicketRefund")
+    public ResponseVO getTicketRefund(@RequestParam int ticketId){
+        return ticketService.getTicketRefund(ticketId);
+    }
 
 }

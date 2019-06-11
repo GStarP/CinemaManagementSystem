@@ -36,4 +36,9 @@ public class ActivityController {
         return activityService.getActivityById(activityId);
     }
 
+    @GetMapping("/getByMovieId")
+    public ResponseVO getActivitiesById(@RequestParam int movieId){
+        return activityService.getActivitiesByMovie(movieId);
+    }
+
 }

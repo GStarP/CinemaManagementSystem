@@ -17,14 +17,14 @@ public interface TicketMapper {
 
     int insertTickets(List<Ticket> tickets);
 
-    void deleteTicket(int ticketId);
+    int deleteTicket(int ticketId);
 
     //TODO:添加@Param
-    void deleteLockedTicket(@Param("userId") int userId, @Param("scheduleId") int scheduleId);
+    int deleteLockedTicket(@Param("userId") int userId, @Param("scheduleId") int scheduleId);
 
-    void updateTicketState(@Param("ticketId") int ticketId, @Param("state") int state);
+    int updateTicketState(@Param("ticketId") int ticketId, @Param("state") int state);
 
-    void updateTicketActualPay(@Param("ticketId") int ticketId, @Param("actualPay") double actualPay);
+    int updateTicketActualPay(@Param("ticketId") int ticketId, @Param("actualPay") double actualPay);
 
     List<Ticket> selectTicketsBySchedule(int scheduleId);
 

@@ -16,4 +16,6 @@ public interface ActivityService {
 
     ResponseVO getActivityById(int activityId);
 
+    ResponseVO getActivitiesByMovie(int movieId);
+
 }

@@ -5,6 +5,7 @@ var coupons = [];
 var orderInfo = [];
 var isVIP = false;
 var useVIP = true;
+var movieId;
 
 $(document).ready(function () {
     scheduleId = parseInt(window.location.href.split('?')[1].split('&')[1].split('=')[1]);
@@ -24,7 +25,9 @@ $(document).ready(function () {
             }
         );
     }
+
 });
+
 
 // 显示用户已选的座位信息列表
 function showSelectedInfo() {
@@ -93,6 +96,7 @@ function renderSchedule(schedule, seats) {
     hallDomStr += hallDom;
 
     $('#hall-card').html(hallDomStr);
+    movieId=schedule.movieId;
 }
 
 function seatClick(id, i, j) {
@@ -188,7 +192,6 @@ function renderOrder(orderInfo) {
     $('#order-total').text(total);
     $('#order-footer-total').text("总金额： ¥" + total);
 
-
     var couponTicketStr = "";
     if (orderInfo.coupons.length == 0) {
         $('#order-discount').text("优惠金额：无");
@@ -203,6 +206,18 @@ function renderOrder(orderInfo) {
         $('#order-coupons').html(couponTicketStr);
         changeCoupon(0);
     }
+
+    getRequest(
+        '/refund/all',
+        function (res) {
+            if (res.success){
+                renderRefund(res.content);
+            }
+        },
+        function (error) {
+            alert(error);
+        }
+    );
 }
 
 function changeCoupon(couponIndex) {
@@ -289,4 +304,24 @@ function validateForm() {
         $('#userBuy-cardPwd-error').css("visibility", "visible");
     }
     return isValidate;
+}
+
+function renderRefund(refunds){
+    var bodyContent='*退票策略：此电影上映';
+    for (var i=0; i<refunds.length; i++){
+        if (refunds[i].movie.id===movieId) {
+            if (refunds[i].price===100){
+                bodyContent=bodyContent+refunds[i].time+'天前退票，全款返还支付金额，上映';
+            } else if (refunds[i].price===0){
+                bodyContent=bodyContent+refunds[i].time+'天前退票，不返还支付金额，上映';
+            } else{
+                bodyContent=bodyContent+refunds[i].time+'天前退票，返还实付票价的'+refunds[i].price+'%，上映';
+            }
+        }
+    }
+    bodyContent=bodyContent.substring(0,bodyContent.length-3)+'。';
+    if (bodyContent==='*退票策略：此电影上映'){
+        bodyContent='*退票策略：此电影全款退票。';
+    }
+    $('.refund-show').empty().html(bodyContent);
 }
