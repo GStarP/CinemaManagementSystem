@@ -14,12 +14,12 @@
 
 #banner-list div{
     position: absolute;
-    margin-left: -5%;
+    margin-left: -9%;
     list-style: none;
     transition: all 0.3s ease-out;
 }
 .banner {
-    width: 60%;
+    width: 65%;
     height: 100%;
 }
 #banner-list div img{
@@ -30,7 +30,7 @@
 }
 .banner-1{
     transform:translate3d(0,0,0) scale(0.8);
-    transform-origin:100% 50%;
+    transform-origin:80% 50%;
     opacity: 0.8;
     z-index: 2;
 }
@@ -41,7 +41,7 @@
 }
 .banner-3{
     transform:translate3d(80%,0,0) scale(0.8);
-    transform-origin:0% 50%;
+    transform-origin:40% 50%;
     opacity: 0.8;
     z-index: 2;
 }
