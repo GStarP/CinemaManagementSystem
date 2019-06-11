@@ -31,6 +31,8 @@ function getVIP() {
                 // 是会员
                 $("#member-card").css("visibility", "visible");
                 $("#member-card").css("display", "");
+                $("#nonmember-card .state").css("display", "none");
+                $("#nonmember-card .line > div").css("display", "none");
 
                 vipCardId = res.content.id;
                 $("#member-balance").text("¥" + res.content.balance.toFixed(2));
@@ -41,6 +43,8 @@ function getVIP() {
             } else {
                 // 非会员
                 $("#member-card").css("display", "none");
+                $("#nonmember-card .state").css("display", "");
+                $("#nonmember-card .line").css("display", "");
             }
         },
         function (error) {
