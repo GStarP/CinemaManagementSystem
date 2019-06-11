@@ -279,7 +279,7 @@ public class TicketServiceImpl implements TicketService,TicketServiceForBl {
     public ResponseVO getTicketRefund(int id) {
         try{
             Ticket ticket=ticketMapper.selectTicketById(id);
-            double discount=getRefundStrategy(ticket.getScheduleId());
+            double discount=getRefundStrategy(ticket.getScheduleId())*100;
             return ResponseVO.buildSuccess(discount);
         }catch (Exception e) {
             return ResponseVO.buildFailure("获取退票折算策略失败!");
@@ -360,7 +360,7 @@ public class TicketServiceImpl implements TicketService,TicketServiceForBl {
         List<Refund> refundList=refundService.getRefundByMovieId(scheduleItem.getMovieId());
         Date date = new Date();
         int time= (int) ((date.getTime()-scheduleItem.getStartTime().getTime())/(1000*60*60*24));
-        int minTime=10000,discount=100;
+        double minTime=10000,discount=100;
         for(Refund temp:refundList){
             if (temp.getTime()>time){
                 if (temp.getTime()<minTime){

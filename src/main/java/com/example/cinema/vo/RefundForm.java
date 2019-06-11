@@ -16,20 +16,12 @@ public class RefundForm {
     /**
      * 适用时间，电影开场前多久
      */
-    private int time;
+    private double time;
 
     /**
      * 折算策略
      */
-    private int price;
-
-    public int getTime() {
-        return time;
-    }
-
-    public void setTime(int time) {
-        this.time = time;
-    }
+    private double price;
 
     public List<Integer> getMovieList() {
         return movieList;
@@ -39,12 +31,19 @@ public class RefundForm {
         this.movieList = movieList;
     }
 
-    public int getPrice() {
+    public double getTime() {
+        return time;
+    }
+
+    public void setTime(double time) {
+        this.time = time;
+    }
+
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(double price) {
         this.price = price;
     }
-
 }

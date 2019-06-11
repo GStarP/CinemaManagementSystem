@@ -15,12 +15,12 @@ public class Refund {
     /**
      * 适用时间，电影开场前多久
      */
-    private int time;
+    private double time;
 
     /**
      * 折算策略
      */
-    private int price;
+    private double price;
 
     public int getId() {
         return id;
@@ -38,19 +38,19 @@ public class Refund {
         this.movieId = movieId;
     }
 
-    public int getTime() {
+    public double getTime() {
         return time;
     }
 
-    public void setTime(int time) {
+    public void setTime(double time) {
         this.time = time;
     }
 
-    public int getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 }
