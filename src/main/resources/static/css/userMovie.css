@@ -1,6 +1,7 @@
 .filler-container {
     padding: 10px;
 }
+
 .filler-item {
     display: flex;
 }
@@ -20,4 +21,16 @@
 
 .to-buy-btn {
     margin-left: auto;
+}
+
+/*==========================================================*/
+
+#filler-container {
+    border: 1px solid #88888820;
+}
+
+#filler-container:hover {
+    box-shadow: 1px 1px 6px #888888;
+    border: 1px solid #88888880;
+    transition: all 0.3s ease-in-out;
 }
