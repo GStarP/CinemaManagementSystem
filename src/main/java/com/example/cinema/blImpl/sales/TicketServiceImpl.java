@@ -204,7 +204,6 @@ public class TicketServiceImpl implements TicketService,TicketServiceForBl {
         }else{
             if(couponId!=0){
                 totalPay=totalPay-((Coupon)couponService.getCoupon(couponId).getContent()).getDiscountAmount();
-                couponService.deleteCoupon(couponId,ticket.getUserId());
             }
             //更新会员卡余额
             if (! vipService.getCardByUserId(ticket.getUserId()).getSuccess()){
