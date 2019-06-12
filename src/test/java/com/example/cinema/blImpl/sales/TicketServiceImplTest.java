@@ -33,7 +33,7 @@ public class TicketServiceImplTest {
         seatForm.setColumnIndex(0);
         seatForm.setRowIndex(0);
         ticketForm.setUserId(0);
-        ticketForm.setScheduleId(0);
+        ticketForm.setScheduleId(69);
         seatForms.add(seatForm);
         ticketForm.setSeats(seatForms);
         ResponseVO responseVO=ticketService.addTicket(ticketForm);
@@ -43,14 +43,14 @@ public class TicketServiceImplTest {
     @Test
     public void completeTicketTest(){
         List<Integer> integers=new ArrayList<>();
-        integers.add(0);
+        integers.add(1);
         ResponseVO responseVO=ticketService.completeTicket(integers,0);
         Assert.assertEquals(true,responseVO.getSuccess());
     }
 
     @Test
     public void getByScheduleTest(){
-        ResponseVO responseVO=ticketService.getBySchedule(0);
+        ResponseVO responseVO=ticketService.getBySchedule(69);
         Assert.assertEquals(true,responseVO.getSuccess());
     }
 }

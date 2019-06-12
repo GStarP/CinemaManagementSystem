@@ -22,7 +22,7 @@ public interface CouponMapper {
 
     void insertCouponUser(@Param("couponId") int couponId,@Param("userId")int userId);
 
-    void deleteCouponUser(@Param("couponId") int couponId,@Param("userId")int userId);
+    int deleteCouponUser(@Param("couponId") int couponId,@Param("userId")int userId);
 
     List<Coupon> selectCouponByUserAndAmount(@Param("userId") int userId,@Param("amount") double amount);
 }

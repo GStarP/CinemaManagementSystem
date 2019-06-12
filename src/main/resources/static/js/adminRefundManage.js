@@ -160,6 +160,11 @@ $(document).ready(function(){
         };
     }
 
+    /**
+     * 检查数据
+     * @param formData
+     * @returns {boolean}
+     */
     function validateRefundForm(formData){
         if(!formData.time) {
             $('#refund-time-input').parent('.form-group').addClass('has-error');

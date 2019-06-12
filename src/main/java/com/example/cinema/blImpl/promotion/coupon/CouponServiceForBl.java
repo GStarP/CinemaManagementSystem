@@ -14,4 +14,6 @@ public interface CouponServiceForBl {
     ResponseVO getCoupon(int couponId);
 
     List<Coupon> getAllCoupon();
+
+    boolean deleteCoupon(int couponId,int userId);
 }
