@@ -100,6 +100,7 @@ public class TicketServiceImpl implements TicketService,TicketServiceForBl {
         }else{
             if(couponId!=0){
                 totalPay=totalPay-((Coupon)couponService.getCoupon(couponId).getContent()).getDiscountAmount();
+                couponService.deleteCoupon(couponId,ticket.getUserId());
             }
             for (int i:id){
                 ticketMapper.updateTicketState(i,1);
@@ -203,6 +204,7 @@ public class TicketServiceImpl implements TicketService,TicketServiceForBl {
         }else{
             if(couponId!=0){
                 totalPay=totalPay-((Coupon)couponService.getCoupon(couponId).getContent()).getDiscountAmount();
+                couponService.deleteCoupon(couponId,ticket.getUserId());
             }
             //更新会员卡余额
             if (! vipService.getCardByUserId(ticket.getUserId()).getSuccess()){
@@ -213,6 +215,7 @@ public class TicketServiceImpl implements TicketService,TicketServiceForBl {
                     return ResponseVO.buildFailure("会员卡余额不足");
                 }
                 vipService.payByCard(vipCard.getId(),vipCard.getBalance()-totalPay);
+                couponService.deleteCoupon(couponId,ticket.getUserId());
             }
             for (int i:id){
                 ticketMapper.updateTicketState(i,1);
