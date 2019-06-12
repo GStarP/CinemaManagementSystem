@@ -1,5 +1,6 @@
 package com.example.cinema.bl.promotion;
 
+import com.example.cinema.po.VIPCard;
 import com.example.cinema.vo.VIPCardForm;
 import com.example.cinema.vo.ResponseVO;
 
@@ -20,4 +21,6 @@ public interface VIPService {
     ResponseVO getCardByUserId(int userId);
 
     ResponseVO changeVIPCard(int cardId, int cardTypeId);
+
+    VIPCard getSingleCard(int id);
 }

@@ -20,5 +20,5 @@ public interface VIPCardMapper {
 
     VIPCard selectCardByUserId(int userId);
 
-
+    VIPCard selectSingleCard(@Param("id") int id);
 }

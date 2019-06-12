@@ -100,6 +100,11 @@ public class VIPServiceImpl implements VIPService, VIPServiceForBl {
     }
 
     @Override
+    public VIPCard getSingleCard(int id) {
+        return vipCardMapper.selectSingleCard(id);
+    }
+
+    @Override
     public ResponseVO changeVIPCard(int cardId, int cardTypeId) {
         try {
             VIPCard oldCard = vipCardMapper.selectCardById(cardId);
