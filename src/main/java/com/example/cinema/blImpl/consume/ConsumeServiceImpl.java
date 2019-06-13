@@ -93,7 +93,7 @@ public class ConsumeServiceImpl implements ConsumeService{
                 vo.setRowIndex(ticket.getRowIndex()+1);
                 ScheduleItem schedule = scheduleServiceForBl.getScheduleItemById(ticket.getScheduleId());
                 vo.setStartTime(schedule.getStartTime());
-                vo.setMovieName(((Movie)movieServiceForBl.getMovieById(schedule.getMovieId())).getName());
+                vo.setMovieName(movieServiceForBl.getMovieById(schedule.getMovieId()).getName());
                 vo.setHallName(hallServiceForBl.getHallById(schedule.getHallId()).getName());
                 return ResponseVO.buildSuccess(vo);
             } else if (history.getType() == ConsumeHistory.BUY_VIP_CARD) {
@@ -104,7 +104,7 @@ public class ConsumeServiceImpl implements ConsumeService{
                 vo.setType(getTypeStr(history.getType()));
                 vo.setConsumeType(history.getConsumeType());
                 vo.setTime(getConsumeTime(history));
-                VIPCard card = (VIPCard) vipService.getCardById(history.getContentId()).getContent();
+                VIPCard card = vipService.getSingleCard(history.getContentId());
                 vo.setCardType(card.getCardType().getName());
                 return ResponseVO.buildSuccess(vo);
             } else if (history.getType() == ConsumeHistory.BUY_LOTTERY) {
@@ -184,7 +184,7 @@ public class ConsumeServiceImpl implements ConsumeService{
         if (his.getType() == ConsumeHistory.BUY_TICKET) {
             return ticketServiceForBl.getTicketById(his.getContentId()).getTime();
         } else if (his.getType() == ConsumeHistory.BUY_VIP_CARD) {
-            return ((VIPCard)vipService.getCardById(his.getContentId()).getContent()).getJoinDate();
+            return vipService.getSingleCard(his.getContentId()).getJoinDate();
         } else {
             return null;
         }
