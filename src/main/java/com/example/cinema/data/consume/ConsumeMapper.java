@@ -16,6 +16,7 @@ import java.util.List;
 @Mapper
 public interface ConsumeMapper {
 
+    //TODO:注释
     List<TopUpHistory> getTopUpHistoryByUserId(@Param("userId") Integer userId);
 
     List<ConsumeHistory> getConsumeHistoryByUserId(@Param("userId") Integer userId);

@@ -11,6 +11,7 @@ import org.apache.ibatis.annotations.Param;
 @Mapper
 public interface BannerMapper {
 
+    //TODO:注释
     BannerInfo selectBannerInfo();
 
     int updateBannerInfo(@Param("info") BannerInfo info);
