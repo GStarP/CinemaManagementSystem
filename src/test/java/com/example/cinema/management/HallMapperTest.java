@@ -1,4 +1,4 @@
-package test.com.example.cinema.data.management;
+package com.example.cinema.management;
 
 import com.example.cinema.CinemaApplication;
 import com.example.cinema.data.management.HallMapper;
