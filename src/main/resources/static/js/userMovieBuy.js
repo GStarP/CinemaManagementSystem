@@ -124,7 +124,6 @@ function orderConfirmClick() {
 
     const seats = []
     selectedSeats.forEach(x => {
-        //TODO:改错1
         seats.push({'columnIndex': x[1], 'rowIndex': x[0]})
     })
     postRequest(
