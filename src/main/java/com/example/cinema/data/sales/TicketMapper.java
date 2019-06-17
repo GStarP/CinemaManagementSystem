@@ -19,7 +19,6 @@ public interface TicketMapper {
 
     int deleteTicket(int ticketId);
 
-    //TODO:添加@Param
     int deleteLockedTicket(@Param("userId") int userId, @Param("scheduleId") int scheduleId);
 
     int updateTicketState(@Param("ticketId") int ticketId, @Param("state") int state);
