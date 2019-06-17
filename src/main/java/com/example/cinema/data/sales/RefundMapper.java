@@ -12,13 +12,37 @@ import java.util.List;
 @Mapper
 public interface RefundMapper {
 
+    /**
+     * 获取全部退票策略
+     * @return
+     */
     List<Refund> selectRefund();
 
+    /**
+     * 新增一条退票策略
+     * @param refund
+     * @return
+     */
     int insertRefund(Refund refund);
 
+    /**
+     * 根据id删除退票策略
+     * @param refundId
+     * @return
+     */
     int deleteRefundById(int refundId);
 
+    /**
+     * 根据电影id获取该电影的退票策略
+     * @param movieId
+     * @return
+     */
     List<Refund> selectRefundByMovieId(int movieId);
 
+    /**
+     * 根据id获取退票策略
+     * @param refundId
+     * @return
+     */
     Refund selectRefundById(int refundId);
 }
