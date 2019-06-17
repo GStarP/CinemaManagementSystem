@@ -27,7 +27,6 @@ $(document).ready(function () {
     }
 
     function getActivity(){
-        //TODO:添加优惠活动
         getRequest(
             '/activity/getByMovieId?movieId=' + movieId,
             function (res) {

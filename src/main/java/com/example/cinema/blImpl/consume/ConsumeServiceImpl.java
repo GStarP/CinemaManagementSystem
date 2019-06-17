@@ -108,7 +108,6 @@ public class ConsumeServiceImpl implements ConsumeService{
                 vo.setCardType(card.getCardType().getName());
                 return ResponseVO.buildSuccess(vo);
             } else if (history.getType() == ConsumeHistory.BUY_LOTTERY) {
-                //TODO:抽奖的消费记录
                 return ResponseVO.buildSuccess();
             } else {
                 return ResponseVO.buildFailure("消费类型错误!");
