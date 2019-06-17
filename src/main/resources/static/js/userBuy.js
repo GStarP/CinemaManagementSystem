@@ -87,14 +87,14 @@ $(document).ready(function () {
             '/ticket/getTicketRefund?ticketId='+$(this).attr('id').substring(1),
             function (res) {
                 if (res.success){
-                    if (res.content===100) {
+                    var discount=parseInt(res.content);
+                    if (discount===100) {
                         bodyContent='现在退票将全款返还支付金额，请确认是否退票。';
-                    }else if (res.content===0){
+                    }else if (discount===0){
                         bodyContent='现在退票不返还支付金额，请确认是否退票。';
                     }else{
-                        bodyContent='现在退款将返还支付金额的'+res.content+'%，请确认是否退票。';
+                        bodyContent='现在退款将返还支付金额的'+discount+'%，请确认是否退票。';
                     }
-
                 }
             }
         );

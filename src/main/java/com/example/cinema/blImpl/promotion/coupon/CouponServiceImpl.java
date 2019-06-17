@@ -52,6 +52,16 @@ public class CouponServiceImpl implements CouponService, CouponServiceForBl {
     }
 
     @Override
+    public boolean deleteCoupon(int couponId,int userId) {
+        int res=couponMapper.deleteCouponUser(couponId,userId);
+        if (res==1){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    @Override
     public ResponseVO addCoupon(CouponForm couponForm) {
         try {
             Coupon coupon=new Coupon();

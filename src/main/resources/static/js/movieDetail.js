@@ -9,6 +9,7 @@ $(document).ready(function () {
     var movieId = parseInt(window.location.href.split('?')[1].split('&')[0].split('=')[1]);
     var userId = sessionStorage.getItem('id');
     var isLike = false;
+    var movieData;
 
     getMovie();
     //更新权限格式
@@ -63,6 +64,7 @@ $(document).ready(function () {
                 var data = res.content;
                 isLike = data.islike;
                 repaintMovieDetail(data);
+                movieData=data;
             },
             function (error) {
                 alert(error);
@@ -125,11 +127,32 @@ $(document).ready(function () {
     }
 
     /**
+     * @Date: 2019-6-11
+     * @Author:  cz
+     * @Info:   设置表单
+     */
+    $('#modify-btn').on('click',function () {
+        //展示现有的电影信息
+        $('#movie-name-input').attr('value',movieData.name);
+        $('#movie-date-input').attr('value',movieData.startDate);
+        $('#movie-img-input').attr('value',movieData.posterUrl);
+        $('#movie-description-input').html(movieData.description);
+        $('#movie-type-input').attr('value',movieData.type);
+        $('#movie-length-input').attr('value',movieData.length);
+        $('#movie-country-input').attr('value',movieData.country);
+        $('#movie-director-input').attr('value',movieData.director);
+        $('#movie-star-input').attr('value',movieData.starring);
+        $('#movie-writer-input').attr('value',movieData.screenWriter);
+        $('#movie-language-input').attr('value',movieData.language);
+    });
+
+    /**
      * @Date:   2019-5-7
      * @Author: hxw
      * @Info:   修改电影信息
      */
     $("#movie-form-btn").click(function () {
+        //获取更新后的电影信息
         var formData = getMovieForm();
         if (!validateMovieForm(formData)) {
             return;

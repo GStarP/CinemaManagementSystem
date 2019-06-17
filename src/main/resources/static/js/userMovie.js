@@ -21,7 +21,7 @@ $(document).ready(function () {
 
         list.forEach(movie => {
             movie.description = movie.description || '';
-            const movieItem = createDOMFromString("<li class='movie-item card'></li>");
+            const movieItem = createDOMFromString("<div></div>");
             mount(new MovieItem({movie: movie, onDetailClick: movieId => onItemClick(movieId)}), movieItem);
             $('.movie-on-list').append(movieItem);
         });
