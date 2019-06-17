@@ -1,4 +1,4 @@
-package test.com.example.cinema.blImpl.management.schedule;
+package com.example.cinema.blImpl.management.schedule;
 
 import com.example.cinema.CinemaApplication;
 import com.example.cinema.blImpl.management.schedule.ScheduleServiceForBl;

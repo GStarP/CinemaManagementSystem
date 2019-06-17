@@ -1,10 +1,9 @@
-package test.com.example.cinema.po;
+package com.example.cinema.po;
 
-import com.example.cinema.po.Hall;
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.Before;
 import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Hall Tester.
