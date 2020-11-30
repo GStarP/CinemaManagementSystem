@@ -7,6 +7,7 @@ import com.example.cinema.blImpl.management.schedule.ScheduleServiceForBl;
 import com.example.cinema.blImpl.promotion.activity.ActivityServiceForBl;
 import com.example.cinema.blImpl.promotion.coupon.CouponServiceForBl;
 import com.example.cinema.blImpl.promotion.member.VIPServiceForBl;
+import com.example.cinema.data.management.ScheduleMapper;
 import com.example.cinema.data.sales.TicketMapper;
 import com.example.cinema.po.Coupon;
 import com.example.cinema.po.Hall;
@@ -16,13 +17,7 @@ import com.example.cinema.po.VIPCard;
 import com.example.cinema.po.ConsumeHistory;
 import com.example.cinema.po.Activity;
 import com.example.cinema.po.Refund;
-import com.example.cinema.vo.ResponseVO;
-import com.example.cinema.vo.ScheduleWithSeatVO;
-import com.example.cinema.vo.TicketForm;
-import com.example.cinema.vo.UserTicketVO;
-import com.example.cinema.vo.TicketWithCouponVO;
-import com.example.cinema.vo.SeatForm;
-import com.example.cinema.vo.TicketVO;
+import com.example.cinema.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -54,6 +49,8 @@ public class TicketServiceImpl implements TicketService,TicketServiceForBl {
     VIPServiceForBl vipService;
     @Autowired
     RefundServiceForBl refundService;
+    @Autowired
+    ScheduleMapper scheduleMapper;
 
     @Override
     @Transactional
@@ -312,6 +309,42 @@ public class TicketServiceImpl implements TicketService,TicketServiceForBl {
         }
     }
 
+    public ResponseVO getUserTicketToPay(int userId) {
+        try {
+            PayInfo payInfo = new PayInfo();
+
+            List<TicketToPayVO> ticketList = new ArrayList<>();
+            double totalFare = 0;
+            for (Ticket ticket : ticketMapper.selectTicketByUser(userId)) {
+                // 只有未完成的票可以进行支付
+                if (ticket.getState() == 0) {
+                    TicketToPayVO ticketToPayVO = new TicketToPayVO();
+                    ticketToPayVO.setTicketId(ticket.getId());
+                    ticketToPayVO.setRowIndex(ticket.getRowIndex());
+                    ticketToPayVO.setColumnIndex(ticket.getColumnIndex());
+                    ticketToPayVO.setSchedule(scheduleMapper.selectScheduleById(ticket.getScheduleId()));
+                    ticketList.add(ticketToPayVO);
+
+                    totalFare += ticketToPayVO.getSchedule().getFare();
+                }
+            }
+
+            List<Coupon> coupons = new ArrayList<>();
+            for (Coupon coupon : couponService.getAllCoupon()) {
+                if (coupon.getTargetAmount() <= totalFare) {
+                    coupons.add(coupon);
+                }
+            }
+
+            payInfo.setTicketList(ticketList);
+            payInfo.setCoupons(coupons);
+            return ResponseVO.buildSuccess(payInfo);
+        } catch (Exception e) {
+            return ResponseVO.buildFailure("获取待支付信息失败");
+        }
+    }
+
+
     //检验优惠券是否存在，是否能用(门槛，时间)，返回应付总金额
     private boolean isCouponEnable(int couponId, double totalPay, int userId){
         //检验是否使用优惠券
@@ -373,6 +406,5 @@ public class TicketServiceImpl implements TicketService,TicketServiceForBl {
         }
         return discount/100.0;
     }
-
 
 }

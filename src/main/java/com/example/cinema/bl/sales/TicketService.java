@@ -69,4 +69,11 @@ public interface TicketService {
      * 获得票的退款策略
      */
     ResponseVO getTicketRefund(int id);
+
+    /**
+     * 获取用户全部未支付且未过期的电影票
+     * @param userId
+     * @return
+     */
+    ResponseVO getUserTicketToPay(int userId);
 }

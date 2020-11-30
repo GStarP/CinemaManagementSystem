@@ -35,7 +35,7 @@ public interface TicketMapper {
 
     int selectTicketNumBySchedule(@Param("scheduleId") int scheduleId);
 
-    @Scheduled(cron = "0/1 * * * * ?")
+    @Scheduled(cron = "0 */1 * * * ?")
     void cleanExpiredTicket();
 }
 
