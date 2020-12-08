@@ -27,6 +27,8 @@ public interface TicketMapper {
 
     List<Ticket> selectTicketsBySchedule(int scheduleId);
 
+    List<Ticket> selectTicketsByUserAndSchedule(@Param("userId") int userId, @Param("scheduleId") int scheduleId);
+
     Ticket selectTicketByScheduleIdAndSeat(@Param("scheduleId") int scheduleId, @Param("column") int columnIndex, @Param("row") int rowIndex);
 
     Ticket selectTicketById(int id);

@@ -309,13 +309,13 @@ public class TicketServiceImpl implements TicketService,TicketServiceForBl {
         }
     }
 
-    public ResponseVO getUserTicketToPay(int userId) {
+    public ResponseVO getUserTicketToPay(int userId, int scheduleId) {
         try {
             PayInfo payInfo = new PayInfo();
 
             List<TicketToPayVO> ticketList = new ArrayList<>();
             double totalFare = 0;
-            for (Ticket ticket : ticketMapper.selectTicketByUser(userId)) {
+            for (Ticket ticket : ticketMapper.selectTicketsByUserAndSchedule(userId, scheduleId)) {
                 // 只有未完成的票可以进行支付
                 if (ticket.getState() == 0) {
                     TicketToPayVO ticketToPayVO = new TicketToPayVO();
