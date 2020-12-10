@@ -70,4 +70,13 @@ public interface ConsumeMapper {
      * @return
      */
     List<TotalConsumeUser> selectConsumeQulifiedUsers(@Param("totalConsume") Double totalConsume);
+
+    /**
+     * 获取某张电影票所对应的消费记录
+     * @param ticketId
+     * @return
+     */
+    int getConsumeHistoryByTicketId(@Param("ticketId") Integer ticketId);
+
+    List<Integer> getTicketIdsByConsumeId(int consumeId);
 }

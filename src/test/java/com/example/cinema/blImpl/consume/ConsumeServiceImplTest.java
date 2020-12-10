@@ -40,7 +40,6 @@ public class ConsumeServiceImplTest {
         Assert.assertEquals(30,history.getMoney(),0.00);
         Assert.assertEquals("夏目友人帐",history.getMovieName());
         Assert.assertEquals("1号厅",history.getHallName());
-        Assert.assertEquals(5,history.getRowIndex());
     }
 
     @Test

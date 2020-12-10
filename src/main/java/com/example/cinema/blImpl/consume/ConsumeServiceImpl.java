@@ -30,7 +30,7 @@ import java.util.List;
  * @date 2019-5-21
  */
 @Service
-public class ConsumeServiceImpl implements ConsumeService{
+public class ConsumeServiceImpl implements ConsumeService, ConsumeServiceForBI{
 
     @Autowired
     private ConsumeMapper consumeMapper;
@@ -87,10 +87,15 @@ public class ConsumeServiceImpl implements ConsumeService{
                 vo.setDiscount(history.getDiscount());
                 vo.setType(getTypeStr(history.getType()));
                 vo.setConsumeType(history.getConsumeType());
-                Ticket ticket = ticketServiceForBl.getTicketById(history.getContentId());
+                List<Integer> ticketIds=consumeMapper.getTicketIdsByConsumeId(history.getContentId());
+                Ticket ticket=new Ticket();
+                String seat="";
+                for(int ticketId:ticketIds){
+                    ticket = ticketServiceForBl.getTicketById(ticketId);
+                    seat=seat+(ticket.getColumnIndex()+1)+"排"+(ticket.getRowIndex()+1)+"座, ";
+                }
+                vo.setSeat(seat.substring(0,seat.length()-2));
                 vo.setTime(ticket.getTime());
-                vo.setColumnIndex(ticket.getColumnIndex()+1);
-                vo.setRowIndex(ticket.getRowIndex()+1);
                 ScheduleItem schedule = scheduleServiceForBl.getScheduleItemById(ticket.getScheduleId());
                 vo.setStartTime(schedule.getStartTime());
                 vo.setMovieName(movieServiceForBl.getMovieById(schedule.getMovieId()).getName());
@@ -186,6 +191,15 @@ public class ConsumeServiceImpl implements ConsumeService{
             return vipService.getSingleCard(his.getContentId()).getJoinDate();
         } else {
             return null;
+        }
+    }
+
+    @Override
+    public int getConsumeByTicketId(int ticketId) {
+        try{
+            return consumeMapper.getConsumeHistoryByTicketId(ticketId);
+        } catch (Exception e) {
+            return 0;
         }
     }
 }
