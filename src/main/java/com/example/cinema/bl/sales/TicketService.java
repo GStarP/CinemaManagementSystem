@@ -75,5 +75,5 @@ public interface TicketService {
      * @param userId
      * @return
      */
-    ResponseVO getUserTicketToPay(int userId);
+    ResponseVO getUserTicketToPay(int userId, int scheduleId);
 }
