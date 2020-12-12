@@ -65,8 +65,8 @@ public class TicketController {
     }
 
     @GetMapping("/toPay")
-    public ResponseVO getUserTicketToPay(@RequestParam int userId, @RequestParam int scheudleId) {
-        return ticketService.getUserTicketToPay(userId, scheudleId);
+    public ResponseVO getUserTicketToPay(@RequestParam int userId, @RequestParam int scheduleId) {
+        return ticketService.getUserTicketToPay(userId, scheduleId);
     }
 
 }
