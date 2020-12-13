@@ -17,6 +17,15 @@ public class BuyTicketHistoryVO extends BriefConsumeHisVO{
     private String hallName;
 
     /**
+     * 座位
+     */
+    private String seat;
+    /**
+     * 放映时间
+     */
+    private Date startTime;
+
+    /**
      * 座位列号
      */
     private int columnIndex;
@@ -24,10 +33,6 @@ public class BuyTicketHistoryVO extends BriefConsumeHisVO{
      * 座位排号
      */
     private int rowIndex;
-    /**
-     * 放映时间
-     */
-    private Date startTime;
 
     public String getMovieName() {
         return movieName;
@@ -45,6 +50,22 @@ public class BuyTicketHistoryVO extends BriefConsumeHisVO{
         this.hallName = hallName;
     }
 
+    public String getSeat(){
+        return seat;
+    }
+
+    public void setSeat(String seat){
+        this.seat=seat;
+    }
+
+    public Date getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(Date startTime) {
+        this.startTime = startTime;
+    }
+
     public int getColumnIndex() {
         return columnIndex;
     }
@@ -59,13 +80,5 @@ public class BuyTicketHistoryVO extends BriefConsumeHisVO{
 
     public void setRowIndex(int rowIndex) {
         this.rowIndex = rowIndex;
-    }
-
-    public Date getStartTime() {
-        return startTime;
-    }
-
-    public void setStartTime(Date startTime) {
-        this.startTime = startTime;
     }
 }

@@ -58,6 +58,11 @@
         delete from ticket where user_id=#{userId} and schedule_id=#{scheduleId} and state=0
     </delete>
 
+    <insert id="insertTicketAndConsume">
+        insert into consume_ticket(consume_id,ticket_id)
+        values(#{consumeId},#{ticketId})
+    </insert>
+
     <resultMap id="Ticket" type="com.example.cinema.po.Ticket">
         <result column="schedule_id" property="scheduleId"></result>
         <result column="id" property="id"></result>

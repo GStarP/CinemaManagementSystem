@@ -33,6 +33,14 @@
 			  on user.id = t2.user_id) s2 on s1.userId = s2.id) h where total > #{totalConsume} order by total desc
     </select>
 
+    <select id="getConsumeHistoryByTicketId" resultType="int">
+        select id from consume_history where contentId=#{ticketId}
+    </select>
+
+    <select id="getTicketIdsByConsumeId" resultType="java.lang.Integer">
+        select ticket_id from consume_ticket where consume_id=#{consumeId}
+    </select>
+
     <resultMap id="TopUpHistpry" type="com.example.cinema.po.TopUpHistory"></resultMap>
 
     <resultMap id="ConsumeHistory" type="com.example.cinema.po.ConsumeHistory"></resultMap>

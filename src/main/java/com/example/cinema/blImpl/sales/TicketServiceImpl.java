@@ -2,6 +2,7 @@ package com.example.cinema.blImpl.sales;
 
 import com.example.cinema.bl.consume.ConsumeService;
 import com.example.cinema.bl.sales.TicketService;
+import com.example.cinema.blImpl.consume.ConsumeServiceForBI;
 import com.example.cinema.blImpl.management.hall.HallServiceForBl;
 import com.example.cinema.blImpl.management.schedule.ScheduleServiceForBl;
 import com.example.cinema.blImpl.promotion.activity.ActivityServiceForBl;
@@ -51,6 +52,8 @@ public class TicketServiceImpl implements TicketService,TicketServiceForBl {
     RefundServiceForBl refundService;
     @Autowired
     ScheduleMapper scheduleMapper;
+    @Autowired
+    ConsumeServiceForBI consumeServiceForBI;
 
     @Override
     @Transactional
@@ -113,6 +116,12 @@ public class TicketServiceImpl implements TicketService,TicketServiceForBl {
         } else {
             consumeService.addConsumeHistory(ticket.getUserId(), totalPay, coupon.getDiscountAmount(),
                     "会员卡", ConsumeHistory.BUY_TICKET, ticket.getId());
+        }
+
+        //将电影票与消费记录关联
+        int consumeId=consumeServiceForBI.getConsumeByTicketId(ticket.getId());
+        for(int ticketId:id){
+            ticketMapper.insertTicketAndConsume(ticketId, consumeId);
         }
 
         //赠送优惠券
@@ -227,6 +236,12 @@ public class TicketServiceImpl implements TicketService,TicketServiceForBl {
         } else {
             consumeService.addConsumeHistory(ticket.getUserId(), totalPay, coupon.getDiscountAmount(),
                     "会员卡", ConsumeHistory.BUY_TICKET, ticket.getId());
+        }
+
+        //将电影票与消费记录关联
+        int consumeId=consumeServiceForBI.getConsumeByTicketId(ticket.getId());
+        for(int ticketId:id){
+            ticketMapper.insertTicketAndConsume(ticketId, consumeId);
         }
 
         //赠送优惠券
