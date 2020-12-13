@@ -87,13 +87,15 @@ public class ConsumeServiceImpl implements ConsumeService, ConsumeServiceForBI{
                 vo.setDiscount(history.getDiscount());
                 vo.setType(getTypeStr(history.getType()));
                 vo.setConsumeType(history.getConsumeType());
-                List<Integer> ticketIds=consumeMapper.getTicketIdsByConsumeId(history.getContentId());
+                List<Integer> ticketIds=consumeMapper.getTicketIdsByConsumeId(history.getId());
                 Ticket ticket=new Ticket();
                 String seat="";
                 for(int ticketId:ticketIds){
                     ticket = ticketServiceForBl.getTicketById(ticketId);
-                    seat=seat+(ticket.getColumnIndex()+1)+"排"+(ticket.getRowIndex()+1)+"座, ";
+                    seat=seat+(ticket.getRowIndex()+1)+"排"+(ticket.getColumnIndex()+1)+"座, ";
                 }
+                vo.setColumnIndex(ticket.getColumnIndex());
+                vo.setRowIndex(ticket.getRowIndex());
                 vo.setSeat(seat.substring(0,seat.length()-2));
                 vo.setTime(ticket.getTime());
                 ScheduleItem schedule = scheduleServiceForBl.getScheduleItemById(ticket.getScheduleId());
