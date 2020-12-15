@@ -344,8 +344,9 @@ public class TicketServiceImpl implements TicketService,TicketServiceForBl {
                 }
             }
 
+
             List<Coupon> coupons = new ArrayList<>();
-            for (Coupon coupon : couponService.getAllCoupon()) {
+            for (Coupon coupon : (List<Coupon>) couponService.getCouponsByUser(userId).getContent()) {
                 if (coupon.getTargetAmount() <= totalFare) {
                     coupons.add(coupon);
                 }
