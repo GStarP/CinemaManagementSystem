@@ -9,6 +9,7 @@ import com.example.cinema.blImpl.promotion.activity.ActivityServiceForBl;
 import com.example.cinema.blImpl.promotion.coupon.CouponServiceForBl;
 import com.example.cinema.blImpl.promotion.member.VIPServiceForBl;
 import com.example.cinema.data.management.ScheduleMapper;
+import com.example.cinema.data.promotion.CouponMapper;
 import com.example.cinema.data.sales.TicketMapper;
 import com.example.cinema.po.Coupon;
 import com.example.cinema.po.Hall;
@@ -54,6 +55,8 @@ public class TicketServiceImpl implements TicketService,TicketServiceForBl {
     ScheduleMapper scheduleMapper;
     @Autowired
     ConsumeServiceForBI consumeServiceForBI;
+    @Autowired
+    CouponMapper couponMapper;
 
     @Override
     @Transactional
@@ -346,7 +349,7 @@ public class TicketServiceImpl implements TicketService,TicketServiceForBl {
 
 
             List<Coupon> coupons = new ArrayList<>();
-            for (Coupon coupon : (List<Coupon>) couponService.getCouponsByUser(userId).getContent()) {
+            for (Coupon coupon : couponMapper.selectCouponByUser(userId)) {
                 if (coupon.getTargetAmount() <= totalFare) {
                     coupons.add(coupon);
                 }
